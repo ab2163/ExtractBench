@@ -34,22 +34,35 @@ class EvidenceStats:
         }
 
 
-_CHECKBOX_GUIDANCE = (
-    " For a checkbox field that is false because its box is printed but "
-    "unchecked, box the empty checkbox square itself. If the false comes from "
-    "another box in a Yes/No pair being checked, box that checked box."
+_CHECKBOX_FALSE_RULE = (
+    " For a checkbox field that is false because its box is printed but unchecked, "
+    "box the empty checkbox square itself."
+)
+_CHECKBOX_PAIR_RULE = " If the false comes from another box in a Yes/No pair being checked, box that checked box."
+_YES_NO_PAIR_RULE = (
+    " If one field stands for a whole Yes/No pair and is false because No is checked, box the No box only."
+    " If Yes and No are separate fields, box each field's own square."
 )
 _CHECKBOX_BORDER_RULE = " For a checkbox, box the whole printed square including its border."
+
+
+def build_checkbox_rule(is_checkbox_guidance: bool, is_checkbox_border: bool, is_yes_no_pair_rule: bool) -> str:
+    checkbox_rule = ""
+    if is_checkbox_guidance:
+        checkbox_rule = _CHECKBOX_FALSE_RULE
+        checkbox_rule += _YES_NO_PAIR_RULE if is_yes_no_pair_rule else _CHECKBOX_PAIR_RULE
+    if is_checkbox_border:
+        checkbox_rule += _CHECKBOX_BORDER_RULE
+    return checkbox_rule
 
 
 def agent_evidence_instruction(
     citations_filename: str = "citations.json",
     is_checkbox_guidance: bool = False,
     is_checkbox_border: bool = False,
+    is_yes_no_pair_rule: bool = False,
 ) -> str:
-    checkbox_rule = _CHECKBOX_GUIDANCE if is_checkbox_guidance else ""
-    if is_checkbox_border:
-        checkbox_rule += _CHECKBOX_BORDER_RULE
+    checkbox_rule = build_checkbox_rule(is_checkbox_guidance, is_checkbox_border, is_yes_no_pair_rule)
     return (
         f"- Also write ./{citations_filename}: a JSON array of evidence objects, "
         "one per non-null value you extracted, each with the keys "

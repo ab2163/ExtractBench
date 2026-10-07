@@ -366,6 +366,20 @@ def register_extract_pipelines(register_fn) -> None:  # type: ignore[no-untyped-
             },
         )
     )
+    register_fn(
+        _pipeline_spec(
+            pipeline_name="claude_code_extract_opus_5_5_high_checkbox_border_yesno_evidence",
+            provider_name="claude_code_extract",
+            config={
+                "model": "claude-opus-5-5",
+                "evidence_mode": True,
+                "effort": "high",
+                "is_checkbox_guidance": True,
+                "is_checkbox_border": True,
+                "is_yes_no_pair_rule": True,
+            },
+        )
+    )
 
     for _model_slug, _model, _reasoning_effort in (
         ("gpt_5_4", "gpt-5.4", "low"),
