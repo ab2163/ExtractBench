@@ -37,6 +37,7 @@ uv run extract-bench run <pipeline_name>
 | `claude_code_extract_opus_4_8_evidence` / `claude_code_extract_opus_5_5_evidence` | Claude Code CLI | agentic extraction with page and box citations in `citations.json` |
 | `claude_code_extract_opus_5_5_{low,medium,high,xhigh,max}_evidence` | Claude Code CLI | Opus 5.5 evidence extraction with `--effort` set to the level in the name |
 | `claude_code_extract_opus_5_5_high_checkbox_evidence` | Claude Code CLI | high-effort evidence extraction whose prompt also says how to box unchecked checkboxes (`is_checkbox_guidance`) |
+| `claude_code_extract_opus_5_5_high_checkbox_border_evidence` | Claude Code CLI | as above, plus a rule to box the whole printed checkbox square including its border (`is_checkbox_border`) |
 | `codex_code_extract_gpt_5_5_low_evidence` / `codex_code_extract_gpt_5_6_sol_low_evidence` / `codex_code_extract_gpt_5_6_terra_low_evidence` | Codex CLI | low-effort extraction with page and box citations; unrestricted shell |
 | `codex_code_extract_gpt_5_6_luna_medium_evidence` | Codex CLI | medium-effort extraction with page and box citations; unrestricted shell, no cost cap |
 | `codex_code_extract_gpt_6_luna_medium_evidence` / `codex_code_extract_gpt_6_luna_high_evidence` / `codex_code_extract_gpt_6_luna_xhigh_evidence` / `codex_code_extract_gpt_6_sol_low_evidence` / `codex_code_extract_gpt_6_sol_medium_evidence` / `codex_code_extract_gpt_6_sol_high_evidence` | Codex CLI | GPT-6 Luna and Sol extraction with page and box citations at the effort in the name; unrestricted shell, no cost cap |

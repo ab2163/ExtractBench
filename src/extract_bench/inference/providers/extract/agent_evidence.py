@@ -39,10 +39,17 @@ _CHECKBOX_GUIDANCE = (
     "unchecked, box the empty checkbox square itself. If the false comes from "
     "another box in a Yes/No pair being checked, box that checked box."
 )
+_CHECKBOX_BORDER_RULE = " For a checkbox, box the whole printed square including its border."
 
 
-def agent_evidence_instruction(citations_filename: str = "citations.json", is_checkbox_guidance: bool = False) -> str:
+def agent_evidence_instruction(
+    citations_filename: str = "citations.json",
+    is_checkbox_guidance: bool = False,
+    is_checkbox_border: bool = False,
+) -> str:
     checkbox_rule = _CHECKBOX_GUIDANCE if is_checkbox_guidance else ""
+    if is_checkbox_border:
+        checkbox_rule += _CHECKBOX_BORDER_RULE
     return (
         f"- Also write ./{citations_filename}: a JSON array of evidence objects, "
         "one per non-null value you extracted, each with the keys "
