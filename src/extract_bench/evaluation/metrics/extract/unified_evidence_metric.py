@@ -1369,6 +1369,16 @@ def _is_page_scored(path: str, entry: Any) -> bool:
     return not _is_null_page_only(entry) and not _is_page_number_page_only(path, entry)
 
 
+def _page_number_alternates(path: str, entries: Sequence[Any]) -> list[int]:
+    if path_leaf(path) not in PAGE_NUMBER_FIELDS:
+        return []
+    alternates = []
+    for entry in entries:
+        if entry.page is not None and int(entry.page) not in alternates:
+            alternates.append(int(entry.page))
+    return alternates
+
+
 def build_rule_indexes(
     field_rules: list[ExtractFieldTestRule],
 ) -> tuple[
@@ -1384,7 +1394,9 @@ def build_rule_indexes(
     annotation still makes a cell page-gradeable. A page-only entry whose value
     is null (a blank field) is skipped: there is no value to cite. So is a
     page-only entry on a field whose value is itself a page number
-    (``PAGE_NUMBER_FIELDS``): value scoring already grades it.
+    (``PAGE_NUMBER_FIELDS``): value scoring already grades it. For those fields
+    the evidence page (the PDF page) is also accepted as a value, alongside the
+    expected value, which some answer keys record as the printed page number.
     """
     alt: dict[str, list[Any]] = {}
     boxes: BoxIndex = {}
@@ -1397,6 +1409,7 @@ def build_rule_indexes(
         entries = iter_rule_evidence(rule)
         vals = [e.value for e in entries if e.value is not None]
         if vals:
+            vals.extend(_page_number_alternates(path, entries))
             alt.setdefault(path, []).extend(vals)
         for e in entries:
             if _is_page_scored(path, e):
