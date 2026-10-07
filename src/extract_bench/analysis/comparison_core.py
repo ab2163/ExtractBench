@@ -14,6 +14,7 @@ from extract_bench.analysis.grounding_annotations import (
     load_gt_grounding_annotations,
     load_pred_grounding_citations,
 )
+from extract_bench.data.corrections import ANSWER_KEY_CORRECTOR
 
 # Metric mapping for different product types
 COMPARISON_METRIC_MAP: dict[str, str] = {
@@ -97,7 +98,10 @@ def load_test_json_for_overlay(test_cases_dir: Path | None, test_id: str) -> dic
             try:
                 with open(path) as f:
                     data = json.load(f)
-                return data if isinstance(data, dict) else None
+                if not isinstance(data, dict):
+                    return None
+                ANSWER_KEY_CORRECTOR.apply_corrections(path, data)
+                return data
             except Exception:
                 return None
     return None

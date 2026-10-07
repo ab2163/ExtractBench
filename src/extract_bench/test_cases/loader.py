@@ -10,6 +10,7 @@ import logging
 from pathlib import Path
 from typing import Any
 
+from extract_bench.data.corrections import ANSWER_KEY_CORRECTOR
 from extract_bench.test_cases.extract_field_paths import (
     validate_rules_match_expected_output,
 )
@@ -317,6 +318,7 @@ def load_test_case(
             test_config: dict[str, Any] = json.load(f)
     except json.JSONDecodeError as e:
         raise ValueError(f"Invalid JSON in test file {test_json_path}: {e}") from e
+    ANSWER_KEY_CORRECTOR.apply_corrections(test_json_path, test_config)
 
     # Generate test_id: group/filename
     group = file_path.parent.name

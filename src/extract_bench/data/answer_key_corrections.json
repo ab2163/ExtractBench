@@ -1,0 +1,157 @@
+{
+  "short/bianco-2024": {
+    "reason": "Form 8283: the donee address spans three printed lines but was boxed on its first line only; empty Section A rows B-D and empty Section B rows A-C were listed although the schema asks for one row per listed item and null for an empty grid.",
+    "set_expected": {
+      "form_8283.section_a_rows": [
+        {
+          "row_label": "A",
+          "donee_name_and_address": "Salvation Army 24201 Orange Street Perris CA 92570",
+          "vehicle_box": false,
+          "vehicle_identification_number": null,
+          "description_and_condition": "Clothes",
+          "date_of_contribution": "04/11/2024",
+          "date_acquired_by_donor": "various",
+          "how_acquired_by_donor": "Purchase",
+          "donor_cost_or_adjusted_basis": 7800,
+          "fair_market_value": 1850,
+          "method_used_to_determine_fmv": "Consignment shop"
+        }
+      ],
+      "form_8283.section_b_rows": null
+    },
+    "drop_rule_prefixes": [
+      "form_8283.section_a_rows[1].",
+      "form_8283.section_a_rows[2].",
+      "form_8283.section_a_rows[3].",
+      "form_8283.section_b_rows["
+    ],
+    "set_rules": {
+      "form_8283.section_a_rows": {
+        "comparator": {
+          "row_label": "case_insensitive",
+          "donee_name_and_address": "address",
+          "vehicle_box": "boolean",
+          "vehicle_identification_number": "case_insensitive",
+          "description_and_condition": "case_insensitive",
+          "date_of_contribution": "date",
+          "date_acquired_by_donor": "date",
+          "how_acquired_by_donor": "case_insensitive",
+          "donor_cost_or_adjusted_basis": "number",
+          "fair_market_value": "number",
+          "method_used_to_determine_fmv": "case_insensitive"
+        },
+        "evidence": [
+          {
+            "page": null,
+            "bbox": null,
+            "quote": null,
+            "value": {
+              "row_label": "A",
+              "donee_name_and_address": "Salvation Army 24201 Orange Street Perris CA 92570",
+              "vehicle_box": false,
+              "vehicle_identification_number": null,
+              "description_and_condition": "Clothes",
+              "date_of_contribution": "04/11/2024",
+              "date_acquired_by_donor": "various",
+              "how_acquired_by_donor": "Purchase",
+              "donor_cost_or_adjusted_basis": 7800,
+              "fair_market_value": 1850,
+              "method_used_to_determine_fmv": "Consignment shop"
+            },
+            "coarse": true
+          }
+        ],
+        "source_policy": "verbatim",
+        "evidence_required": true,
+        "verified": true,
+        "verified_by": "human",
+        "structural": "match_by:donee_name_and_address"
+      },
+      "form_8283.section_b_rows": {
+        "comparator": {
+          "row_label": "case_insensitive",
+          "description_of_donated_property": "case_insensitive",
+          "physical_condition_summary": "case_insensitive",
+          "appraised_fair_market_value": "number",
+          "date_acquired_by_donor": "date",
+          "how_acquired_by_donor": "case_insensitive",
+          "donor_cost_or_adjusted_basis": "number",
+          "bargain_sale_amount_received": "number",
+          "qualified_conservation_contribution_relevant_basis": "number",
+          "amount_claimed_as_deduction": "number"
+        },
+        "evidence": [
+          {
+            "page": null,
+            "bbox": null,
+            "quote": null,
+            "value": null,
+            "coarse": true
+          }
+        ],
+        "source_policy": "verbatim",
+        "evidence_required": true,
+        "verified": true,
+        "verified_by": "human",
+        "structural": "match_by:description_of_donated_property"
+      },
+      "form_8283.section_a_rows[0].donee_name_and_address": {
+        "comparator": "address",
+        "evidence": [
+          {
+            "page": 8,
+            "bbox": [
+              0.1116982,
+              0.3649962,
+              0.10980274,
+              0.00895827
+            ],
+            "quote": "Salvation Army",
+            "value": "Salvation Army 24201 Orange Street Perris CA 92570",
+            "coarse": false
+          },
+          {
+            "page": 8,
+            "bbox": [
+              0.11473,
+              0.37543,
+              0.14452,
+              0.00741
+            ],
+            "quote": "24201 Orange Street",
+            "value": "Salvation Army 24201 Orange Street Perris CA 92570",
+            "coarse": false
+          },
+          {
+            "page": 8,
+            "bbox": [
+              0.11473,
+              0.38455,
+              0.11397,
+              0.00542
+            ],
+            "quote": "Perris CA 92570",
+            "value": "Salvation Army 24201 Orange Street Perris CA 92570",
+            "coarse": false
+          },
+          {
+            "page": 8,
+            "bbox": [
+              0.1117,
+              0.365,
+              0.14755,
+              0.02497
+            ],
+            "quote": "Salvation Army 24201 Orange Street Perris CA 92570",
+            "value": "Salvation Army 24201 Orange Street Perris CA 92570",
+            "coarse": true
+          }
+        ],
+        "source_policy": "verbatim",
+        "evidence_required": true,
+        "verified": true,
+        "verified_by": "human"
+      }
+    }
+  }
+}

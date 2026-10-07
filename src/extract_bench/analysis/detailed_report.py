@@ -33,6 +33,7 @@ from extract_bench.analysis.metric_definitions import (
     tooltip_dict,
 )
 from extract_bench.analysis.report_static_assets import detailed_report_script, detailed_report_style
+from extract_bench.data.corrections import ANSWER_KEY_CORRECTOR
 from extract_bench.schemas.evaluation import EvaluationSummary
 
 # Per-doc table count metrics are bookkeeping, not quality scores -- exclude
@@ -401,6 +402,7 @@ def _build_data_blob(
         for test_file in test_cases_dir.rglob("*.test.json"):
             try:
                 data = json.loads(test_file.read_text(encoding="utf-8"))
+                ANSWER_KEY_CORRECTOR.apply_corrections(test_file, data)
                 lookup_keys = _lookup_keys_for_file(test_file, test_cases_dir, suffix=".test.json")
                 if data.get("expected_markdown"):
                     _store_map_entry(expected_map, lookup_keys, data["expected_markdown"])
