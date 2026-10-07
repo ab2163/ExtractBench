@@ -34,7 +34,15 @@ class EvidenceStats:
         }
 
 
-def agent_evidence_instruction(citations_filename: str = "citations.json") -> str:
+_CHECKBOX_GUIDANCE = (
+    " For a checkbox field that is false because its box is printed but "
+    "unchecked, box the empty checkbox square itself. If the false comes from "
+    "another box in a Yes/No pair being checked, box that checked box."
+)
+
+
+def agent_evidence_instruction(citations_filename: str = "citations.json", is_checkbox_guidance: bool = False) -> str:
+    checkbox_rule = _CHECKBOX_GUIDANCE if is_checkbox_guidance else ""
     return (
         f"- Also write ./{citations_filename}: a JSON array of evidence objects, "
         "one per non-null value you extracted, each with the keys "
@@ -47,7 +55,7 @@ def agent_evidence_instruction(citations_filename: str = "citations.json") -> st
         "width and height in [0, 1], origin at the TOP-LEFT corner of the "
         "page.\n"
         "  - Box the value itself -- the filled-in text, number, or checkbox "
-        "mark -- not the surrounding row, label, or form section.\n"
+        f"mark -- not the surrounding row, label, or form section.{checkbox_rule}\n"
         "  - You may use any tool available to locate values on the page "
         "(e.g. a PDF text-extraction library that reports word rectangles, or "
         "reading the rendered page yourself). Convert PDF-space rectangles to "

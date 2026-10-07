@@ -160,6 +160,7 @@ class CodexCodeExtractProvider(Provider):
         # to be required. Direct model providers can still opt into this.
         self._all_properties_required: bool = bool(self.base_config.get("all_properties_required", False))
         self._evidence_mode: bool = bool(self.base_config.get("evidence_mode", False))
+        self._is_checkbox_guidance: bool = bool(self.base_config.get("is_checkbox_guidance", False))
 
         self._api_key: str | None = self.base_config.get("api_key") or os.getenv("CODEX_API_KEY")
         self._codex_home: str | None = self.base_config.get("codex_home")
@@ -209,7 +210,9 @@ class CodexCodeExtractProvider(Provider):
 
     def _build_prompt(self, schema: dict[str, Any], staged_name: str) -> str:
         schema_json = json.dumps(schema, indent=2)
-        evidence_rule = f"\n{agent_evidence_instruction()}" if self._evidence_mode else ""
+        evidence_rule = ""
+        if self._evidence_mode:
+            evidence_rule = f"\n{agent_evidence_instruction(is_checkbox_guidance=self._is_checkbox_guidance)}"
         return (
             f"Extract structured data from the document file `./{staged_name}` in the current directory.\n\n"
             "Use only local file inspection and shell commands. Do not use web search, network calls, "
@@ -679,6 +682,7 @@ class CodexCodeExtractProvider(Provider):
             "additional_properties_false": self._additional_properties_false,
             "all_properties_required": self._all_properties_required,
             "evidence_mode": self._evidence_mode,
+            "is_checkbox_guidance": self._is_checkbox_guidance,
             "input_price_per_1m": self._input_price_per_1m,
             "cached_input_price_per_1m": self._cached_input_price_per_1m,
             "cache_write_price_per_1m": self._cache_write_price_per_1m,

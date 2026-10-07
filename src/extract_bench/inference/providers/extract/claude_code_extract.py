@@ -109,6 +109,7 @@ class ClaudeCodeExtractProvider(Provider):
         self._promote_repeated: bool = bool(self.base_config.get("promote_repeated_structure", True))
         self._additional_properties_false: bool = bool(self.base_config.get("additional_properties_false", True))
         self._evidence_mode: bool = bool(self.base_config.get("evidence_mode", False))
+        self._is_checkbox_guidance: bool = bool(self.base_config.get("is_checkbox_guidance", False))
         # Track live subprocesses for cancel(): example_id -> Popen
         self._procs: dict[str, subprocess.Popen[str]] = {}
         self._procs_lock = threading.Lock()
@@ -140,7 +141,9 @@ class ClaudeCodeExtractProvider(Provider):
 
     def _build_prompt(self, schema: dict[str, Any], staged_name: str) -> str:
         schema_json = json.dumps(schema, indent=2)
-        evidence_rule = f"\n{agent_evidence_instruction()}" if self._evidence_mode else ""
+        evidence_rule = ""
+        if self._evidence_mode:
+            evidence_rule = f"\n{agent_evidence_instruction(is_checkbox_guidance=self._is_checkbox_guidance)}"
         return (
             f"Extract structured data from the document file `./{staged_name}` in the current directory.\n\n"
             "Use only local file inspection and shell commands. Do not use web search, network calls, "
@@ -461,6 +464,7 @@ class ClaudeCodeExtractProvider(Provider):
             "promote_repeated_structure": self._promote_repeated,
             "additional_properties_false": self._additional_properties_false,
             "evidence_mode": self._evidence_mode,
+            "is_checkbox_guidance": self._is_checkbox_guidance,
         }
 
     # ------------------------------------------------------------------
