@@ -40,24 +40,16 @@ _CHECKBOX_GUIDANCE = (
     "another box in a Yes/No pair being checked, box that checked box."
 )
 _CHECKBOX_BORDER_RULE = " For a checkbox, box the whole printed square including its border."
-_NULL_PAGE_RULE = (
-    "\n  - Also add an evidence object for each field you set to null whose place is printed "
-    "in the document, for example a blank line, an empty box, or a field that records later "
-    'corrections to a printed entry. Give its "field_path" and the "page" where that place is '
-    'printed, and set "bbox" to null.'
-)
 
 
 def agent_evidence_instruction(
     citations_filename: str = "citations.json",
     is_checkbox_guidance: bool = False,
     is_checkbox_border: bool = False,
-    is_null_page_citation: bool = False,
 ) -> str:
     checkbox_rule = _CHECKBOX_GUIDANCE if is_checkbox_guidance else ""
     if is_checkbox_border:
         checkbox_rule += _CHECKBOX_BORDER_RULE
-    null_page_rule = _NULL_PAGE_RULE if is_null_page_citation else ""
     return (
         f"- Also write ./{citations_filename}: a JSON array of evidence objects, "
         "one per non-null value you extracted, each with the keys "
@@ -75,7 +67,7 @@ def agent_evidence_instruction(
         "(e.g. a PDF text-extraction library that reports word rectangles, or "
         "reading the rendered page yourself). Convert PDF-space rectangles to "
         "the top-left-origin fractions above before writing them.\n"
-        f"  - Omit a field entirely rather than guessing a location for it.{null_page_rule}"
+        "  - Omit a field entirely rather than guessing a location for it."
     )
 
 

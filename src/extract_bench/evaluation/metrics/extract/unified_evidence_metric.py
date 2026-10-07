@@ -1353,6 +1353,10 @@ class Scorer:
         return c
 
 
+def _is_null_page_only(entry: Any) -> bool:
+    return entry.bbox is None and entry.value is None
+
+
 def build_rule_indexes(
     field_rules: list[ExtractFieldTestRule],
 ) -> tuple[
@@ -1365,7 +1369,8 @@ def build_rule_indexes(
 
     ``pages`` is a superset of the pages implied by ``boxes``: it holds every
     page any evidence entry carries, even entries with no bbox, so a page-only
-    annotation still makes a cell page-gradeable.
+    annotation still makes a cell page-gradeable. A page-only entry whose value
+    is null (a blank field) is skipped: there is no value to cite.
     """
     alt: dict[str, list[Any]] = {}
     boxes: BoxIndex = {}
@@ -1380,7 +1385,7 @@ def build_rule_indexes(
         if vals:
             alt.setdefault(path, []).extend(vals)
         for e in entries:
-            if e.page is not None:
+            if e.page is not None and not _is_null_page_only(e):
                 pages.setdefault(path, set()).add(int(e.page))
                 parsed = _validated_bbox(e.bbox) if e.bbox is not None else None
                 if parsed is not None:

@@ -162,7 +162,6 @@ class CodexCodeExtractProvider(Provider):
         self._evidence_mode: bool = bool(self.base_config.get("evidence_mode", False))
         self._is_checkbox_guidance: bool = bool(self.base_config.get("is_checkbox_guidance", False))
         self._is_checkbox_border: bool = bool(self.base_config.get("is_checkbox_border", False))
-        self._is_null_page_citation: bool = bool(self.base_config.get("is_null_page_citation", False))
 
         self._api_key: str | None = self.base_config.get("api_key") or os.getenv("CODEX_API_KEY")
         self._codex_home: str | None = self.base_config.get("codex_home")
@@ -217,7 +216,6 @@ class CodexCodeExtractProvider(Provider):
             instruction = agent_evidence_instruction(
                 is_checkbox_guidance=self._is_checkbox_guidance,
                 is_checkbox_border=self._is_checkbox_border,
-                is_null_page_citation=self._is_null_page_citation,
             )
             evidence_rule = f"\n{instruction}"
         return (
@@ -691,7 +689,6 @@ class CodexCodeExtractProvider(Provider):
             "evidence_mode": self._evidence_mode,
             "is_checkbox_guidance": self._is_checkbox_guidance,
             "is_checkbox_border": self._is_checkbox_border,
-            "is_null_page_citation": self._is_null_page_citation,
             "input_price_per_1m": self._input_price_per_1m,
             "cached_input_price_per_1m": self._cached_input_price_per_1m,
             "cache_write_price_per_1m": self._cache_write_price_per_1m,

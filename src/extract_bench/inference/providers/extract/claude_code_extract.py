@@ -111,7 +111,6 @@ class ClaudeCodeExtractProvider(Provider):
         self._evidence_mode: bool = bool(self.base_config.get("evidence_mode", False))
         self._is_checkbox_guidance: bool = bool(self.base_config.get("is_checkbox_guidance", False))
         self._is_checkbox_border: bool = bool(self.base_config.get("is_checkbox_border", False))
-        self._is_null_page_citation: bool = bool(self.base_config.get("is_null_page_citation", False))
         # Track live subprocesses for cancel(): example_id -> Popen
         self._procs: dict[str, subprocess.Popen[str]] = {}
         self._procs_lock = threading.Lock()
@@ -148,7 +147,6 @@ class ClaudeCodeExtractProvider(Provider):
             instruction = agent_evidence_instruction(
                 is_checkbox_guidance=self._is_checkbox_guidance,
                 is_checkbox_border=self._is_checkbox_border,
-                is_null_page_citation=self._is_null_page_citation,
             )
             evidence_rule = f"\n{instruction}"
         return (
@@ -473,7 +471,6 @@ class ClaudeCodeExtractProvider(Provider):
             "evidence_mode": self._evidence_mode,
             "is_checkbox_guidance": self._is_checkbox_guidance,
             "is_checkbox_border": self._is_checkbox_border,
-            "is_null_page_citation": self._is_null_page_citation,
         }
 
     # ------------------------------------------------------------------
