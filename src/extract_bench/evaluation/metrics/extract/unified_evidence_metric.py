@@ -238,6 +238,8 @@ ENVELOPE_DUPLICATE_IOU = 0.9
 # A part is touched by a citation box that covers at least this fraction of it.
 ENVELOPE_PART_COVERAGE = 0.5
 
+PAGE_NUMBER_FIELDS = frozenset({"source_page"})
+
 
 def _validated_bbox(raw: Sequence[SupportsFloat]) -> BBox | None:
     """Four finite COCO xywh floats with positive size, else None."""
@@ -1357,6 +1359,16 @@ def _is_null_page_only(entry: Any) -> bool:
     return entry.bbox is None and entry.value is None
 
 
+def _is_page_number_page_only(path: str, entry: Any) -> bool:
+    return entry.bbox is None and path_leaf(path) in PAGE_NUMBER_FIELDS
+
+
+def _is_page_scored(path: str, entry: Any) -> bool:
+    if entry.page is None:
+        return False
+    return not _is_null_page_only(entry) and not _is_page_number_page_only(path, entry)
+
+
 def build_rule_indexes(
     field_rules: list[ExtractFieldTestRule],
 ) -> tuple[
@@ -1370,7 +1382,9 @@ def build_rule_indexes(
     ``pages`` is a superset of the pages implied by ``boxes``: it holds every
     page any evidence entry carries, even entries with no bbox, so a page-only
     annotation still makes a cell page-gradeable. A page-only entry whose value
-    is null (a blank field) is skipped: there is no value to cite.
+    is null (a blank field) is skipped: there is no value to cite. So is a
+    page-only entry on a field whose value is itself a page number
+    (``PAGE_NUMBER_FIELDS``): value scoring already grades it.
     """
     alt: dict[str, list[Any]] = {}
     boxes: BoxIndex = {}
@@ -1385,7 +1399,7 @@ def build_rule_indexes(
         if vals:
             alt.setdefault(path, []).extend(vals)
         for e in entries:
-            if e.page is not None and not _is_null_page_only(e):
+            if _is_page_scored(path, e):
                 pages.setdefault(path, set()).add(int(e.page))
                 parsed = _validated_bbox(e.bbox) if e.bbox is not None else None
                 if parsed is not None:
