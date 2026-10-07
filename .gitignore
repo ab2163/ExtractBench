@@ -225,3 +225,7 @@ data/
 !src/extract_bench/data/
 output/
 results/
+
+# Materialized benchmark subsets and their outputs (rebuild from subsets/*.json)
+data_pilot_*/
+output_pilot_*/

@@ -1,0 +1,574 @@
+{
+  "name": "pilot_70",
+  "seed": 7,
+  "created": "2026-10-07",
+  "dataset_repo": "llamaindex/ExtractBench",
+  "dataset_revision": "51bf3a03eb7feeaef8952be1fc2fc7f924ee72dc",
+  "per_split": {
+    "short": 25,
+    "medium": 25,
+    "long": 20
+  },
+  "documents": [
+    {
+      "test_id": "short/07021-2016-p0029",
+      "split": "short",
+      "stem": "07021-2016-p0029",
+      "source_file": "07021-2016-p0029.pdf",
+      "test_json_sha256": "8c145570ced0fd2ad1f18adbf9786db9cd18c9d5c6ef3212cd432eb5189a209c",
+      "source_sha256": "c485552704ad1ffe0fc0f65bb593641313f1a094ddf94d073bc486fec1866f72"
+    },
+    {
+      "test_id": "short/07021-2016-p0039",
+      "split": "short",
+      "stem": "07021-2016-p0039",
+      "source_file": "07021-2016-p0039.pdf",
+      "test_json_sha256": "19a2299b5996804a08c0d32be897c9317912bda64a0f3ea666b8f1881debabbf",
+      "source_sha256": "4df1f5b8613c4b8ad12902a27aca838b24fcfc1aa1277266fdfe63caeae8ca2b"
+    },
+    {
+      "test_id": "short/07021-2016-p0051",
+      "split": "short",
+      "stem": "07021-2016-p0051",
+      "source_file": "07021-2016-p0051.pdf",
+      "test_json_sha256": "282e3ccdf1a486bd72906407a350d2976dce4b64ce479b19238e6df200e91440",
+      "source_sha256": "b9b8e2d4f4c8bd7b63a3493e182be82c2620b2724f6e5eb568e685789577460d"
+    },
+    {
+      "test_id": "short/07021-2016-p0074",
+      "split": "short",
+      "stem": "07021-2016-p0074",
+      "source_file": "07021-2016-p0074.pdf",
+      "test_json_sha256": "b644acd32199d4949473cd7fbdc1291b82f01407eb4d5bf35363be6756610f48",
+      "source_sha256": "0b280f5c605466472836c5790705260a4c6231c512c668270aa86eae66c27853"
+    },
+    {
+      "test_id": "short/07021-2016-p0078",
+      "split": "short",
+      "stem": "07021-2016-p0078",
+      "source_file": "07021-2016-p0078.pdf",
+      "test_json_sha256": "6b70d2cdc2c09fb4ac5b80bbc911c97202c685eedef65a2799d14de9acaeeba8",
+      "source_sha256": "fd76a5753d93969a1a6343c32d0179b06d62acbd734fe96868df425b60ba0f27"
+    },
+    {
+      "test_id": "short/08-37943 H-12 09-25-2014 F-01249",
+      "split": "short",
+      "stem": "08-37943 H-12 09-25-2014 F-01249",
+      "source_file": "08-37943 H-12 09-25-2014 F-01249.pdf",
+      "test_json_sha256": "7bb47102935eb8df9fb83fb4fdde0da385177cc3cd6229d0dd2d0eaa6f867032",
+      "source_sha256": "a21839643f0b39b0c8c1328ee6ec14a17f0abdb67291db1c6c8c8f6e47b6dcb9"
+    },
+    {
+      "test_id": "short/08-43259 H-12 3-18-2024 F-22737",
+      "split": "short",
+      "stem": "08-43259 H-12 3-18-2024 F-22737",
+      "source_file": "08-43259 H-12 3-18-2024 F-22737.pdf",
+      "test_json_sha256": "0ca3fe237a422a7560167c49a632b52c895d062ec4b2e3cea7543f49b3852f36",
+      "source_sha256": "0638ae0316daeded32ba6516904945588c5c450be138f73dffc68e59acd45cf9"
+    },
+    {
+      "test_id": "short/08-51344 H-12 10-2-2023 F-22666",
+      "split": "short",
+      "stem": "08-51344 H-12 10-2-2023 F-22666",
+      "source_file": "08-51344 H-12 10-2-2023 F-22666.pdf",
+      "test_json_sha256": "5e70ebb4faaaca03709122af7edd47602377cacfb38c4d6dd266d220f0b7aba6",
+      "source_sha256": "d69c8ed8cd0b27bb24cfc592fe04f374c2f67eed7a194716565fd1110642ee19"
+    },
+    {
+      "test_id": "short/2A-9-160298_109929",
+      "split": "short",
+      "stem": "2A-9-160298_109929",
+      "source_file": "2A-9-160298_109929.pdf",
+      "test_json_sha256": "bc40aa2dc219339e082d51804b942ff938671c6276474d1419e8281d902fe77c",
+      "source_sha256": "27e072e0639e41105da4e3626ff6fb90ccaf1791c80eb9ca776a88c5477f275f"
+    },
+    {
+      "test_id": "short/593338187_200912_990PF-p0037",
+      "split": "short",
+      "stem": "593338187_200912_990PF-p0037",
+      "source_file": "593338187_200912_990PF-p0037.pdf",
+      "test_json_sha256": "36ce9a61c81aa15e72bc93f234e283733fbad423f419ba17077cd0403068c39f",
+      "source_sha256": "66012a0560e53420fd383ccdd0224fe8862e87edc2139c08b436544d7103f7e6"
+    },
+    {
+      "test_id": "short/H9-53-24_24",
+      "split": "short",
+      "stem": "H9-53-24_24",
+      "source_file": "H9-53-24_24.pdf",
+      "test_json_sha256": "1d146021e1451a6def1c2fe96d609e325e279422d6df13278ecc847728b85e1e",
+      "source_sha256": "b1442c68ee2835c7d4322c8118442280cfb8198ec4cb4872f17e92ee92654a69"
+    },
+    {
+      "test_id": "short/P18-28-56_57",
+      "split": "short",
+      "stem": "P18-28-56_57",
+      "source_file": "P18-28-56_57.pdf",
+      "test_json_sha256": "7cedad48435163a7bf453660cf5b96c2335a1033d4fd81e62e517c19ae085711",
+      "source_sha256": "e190b1c4db48adde563781634cf5485f8f4d5c94d39b134992eddd1056c22276"
+    },
+    {
+      "test_id": "short/P4-83-443_152",
+      "split": "short",
+      "stem": "P4-83-443_152",
+      "source_file": "P4-83-443_152.pdf",
+      "test_json_sha256": "3b6280297c4dfc05e6051fe933defeab374040e6f3db430fb6562902657948ad",
+      "source_sha256": "2a1d7207a15763faa4419696092240a37d0c181b55e9d3025f3c4dd29f7a9d21"
+    },
+    {
+      "test_id": "short/REDACTED_2007_NISSAN_MURANO_professional_valuation",
+      "split": "short",
+      "stem": "REDACTED_2007_NISSAN_MURANO_professional_valuation",
+      "source_file": "REDACTED_2007_NISSAN_MURANO_professional_valuation.pdf",
+      "test_json_sha256": "c04432991787c2b6d5b7c49af5caf911511f6561cdcaf51b32fc98318a700c40",
+      "source_sha256": "e3d5e2405c119a214f1d5fae8fdcc48ff60a32c1c58bd0952db37a4fecc87762"
+    },
+    {
+      "test_id": "short/W-1-9-261_263",
+      "split": "short",
+      "stem": "W-1-9-261_263",
+      "source_file": "W-1-9-261_263.pdf",
+      "test_json_sha256": "b736e9560d2365dcddc36f24aacff5392b72bc6f4248d72d0cdd24dcf0217be3",
+      "source_sha256": "26cfe733bd7ae8ea435ce8638f7e8e7ff69e005676b9ac817dbd63c38ad0d392"
+    },
+    {
+      "test_id": "short/W14-2nd Sub 53269 Revised W14",
+      "split": "short",
+      "stem": "W14-2nd Sub 53269 Revised W14",
+      "source_file": "W14-2nd Sub 53269 Revised W14.pdf",
+      "test_json_sha256": "7f6031dd58cc502112e1c5e5f8376954a7b9d4d40d22c92d194d5f1979742c6b",
+      "source_sha256": "6860c28b86c44cb8796b4f0204ac938b7017681fe4ac9ba3522a1df20d2206b3"
+    },
+    {
+      "test_id": "short/W14-53632_W14 ADMIN REVIEWED",
+      "split": "short",
+      "stem": "W14-53632_W14 ADMIN REVIEWED",
+      "source_file": "W14-53632_W14 ADMIN REVIEWED.pdf",
+      "test_json_sha256": "467ff7afc84c33fd375e095ec22e63ce3aee1315e479734a189b211dc564df21",
+      "source_sha256": "0c742954d861f8063cec5f4cee06eeb5e267841e8e7b3ddff79025515b63a321"
+    },
+    {
+      "test_id": "short/aclu_cdwg_invoice",
+      "split": "short",
+      "stem": "aclu_cdwg_invoice",
+      "source_file": "aclu_cdwg_invoice.pdf",
+      "test_json_sha256": "0513def017fba9f0136ca4f485befb1be6c706dfd5ddd365a6b764817a483a26",
+      "source_sha256": "8a87cfd1c8006b7f23c958de052b65316b2d39c32e1699f98861d938510f1c0b"
+    },
+    {
+      "test_id": "short/budget_appendix_legis",
+      "split": "short",
+      "stem": "budget_appendix_legis",
+      "source_file": "budget_appendix_legis.pdf",
+      "test_json_sha256": "d77914e90b217cd34a59a7656c54062ebcc903307edc513e0a5e510da5ca9616",
+      "source_sha256": "436b2659c1002cb2e7aac4cc9cf3b421d251fedc99082eafd20072e38aba3afe"
+    },
+    {
+      "test_id": "short/ca_rad_crossover_outpatient_p5_corrupted",
+      "split": "short",
+      "stem": "ca_rad_crossover_outpatient_p5_corrupted",
+      "source_file": "ca_rad_crossover_outpatient_p5_corrupted.pdf",
+      "test_json_sha256": "1861c0d395397512bf9e25378637e0cb37d3e61c46f5ac2b34a08c764820a523",
+      "source_sha256": "0045db2f577520af36c1bedda0886a413a4dc43f383901c4fc55608bc4549018"
+    },
+    {
+      "test_id": "short/cbp_7501_continuation_0016",
+      "split": "short",
+      "stem": "cbp_7501_continuation_0016",
+      "source_file": "cbp_7501_continuation_0016.pdf",
+      "test_json_sha256": "ffabcf0dfede65c826ccf840a9b486be6a58c15529a2b9e9883670d14a869785",
+      "source_sha256": "bb9dd2dc1ff51415558f222793a9aad405530de7cbe4af43a0f76e83ec43d7e4"
+    },
+    {
+      "test_id": "short/dc-pepco-residential-bill",
+      "split": "short",
+      "stem": "dc-pepco-residential-bill",
+      "source_file": "dc-pepco-residential-bill.pdf",
+      "test_json_sha256": "a52bc0d1e12d258896bcfd813a6085302f8210996da728e0309a416baa3a45a4",
+      "source_sha256": "8796ed60843ea1a0c779b95f1564ac8130bdab3b6effba09353cec217cbac119"
+    },
+    {
+      "test_id": "short/passcoag-2020-w2-p0003-r3",
+      "split": "short",
+      "stem": "passcoag-2020-w2-p0003-r3",
+      "source_file": "passcoag-2020-w2-p0003-r3.pdf",
+      "test_json_sha256": "b15388ec29eebd6941b9dc6615c38a6e7e77f97de34798d2a67461a9b3c5f071",
+      "source_sha256": "ecb75a6a8deaf1d61e044a92d4c5fc06fb9ddefbb120f0b1d953ea200879aa6b"
+    },
+    {
+      "test_id": "short/real_wyo_Weston_2024",
+      "split": "short",
+      "stem": "real_wyo_Weston_2024",
+      "source_file": "real_wyo_Weston_2024.pdf",
+      "test_json_sha256": "31db3836c7fbc807a8d1512c6b41b70ef40d3cb96ba3811b3c2f2ad84482c2ef",
+      "source_sha256": "14b0a91c253096d7dd6ee678eb8f9bac48a01d929fff0a62f167f88f7241df47"
+    },
+    {
+      "test_id": "short/texas_facilities_commission_purchase_order_shelton-keller_corrupted",
+      "split": "short",
+      "stem": "texas_facilities_commission_purchase_order_shelton-keller_corrupted",
+      "source_file": "texas_facilities_commission_purchase_order_shelton-keller_corrupted.pdf",
+      "test_json_sha256": "068f8b5025dbd32cbafe97129d81f525fed95d6b91276f62f2dbb65ec0c1bc86",
+      "source_sha256": "4840fd5b81fea6a589743c2f84249629efe8c7286dd7a2b2e255ada0aa2082bf"
+    },
+    {
+      "test_id": "medium/baker_hughes_earnings_deck_q4fy25",
+      "split": "medium",
+      "stem": "baker_hughes_earnings_deck_q4fy25",
+      "source_file": "baker_hughes_earnings_deck_q4fy25.pdf",
+      "test_json_sha256": "b20dfa831eee7a9d709e7ade01497500e388749a384044061234bd9a56ec7c89",
+      "source_sha256": "0aacb98fdb9ee986940f4b1c348f403acfaa42d32621a22909c6f3abb0f75f8f"
+    },
+    {
+      "test_id": "medium/bar-lev-2021",
+      "split": "medium",
+      "stem": "bar-lev-2021",
+      "source_file": "bar-lev-2021.pdf",
+      "test_json_sha256": "5c8c1947509dda8e6b0ce09177812acd797551cb335810f78d29177c60292faa",
+      "source_sha256": "f4360b1fd2d3b3576dc954e62c883a122cb51301b432bd83b4d2b64d6d1d8ffb"
+    },
+    {
+      "test_id": "medium/bar-lev-2022",
+      "split": "medium",
+      "stem": "bar-lev-2022",
+      "source_file": "bar-lev-2022.pdf",
+      "test_json_sha256": "97de8b5c7e209fc3e92b6a2732970aa31112c7e799be282d73df01d8ccc8f618",
+      "source_sha256": "87e40f9d51583184bbdc794a0d72d9e2d207df9dc673ede7409137a8b52debd5"
+    },
+    {
+      "test_id": "medium/bianco-2022",
+      "split": "medium",
+      "stem": "bianco-2022",
+      "source_file": "bianco-2022.pdf",
+      "test_json_sha256": "5f41a56b8d9a60ff7b607e5cfa9a36990213e89e025e5968e6a7324ea2e0294a",
+      "source_sha256": "9c717a6760a62d155f1e08391a6149f6a681346d15481b0893a17bcadec0ad08"
+    },
+    {
+      "test_id": "medium/cabrera-2021",
+      "split": "medium",
+      "stem": "cabrera-2021",
+      "source_file": "cabrera-2021.pdf",
+      "test_json_sha256": "5a0a2682d82bcd687b63bcdf13781036c435786918ac90aa37e4d99044bf7435",
+      "source_sha256": "69bd7f4811259ddbfd0e9d65b2394980211c6b6e6ae5b28a9cc4170462fc08cb"
+    },
+    {
+      "test_id": "medium/cabrera-2022",
+      "split": "medium",
+      "stem": "cabrera-2022",
+      "source_file": "cabrera-2022.pdf",
+      "test_json_sha256": "76b7cefd2df2be2b73b8281081a482a0f9cfaa5f1c709e838466a58dd3caf222",
+      "source_sha256": "c0bdbe2346a7b3c07f366238a8aa5322c7731d10a20d394f3820d262ac173667"
+    },
+    {
+      "test_id": "medium/ccc_online_0004_liberty_dodge_journey_corrupted",
+      "split": "medium",
+      "stem": "ccc_online_0004_liberty_dodge_journey_corrupted",
+      "source_file": "ccc_online_0004_liberty_dodge_journey_corrupted.pdf",
+      "test_json_sha256": "f0172fc97715d1392f6e22300d69b388a6126788b996b8dbc441addd204f16b5",
+      "source_sha256": "4a5801ed3bc9662d5d191eb2f9f5b45aa8cadb1be66b7feafcbdbf2d02696dc3"
+    },
+    {
+      "test_id": "medium/ccc_online_0010_travelers_ford_explorer",
+      "split": "medium",
+      "stem": "ccc_online_0010_travelers_ford_explorer",
+      "source_file": "ccc_online_0010_travelers_ford_explorer.pdf",
+      "test_json_sha256": "3675ee5fdbe6ba8678f270cb6d58d43476942ffa5364d81d4b805bd799c0b9b4",
+      "source_sha256": "74cb8231323c04a3c201790106fd5103816e51772614f6c05b7bb62faaee78c6"
+    },
+    {
+      "test_id": "medium/erie_county_2017_single_audit",
+      "split": "medium",
+      "stem": "erie_county_2017_single_audit",
+      "source_file": "erie_county_2017_single_audit.pdf",
+      "test_json_sha256": "59e0d3355f3ff326f4d24ea63589dc202db86d5046e318fd0e2f7c18fc488b19",
+      "source_sha256": "e05d3adcc305a8a1431ba0576c347dd4a5aa4903ac93588e8b158c2d0168a89f"
+    },
+    {
+      "test_id": "medium/gov_clin_schedule_0035",
+      "split": "medium",
+      "stem": "gov_clin_schedule_0035",
+      "source_file": "gov_clin_schedule_0035.pdf",
+      "test_json_sha256": "e1ef2bbe88d29bb5e13262592c91de4745b4248c2d85f9358e8dab0d0bf08b52",
+      "source_sha256": "2db73543b475a7d29be7953be981950ee50773ba33950e502cbe34e4c6e4bdba"
+    },
+    {
+      "test_id": "medium/gsa_mas_it_labor_0018",
+      "split": "medium",
+      "stem": "gsa_mas_it_labor_0018",
+      "source_file": "gsa_mas_it_labor_0018.pdf",
+      "test_json_sha256": "22dcab54dd8ecbe0f9720267604da83e60e848043d51a85113a7471a9eca0f5a",
+      "source_sha256": "fca78892b214f85f1efd378a1f2bb313b0c08109294e1e969a13feb67db502df"
+    },
+    {
+      "test_id": "medium/jackson_college_2024_federal_awards_audit",
+      "split": "medium",
+      "stem": "jackson_college_2024_federal_awards_audit",
+      "source_file": "jackson_college_2024_federal_awards_audit.pdf",
+      "test_json_sha256": "ebf9ff1afdda95e913726db247a73058b7c9f05e155e2d877c6532605a9c9e52",
+      "source_sha256": "663dbcb067b8d54d0305352df3a8dabcecab40f1adae08e161e94688ed1758df"
+    },
+    {
+      "test_id": "medium/real_penn_hills_pa_2023",
+      "split": "medium",
+      "stem": "real_penn_hills_pa_2023",
+      "source_file": "real_penn_hills_pa_2023.pdf",
+      "test_json_sha256": "21cc5ea05fbd80d370554fe148bb8493af7fe3707c191141387b3648fb7cf6a7",
+      "source_sha256": "a64c7512684f3946c3cfb43b960544e6087e0f7c70f41a97ba93ea93f4ab8309"
+    },
+    {
+      "test_id": "medium/real_sm0801_dispositions_full",
+      "split": "medium",
+      "stem": "real_sm0801_dispositions_full",
+      "source_file": "real_sm0801_dispositions_full.pdf",
+      "test_json_sha256": "342f4ca51141dddacb5accd8bc79fa62739f570a617e3a70179366bcf7602519",
+      "source_sha256": "79b75ea283392178507f8d747334ebb2bf75062b6fbccb05d00622f2a063d38a"
+    },
+    {
+      "test_id": "medium/real_sm0801_dispositions_full_corrupted",
+      "split": "medium",
+      "stem": "real_sm0801_dispositions_full_corrupted",
+      "source_file": "real_sm0801_dispositions_full_corrupted.pdf",
+      "test_json_sha256": "5fe0b0c0be456727914880435af321dace8befba4c2fdd0926eb76182890e07a",
+      "source_sha256": "e8e5b1e5559481c373d1acc15d4d5d79eafd947a7675b968103f4b650abe7fba"
+    },
+    {
+      "test_id": "medium/real_vg_divappr_full",
+      "split": "medium",
+      "stem": "real_vg_divappr_full",
+      "source_file": "real_vg_divappr_full.pdf",
+      "test_json_sha256": "8a5e3dc9289250317ba3b3f55e203d107f78a97bf575b8c62a0547d4e82e976b",
+      "source_sha256": "ec2e062ad7cd1b10c2d3869be8d7ad85048e3dd20cd2529b1e2865866e7c26ac"
+    },
+    {
+      "test_id": "medium/real_vg_divgrowth_full",
+      "split": "medium",
+      "stem": "real_vg_divgrowth_full",
+      "source_file": "real_vg_divgrowth_full.pdf",
+      "test_json_sha256": "148b57350bd4c978b9658efa3991cd08255afa1dcabbc52aedbfbfc156210a02",
+      "source_sha256": "1ef0218e38e7811e939868a666ce47a44fd82a253f424fa644f36479c37bdf26"
+    },
+    {
+      "test_id": "medium/real_vg_primecap_full",
+      "split": "medium",
+      "stem": "real_vg_primecap_full",
+      "source_file": "real_vg_primecap_full.pdf",
+      "test_json_sha256": "ef6eaa6c61981a8f556f1437a208cee33c98abe232dab11112413dc1ac98c6ab",
+      "source_sha256": "b6764c4202c2547cc3cb7e531e58ea4bcc4f571c43a95edff7e0b44cf02787d0"
+    },
+    {
+      "test_id": "medium/real_wright_co_mn",
+      "split": "medium",
+      "stem": "real_wright_co_mn",
+      "source_file": "real_wright_co_mn.pdf",
+      "test_json_sha256": "1e5ef01a68e8a23b56a396ed358b3c18e0044f888b142d22359213e001378f30",
+      "source_sha256": "6cf1aeb8d02f37cca71c4ce5fc3df53aee81f4a9b3c1ffb0ce93b0ce3602470f"
+    },
+    {
+      "test_id": "medium/sf1449_supplies_services_0046",
+      "split": "medium",
+      "stem": "sf1449_supplies_services_0046",
+      "source_file": "sf1449_supplies_services_0046.pdf",
+      "test_json_sha256": "1815cac3d5932568858f5ed8a9f04264a01668d07303b4b5182035368ffa9c11",
+      "source_sha256": "a7f371e60b6e37daa35886e8e892bc555735078b7e8b64bc65493ba17a26136b"
+    },
+    {
+      "test_id": "medium/smfg-kessan-tanshin-2024-ja",
+      "split": "medium",
+      "stem": "smfg-kessan-tanshin-2024-ja",
+      "source_file": "smfg-kessan-tanshin-2024-ja.pdf",
+      "test_json_sha256": "db5bde651bff6574960531a2449be73686f5cabf0c7c7e1bdf7a6816880f2924",
+      "source_sha256": "8cff8c5b3b51dc9148a4deb79c75e08b9fa91d082cbaaa77480dd83db6059d5f"
+    },
+    {
+      "test_id": "medium/synchrony_investor_deck_q1_2026",
+      "split": "medium",
+      "stem": "synchrony_investor_deck_q1_2026",
+      "source_file": "synchrony_investor_deck_q1_2026.pdf",
+      "test_json_sha256": "c9cda69bfbed267b062c06cd87a6ffd9f1668af128767828784b2fd38aa54f83",
+      "source_sha256": "8197903af9846cda568e599ae457d8c5dc61f88d88318022103d3e1d550c5123"
+    },
+    {
+      "test_id": "medium/sysco_earnings_deck_q2fy26",
+      "split": "medium",
+      "stem": "sysco_earnings_deck_q2fy26",
+      "source_file": "sysco_earnings_deck_q2fy26.pdf",
+      "test_json_sha256": "433ffe3163c5883ae9ac3be14923acc99a277d66dcc1e91667c3afa81f3e9391",
+      "source_sha256": "c3bc4a31210edf844a776a0864fdebeead0aa5e18ed223c1aa66702c298ec116"
+    },
+    {
+      "test_id": "medium/transunion_earnings_deck_q4fy25",
+      "split": "medium",
+      "stem": "transunion_earnings_deck_q4fy25",
+      "source_file": "transunion_earnings_deck_q4fy25.pdf",
+      "test_json_sha256": "b865ffe6d27d1d999388897fa142d5a94c6d50b57cddbf5f0532c4c1339fdcb9",
+      "source_sha256": "4623bfa1f3bb2277268626f8ed0fa5df9ebfc048dfb089392e446b72f08ed93c"
+    },
+    {
+      "test_id": "medium/veralto_earnings_deck_q4fy25",
+      "split": "medium",
+      "stem": "veralto_earnings_deck_q4fy25",
+      "source_file": "veralto_earnings_deck_q4fy25.pdf",
+      "test_json_sha256": "ad9d130d74210d924c1f67e7cfbd6608d640c3806c07a8dbf7aa0a5651ca07f7",
+      "source_sha256": "0b434fe01dc376c8972ede272df0551c30965f58b880dcecdc37bb254de970ce"
+    },
+    {
+      "test_id": "long/dd1155_schedule_continuation_0011",
+      "split": "long",
+      "stem": "dd1155_schedule_continuation_0011",
+      "source_file": "dd1155_schedule_continuation_0011.pdf",
+      "test_json_sha256": "8536aab1db81fc8130251edef930eb75dde81222f23f9d6ce4f15d0baf7ab3e6",
+      "source_sha256": "92bf85531f4d525a50421f81a009b63d80987a36e7cd3481d5778f79a5d78ab5"
+    },
+    {
+      "test_id": "long/dd1155_schedule_continuation_0012",
+      "split": "long",
+      "stem": "dd1155_schedule_continuation_0012",
+      "source_file": "dd1155_schedule_continuation_0012.pdf",
+      "test_json_sha256": "87438bd61bd85deb3b988979f055a8b1de70bc94001bce6a46ceadbcf1cc2907",
+      "source_sha256": "8632fc7b1783beffc0f898470b9b4f1291608412b195e3c57585794437d4e2f6"
+    },
+    {
+      "test_id": "long/gov_clin_schedule_0005",
+      "split": "long",
+      "stem": "gov_clin_schedule_0005",
+      "source_file": "gov_clin_schedule_0005.pdf",
+      "test_json_sha256": "987dc4507332138bcbbd56a7f2859542314a0e4d4364f118a49c06576473c866",
+      "source_sha256": "e0d7577e5d87907c281c0388ac96cdb00e7e794bb344af0693f358bbd1a77943"
+    },
+    {
+      "test_id": "long/gov_clin_schedule_0031",
+      "split": "long",
+      "stem": "gov_clin_schedule_0031",
+      "source_file": "gov_clin_schedule_0031.pdf",
+      "test_json_sha256": "a642e22b0a8924d06639c83693d4092a4e2f54d5648b19280b1fc30fd8837ca3",
+      "source_sha256": "80c12ae1c911f821c90ce459081fd3d51305e89c77bc124e45e701869eab81f3"
+    },
+    {
+      "test_id": "long/real_credit_strategies_full",
+      "split": "long",
+      "stem": "real_credit_strategies_full",
+      "source_file": "real_credit_strategies_full.pdf",
+      "test_json_sha256": "c114be16ad36d6cbe70da4838cf885a1724723b8a6f169c38367e0aaebf7d7d8",
+      "source_sha256": "c5cd96b35269c4d95cf5acbd56de1adebe22f2549b76188cab2fbdc3a156d853"
+    },
+    {
+      "test_id": "long/real_freer_register_full",
+      "split": "long",
+      "stem": "real_freer_register_full",
+      "source_file": "real_freer_register_full.pdf",
+      "test_json_sha256": "f71b109636a7d2edaf4db9ce57fb4d0263c51d6152f2df58bec464baca1ee25e",
+      "source_sha256": "4fc4c47e19fcaa9820f655294b824a29e51ebd66888afc9f3f04b4d4961d96ff"
+    },
+    {
+      "test_id": "long/real_ftx_full",
+      "split": "long",
+      "stem": "real_ftx_full",
+      "source_file": "real_ftx_full.pdf",
+      "test_json_sha256": "c523d443bb2d268ab640fd0bc4ffe990fc880bfd660df4828005719132340b01",
+      "source_sha256": "2c64aea406e2f7117036e7db73201299bd6317f58627fbc120333afa5984cb34"
+    },
+    {
+      "test_id": "long/real_ftx_full_corrupted",
+      "split": "long",
+      "stem": "real_ftx_full_corrupted",
+      "source_file": "real_ftx_full_corrupted.pdf",
+      "test_json_sha256": "a43cc3ff94e66e478f455c0c897119fa4216d4c0dfc05205085816c536394a2f",
+      "source_sha256": "ae32e3e176427feb3a19b83150393fbc5820160cdd2a0730f3bcc0b01eb69dd3"
+    },
+    {
+      "test_id": "long/real_imedia_full",
+      "split": "long",
+      "stem": "real_imedia_full",
+      "source_file": "real_imedia_full.pdf",
+      "test_json_sha256": "40a36e076fc58e7f83703f8f01607a374721dc065d487eca17add61406ac81bb",
+      "source_sha256": "baf432a796a8ba49addb77efe39b19cfd001183684d340fdf43f3c37e59e7c36"
+    },
+    {
+      "test_id": "long/real_imedia_full_corrupted",
+      "split": "long",
+      "stem": "real_imedia_full_corrupted",
+      "source_file": "real_imedia_full_corrupted.pdf",
+      "test_json_sha256": "a6d19001b72c481f71de67d40d0177bdd25864577f85f38ef40f71d973ce7262",
+      "source_sha256": "f52373f5891cebea37365011acfa98187b3b742967d1df9bf8c75f0bac9f4c17"
+    },
+    {
+      "test_id": "long/real_ishares_iboxx_bond_etfs",
+      "split": "long",
+      "stem": "real_ishares_iboxx_bond_etfs",
+      "source_file": "real_ishares_iboxx_bond_etfs.pdf",
+      "test_json_sha256": "c1ddfcd2706362528ab563b0ffa3b622fda630ee26f6883d8510ea7947df55d9",
+      "source_sha256": "2a27528bdaab0fc6df7b4491bc10fd251ceead769a6fefa70384662d90b29320"
+    },
+    {
+      "test_id": "long/real_ofac_ssi_full",
+      "split": "long",
+      "stem": "real_ofac_ssi_full",
+      "source_file": "real_ofac_ssi_full.pdf",
+      "test_json_sha256": "e943369beb0875e95347717f9bfb941c9ce58b0b5651f08dc231b683ea461b26",
+      "source_sha256": "6fca7572691d172cb907f081c5bb3bb32bc99b64d20b8c9902af50ab1958e734"
+    },
+    {
+      "test_id": "long/real_oklahoma_unclaimed_2024",
+      "split": "long",
+      "stem": "real_oklahoma_unclaimed_2024",
+      "source_file": "real_oklahoma_unclaimed_2024.pdf",
+      "test_json_sha256": "95d73244d861d911709fe98c91e0ff1daaa92daf4344a83f3892f34d8b8de437",
+      "source_sha256": "1faa56d7c911dfbab21d0432ae87b591609df9ca85f863c85ac2c0c8d947857d"
+    },
+    {
+      "test_id": "long/real_sm0801_ae_full",
+      "split": "long",
+      "stem": "real_sm0801_ae_full",
+      "source_file": "real_sm0801_ae_full.pdf",
+      "test_json_sha256": "137bd4830ed3e8e2d6c5874fa5c69680d21d2063827defa87bd31d5fae652488",
+      "source_sha256": "f311999a7b1c9f36ecf80a1328fbc5dbd81a22f93b42983807899635b453a5c4"
+    },
+    {
+      "test_id": "long/real_sm0801_eco_full",
+      "split": "long",
+      "stem": "real_sm0801_eco_full",
+      "source_file": "real_sm0801_eco_full.pdf",
+      "test_json_sha256": "77d9fc491a3c573b1bcce0941fe1118e99e1098ad0e8afa1d4c3ad2cdc3cdcac",
+      "source_sha256": "e21e6eeb75d5aa1ce519c636de319e20445980e7a1ef28b7aa897d004af89030"
+    },
+    {
+      "test_id": "long/real_sm0801_eco_full_corrupted",
+      "split": "long",
+      "stem": "real_sm0801_eco_full_corrupted",
+      "source_file": "real_sm0801_eco_full_corrupted.pdf",
+      "test_json_sha256": "7eff9eb78f6e02468a624eaa22da1e2b004b8aa115fd9a2948246ad37e882d0b",
+      "source_sha256": "5680320c8c8ddbad55d889f9cdfd5b283df302ac932edc86175ea8eca12e0239"
+    },
+    {
+      "test_id": "long/sec_13f_0010_renaissance_technologies",
+      "split": "long",
+      "stem": "sec_13f_0010_renaissance_technologies",
+      "source_file": "sec_13f_0010_renaissance_technologies.pdf",
+      "test_json_sha256": "af79b0695c980bf9a97689ff78432bb594966937fee2dbbd70a8332122fed87f",
+      "source_sha256": "63c4ae033b570db4caf0371d53bcf4289f1e8986d6e15bc099cc22df4c1a70f8"
+    },
+    {
+      "test_id": "long/sec_13f_0026_brown_brothers_harriman",
+      "split": "long",
+      "stem": "sec_13f_0026_brown_brothers_harriman",
+      "source_file": "sec_13f_0026_brown_brothers_harriman.pdf",
+      "test_json_sha256": "b2b751ca96e29f225c6063887327799e689ff55e3ed817615848bd7718313131",
+      "source_sha256": "4787d70ca373866d0e595f923c9305d0759e63f7dd7128e070b78efbf3632283"
+    },
+    {
+      "test_id": "long/sf1449_supplies_services_0042",
+      "split": "long",
+      "stem": "sf1449_supplies_services_0042",
+      "source_file": "sf1449_supplies_services_0042.pdf",
+      "test_json_sha256": "665d25937950176df077401577b3e952faa0aca4b47327c4800c246f76e75c1d",
+      "source_sha256": "5b08e5f3b7feae39f547e5afad3b4d4b9f77e9a20f432f24e37338d2777ff55a"
+    },
+    {
+      "test_id": "long/sf1449_supplies_services_0059",
+      "split": "long",
+      "stem": "sf1449_supplies_services_0059",
+      "source_file": "sf1449_supplies_services_0059.pdf",
+      "test_json_sha256": "9e1abbee3a349efdda15c035f718ea610999bf21ab5585858304f73deb5c2c3d",
+      "source_sha256": "8b4089e97851f6eb117c8c139229981a9a0f4c49c331ad61a3419f2e4ad47077"
+    }
+  ]
+}
