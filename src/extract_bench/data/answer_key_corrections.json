@@ -153,5 +153,152 @@
         "verified_by": "human"
       }
     }
+  },
+  "medium/cabrera-2021": {
+    "reason": "Schedule E estates/trusts rows A-B are both empty, but the schema says one row per listed estate/trust and empty grid -> null.",
+    "set_expected": {
+      "schedule_e.estates_trusts": null
+    },
+    "drop_rule_prefixes": [
+      "schedule_e.estates_trusts["
+    ],
+    "set_rules": {
+      "schedule_e.estates_trusts": {
+        "comparator": {
+          "row_label": "case_insensitive",
+          "name": "case_insensitive",
+          "ein": "case_insensitive",
+          "passive_deduction_or_loss_allowed": "number",
+          "passive_income_k1": "number",
+          "deduction_or_loss_k1": "number",
+          "other_income_k1": "number"
+        },
+        "evidence": [
+          {
+            "page": null,
+            "bbox": null,
+            "quote": null,
+            "value": null,
+            "coarse": true
+          }
+        ],
+        "source_policy": "verbatim",
+        "evidence_required": true,
+        "verified": true,
+        "verified_by": "human",
+        "structural": "match_by:name"
+      }
+    }
+  },
+  "medium/cabrera-2022": {
+    "reason": "Form 7203 debt columns 1-3 are all empty, but the schema says to omit columns with no data and null if Part II is blank; Form 8283 Section A rows B-E are empty, but the schema says one row per listed item.",
+    "set_expected": {
+      "form_7203.debt_columns": null,
+      "form_8283.section_a_rows": [
+        {
+          "row_label": "A",
+          "donee_name_and_address": "GOODWILL 1120 W 6TH S, CORONA, CA 92882",
+          "vehicle_box": false,
+          "vehicle_identification_number": null,
+          "description_and_condition": "VARIOUS HOUSEHOLD ITEMS",
+          "date_of_contribution": "10/16/23",
+          "date_acquired_by_donor": "06/15",
+          "how_acquired_by_donor": "PURCHASE",
+          "donor_cost_or_adjusted_basis": 35000,
+          "fair_market_value": 3200,
+          "method_used_to_determine_fmv": "THRIFT SHOP VALUE"
+        }
+      ]
+    },
+    "drop_rule_prefixes": [
+      "form_7203.debt_columns[",
+      "form_8283.section_a_rows[1].",
+      "form_8283.section_a_rows[2].",
+      "form_8283.section_a_rows[3].",
+      "form_8283.section_a_rows[4]."
+    ],
+    "set_rules": {
+      "form_7203.debt_columns": {
+        "comparator": {
+          "debt_label": "case_insensitive",
+          "formal_note_box": "boolean",
+          "open_account_box": "boolean",
+          "line_16_loan_balance_beginning": "number",
+          "line_17_additional_loans": "number",
+          "line_18_loan_balance_before_repayment": "number",
+          "line_19_principal_portion_of_repayment": "number",
+          "line_20_loan_balance_end": "number",
+          "line_21_debt_basis_beginning": "number",
+          "line_22_amount_from_line_17": "number",
+          "line_23_debt_basis_restoration": "number",
+          "line_24_debt_basis_before_repayment": "number",
+          "line_25_divide_24_by_18": "number",
+          "line_26_nontaxable_debt_repayment": "number",
+          "line_27_debt_basis_before_nondeductible": "number",
+          "line_28_nondeductible_expenses_and_depletion": "number",
+          "line_29_debt_basis_before_losses": "number",
+          "line_30_allowable_losses_in_excess_of_stock_basis": "number",
+          "line_31_debt_basis_end": "number",
+          "line_32_repayment": "number",
+          "line_33_nontaxable_repayments": "number",
+          "line_34_reportable_gain": "number"
+        },
+        "evidence": [
+          {
+            "page": null,
+            "bbox": null,
+            "quote": null,
+            "value": null,
+            "coarse": true
+          }
+        ],
+        "source_policy": "verbatim",
+        "evidence_required": true,
+        "verified": true,
+        "verified_by": "human",
+        "structural": "match_by:debt_label"
+      },
+      "form_8283.section_a_rows": {
+        "comparator": {
+          "row_label": "case_insensitive",
+          "donee_name_and_address": "address",
+          "vehicle_box": "boolean",
+          "vehicle_identification_number": "case_insensitive",
+          "description_and_condition": "case_insensitive",
+          "date_of_contribution": "date",
+          "date_acquired_by_donor": "date",
+          "how_acquired_by_donor": "case_insensitive",
+          "donor_cost_or_adjusted_basis": "number",
+          "fair_market_value": "number",
+          "method_used_to_determine_fmv": "case_insensitive"
+        },
+        "evidence": [
+          {
+            "page": null,
+            "bbox": null,
+            "quote": null,
+            "value": {
+              "row_label": "A",
+              "donee_name_and_address": "GOODWILL 1120 W 6TH S, CORONA, CA 92882",
+              "vehicle_box": false,
+              "vehicle_identification_number": null,
+              "description_and_condition": "VARIOUS HOUSEHOLD ITEMS",
+              "date_of_contribution": "10/16/23",
+              "date_acquired_by_donor": "06/15",
+              "how_acquired_by_donor": "PURCHASE",
+              "donor_cost_or_adjusted_basis": 35000,
+              "fair_market_value": 3200,
+              "method_used_to_determine_fmv": "THRIFT SHOP VALUE"
+            },
+            "coarse": true
+          }
+        ],
+        "source_policy": "verbatim",
+        "evidence_required": true,
+        "verified": true,
+        "verified_by": "human",
+        "structural": "match_by:donee_name_and_address"
+      }
+    }
   }
 }
