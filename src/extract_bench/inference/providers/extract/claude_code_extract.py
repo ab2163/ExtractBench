@@ -69,6 +69,9 @@ _TRACE_TAIL_EVENTS = 20
 # raw.json (we log what the agent *runs*, not the full bodies).
 _MAX_BASH_CMD_CHARS = 2000
 
+_TRACE_TEXT_SUFFIXES = (".py", ".txt", ".json", ".sh", ".md", ".csv", ".log")
+_MAX_TRACE_FILE_BYTES = 2_000_000
+
 # Substrings (in the result event's subtype/message) that classify a CLI error.
 _RATE_LIMIT_KEYWORDS = ("rate limit", "rate_limit", "429", "quota")
 _TRANSIENT_KEYWORDS = ("overloaded", "529", "503", "502", "504", "timeout", "timed out")
@@ -112,6 +115,7 @@ class ClaudeCodeExtractProvider(Provider):
         self._is_checkbox_guidance: bool = bool(self.base_config.get("is_checkbox_guidance", False))
         self._is_checkbox_border: bool = bool(self.base_config.get("is_checkbox_border", False))
         self._is_yes_no_pair_rule: bool = bool(self.base_config.get("is_yes_no_pair_rule", False))
+        self._is_full_trace: bool = bool(self.base_config.get("is_full_trace", False))
         # Track live subprocesses for cancel(): example_id -> Popen
         self._procs: dict[str, subprocess.Popen[str]] = {}
         self._procs_lock = threading.Lock()
@@ -382,6 +386,27 @@ class ClaudeCodeExtractProvider(Provider):
         return tail
 
     @staticmethod
+    def _parse_all_events(lines: list[str]) -> list[Any]:
+        events: list[Any] = []
+        for line in lines:
+            try:
+                events.append(json.loads(line))
+            except json.JSONDecodeError:
+                events.append(line)
+        return events
+
+    @staticmethod
+    def _read_workdir_texts(workdir: Path, staged_name: str) -> dict[str, str]:
+        texts: dict[str, str] = {}
+        for path in sorted(workdir.rglob("*")):
+            if not path.is_file() or path.name in (staged_name, "mcp_config.json"):
+                continue
+            if path.suffix not in _TRACE_TEXT_SUFFIXES or path.stat().st_size > _MAX_TRACE_FILE_BYTES:
+                continue
+            texts[str(path.relative_to(workdir))] = path.read_text(errors="replace")
+        return texts
+
+    @staticmethod
     def _tool_usage(lines: list[str]) -> dict[str, Any]:
         """Distill the agent's tool CALLS (never outputs) from the stream-json trace.
 
@@ -474,6 +499,7 @@ class ClaudeCodeExtractProvider(Provider):
             "is_checkbox_guidance": self._is_checkbox_guidance,
             "is_checkbox_border": self._is_checkbox_border,
             "is_yes_no_pair_rule": self._is_yes_no_pair_rule,
+            "is_full_trace": self._is_full_trace,
         }
 
     # ------------------------------------------------------------------
@@ -518,6 +544,7 @@ class ClaudeCodeExtractProvider(Provider):
             self._raise_for_status(returncode, result_event, lines, stderr_tail)
             data = self._read_output_json(workdir)
             agent_citations = read_agent_citations_file(workdir / "citations.json") if self._evidence_mode else None
+            workdir_texts = self._read_workdir_texts(workdir, staged_name) if self._is_full_trace else None
 
         completed_at = datetime.now()
         latency_ms = int((completed_at - started_at).total_seconds() * 1000)
@@ -540,6 +567,11 @@ class ClaudeCodeExtractProvider(Provider):
             **self._tool_usage(lines),
             "_trace_tail": self._trace_tail(lines),
         }
+
+        if self._is_full_trace:
+            raw_output["_prompt"] = prompt
+            raw_output["_trace_full"] = self._parse_all_events(lines)
+            raw_output["_workdir_files"] = workdir_texts
 
         if self._evidence_mode:
             citations, evidence_stats = citations_from_agent_file(agent_citations, source="claude_code_evidence")
