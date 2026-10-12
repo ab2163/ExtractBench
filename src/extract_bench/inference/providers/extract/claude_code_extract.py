@@ -116,6 +116,7 @@ class ClaudeCodeExtractProvider(Provider):
         self._is_checkbox_border: bool = bool(self.base_config.get("is_checkbox_border", False))
         self._is_yes_no_pair_rule: bool = bool(self.base_config.get("is_yes_no_pair_rule", False))
         self._is_full_trace: bool = bool(self.base_config.get("is_full_trace", False))
+        self._is_all_fields_citation: bool = bool(self.base_config.get("is_all_fields_citation", False))
         # Track live subprocesses for cancel(): example_id -> Popen
         self._procs: dict[str, subprocess.Popen[str]] = {}
         self._procs_lock = threading.Lock()
@@ -153,6 +154,7 @@ class ClaudeCodeExtractProvider(Provider):
                 is_checkbox_guidance=self._is_checkbox_guidance,
                 is_checkbox_border=self._is_checkbox_border,
                 is_yes_no_pair_rule=self._is_yes_no_pair_rule,
+                is_all_fields_citation=self._is_all_fields_citation,
             )
             evidence_rule = f"\n{instruction}"
         return (
@@ -500,6 +502,7 @@ class ClaudeCodeExtractProvider(Provider):
             "is_checkbox_border": self._is_checkbox_border,
             "is_yes_no_pair_rule": self._is_yes_no_pair_rule,
             "is_full_trace": self._is_full_trace,
+            "is_all_fields_citation": self._is_all_fields_citation,
         }
 
     # ------------------------------------------------------------------

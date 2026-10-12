@@ -44,6 +44,11 @@ _YES_NO_PAIR_RULE = (
     " If Yes and No are separate fields, box each field's own square."
 )
 _CHECKBOX_BORDER_RULE = " For a checkbox, box the whole printed square including its border."
+_CITATION_SCOPE_VALUES = "one per non-null value you extracted,"
+_CITATION_SCOPE_ALL_FIELDS = (
+    "one per non-null field you extracted -- every filled-in field in your output.json, "
+    "including text fields such as names, titles, labels and codes, not only numbers or table cells --"
+)
 
 
 def build_checkbox_rule(is_checkbox_guidance: bool, is_checkbox_border: bool, is_yes_no_pair_rule: bool) -> str:
@@ -56,16 +61,24 @@ def build_checkbox_rule(is_checkbox_guidance: bool, is_checkbox_border: bool, is
     return checkbox_rule
 
 
+def build_citation_scope(is_all_fields_citation: bool) -> str:
+    if is_all_fields_citation:
+        return _CITATION_SCOPE_ALL_FIELDS
+    return _CITATION_SCOPE_VALUES
+
+
 def agent_evidence_instruction(
     citations_filename: str = "citations.json",
     is_checkbox_guidance: bool = False,
     is_checkbox_border: bool = False,
     is_yes_no_pair_rule: bool = False,
+    is_all_fields_citation: bool = False,
 ) -> str:
     checkbox_rule = build_checkbox_rule(is_checkbox_guidance, is_checkbox_border, is_yes_no_pair_rule)
+    citation_scope = build_citation_scope(is_all_fields_citation)
     return (
         f"- Also write ./{citations_filename}: a JSON array of evidence objects, "
-        "one per non-null value you extracted, each with the keys "
+        f"{citation_scope} each with the keys "
         '"field_path", "page" and "bbox".\n'
         '  - "field_path" is the dotted path of the field in your output.json, '
         "with a bracketed index for array rows: `invoice_number`, "
