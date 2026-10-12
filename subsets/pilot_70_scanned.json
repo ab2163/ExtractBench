@@ -1,0 +1,176 @@
+{
+  "name": "pilot_70_scanned",
+  "seed": 7,
+  "created": "2026-10-07",
+  "dataset_repo": "llamaindex/ExtractBench",
+  "dataset_revision": "51bf3a03eb7feeaef8952be1fc2fc7f924ee72dc",
+  "per_split": {
+    "short": 10,
+    "medium": 7,
+    "long": 3
+  },
+  "documents": [
+    {
+      "test_id": "short/08-37943 H-12 09-25-2014 F-01249",
+      "split": "short",
+      "stem": "08-37943 H-12 09-25-2014 F-01249",
+      "source_file": "08-37943 H-12 09-25-2014 F-01249.pdf",
+      "test_json_sha256": "7bb47102935eb8df9fb83fb4fdde0da385177cc3cd6229d0dd2d0eaa6f867032",
+      "source_sha256": "a21839643f0b39b0c8c1328ee6ec14a17f0abdb67291db1c6c8c8f6e47b6dcb9"
+    },
+    {
+      "test_id": "short/08-43259 H-12 3-18-2024 F-22737",
+      "split": "short",
+      "stem": "08-43259 H-12 3-18-2024 F-22737",
+      "source_file": "08-43259 H-12 3-18-2024 F-22737.pdf",
+      "test_json_sha256": "0ca3fe237a422a7560167c49a632b52c895d062ec4b2e3cea7543f49b3852f36",
+      "source_sha256": "0638ae0316daeded32ba6516904945588c5c450be138f73dffc68e59acd45cf9"
+    },
+    {
+      "test_id": "short/08-51344 H-12 10-2-2023 F-22666",
+      "split": "short",
+      "stem": "08-51344 H-12 10-2-2023 F-22666",
+      "source_file": "08-51344 H-12 10-2-2023 F-22666.pdf",
+      "test_json_sha256": "5e70ebb4faaaca03709122af7edd47602377cacfb38c4d6dd266d220f0b7aba6",
+      "source_sha256": "d69c8ed8cd0b27bb24cfc592fe04f374c2f67eed7a194716565fd1110642ee19"
+    },
+    {
+      "test_id": "short/2A-9-160298_109929",
+      "split": "short",
+      "stem": "2A-9-160298_109929",
+      "source_file": "2A-9-160298_109929.pdf",
+      "test_json_sha256": "bc40aa2dc219339e082d51804b942ff938671c6276474d1419e8281d902fe77c",
+      "source_sha256": "27e072e0639e41105da4e3626ff6fb90ccaf1791c80eb9ca776a88c5477f275f"
+    },
+    {
+      "test_id": "short/H9-53-24_24",
+      "split": "short",
+      "stem": "H9-53-24_24",
+      "source_file": "H9-53-24_24.pdf",
+      "test_json_sha256": "1d146021e1451a6def1c2fe96d609e325e279422d6df13278ecc847728b85e1e",
+      "source_sha256": "b1442c68ee2835c7d4322c8118442280cfb8198ec4cb4872f17e92ee92654a69"
+    },
+    {
+      "test_id": "short/P18-28-56_57",
+      "split": "short",
+      "stem": "P18-28-56_57",
+      "source_file": "P18-28-56_57.pdf",
+      "test_json_sha256": "7cedad48435163a7bf453660cf5b96c2335a1033d4fd81e62e517c19ae085711",
+      "source_sha256": "e190b1c4db48adde563781634cf5485f8f4d5c94d39b134992eddd1056c22276"
+    },
+    {
+      "test_id": "short/aclu_cdwg_invoice",
+      "split": "short",
+      "stem": "aclu_cdwg_invoice",
+      "source_file": "aclu_cdwg_invoice.pdf",
+      "test_json_sha256": "0513def017fba9f0136ca4f485befb1be6c706dfd5ddd365a6b764817a483a26",
+      "source_sha256": "8a87cfd1c8006b7f23c958de052b65316b2d39c32e1699f98861d938510f1c0b"
+    },
+    {
+      "test_id": "short/ca_rad_crossover_outpatient_p5_corrupted",
+      "split": "short",
+      "stem": "ca_rad_crossover_outpatient_p5_corrupted",
+      "source_file": "ca_rad_crossover_outpatient_p5_corrupted.pdf",
+      "test_json_sha256": "1861c0d395397512bf9e25378637e0cb37d3e61c46f5ac2b34a08c764820a523",
+      "source_sha256": "0045db2f577520af36c1bedda0886a413a4dc43f383901c4fc55608bc4549018"
+    },
+    {
+      "test_id": "short/passcoag-2020-w2-p0003-r3",
+      "split": "short",
+      "stem": "passcoag-2020-w2-p0003-r3",
+      "source_file": "passcoag-2020-w2-p0003-r3.pdf",
+      "test_json_sha256": "b15388ec29eebd6941b9dc6615c38a6e7e77f97de34798d2a67461a9b3c5f071",
+      "source_sha256": "ecb75a6a8deaf1d61e044a92d4c5fc06fb9ddefbb120f0b1d953ea200879aa6b"
+    },
+    {
+      "test_id": "short/texas_facilities_commission_purchase_order_shelton-keller_corrupted",
+      "split": "short",
+      "stem": "texas_facilities_commission_purchase_order_shelton-keller_corrupted",
+      "source_file": "texas_facilities_commission_purchase_order_shelton-keller_corrupted.pdf",
+      "test_json_sha256": "068f8b5025dbd32cbafe97129d81f525fed95d6b91276f62f2dbb65ec0c1bc86",
+      "source_sha256": "4840fd5b81fea6a589743c2f84249629efe8c7286dd7a2b2e255ada0aa2082bf"
+    },
+    {
+      "test_id": "medium/bar-lev-2021",
+      "split": "medium",
+      "stem": "bar-lev-2021",
+      "source_file": "bar-lev-2021.pdf",
+      "test_json_sha256": "5c8c1947509dda8e6b0ce09177812acd797551cb335810f78d29177c60292faa",
+      "source_sha256": "f4360b1fd2d3b3576dc954e62c883a122cb51301b432bd83b4d2b64d6d1d8ffb"
+    },
+    {
+      "test_id": "medium/bar-lev-2022",
+      "split": "medium",
+      "stem": "bar-lev-2022",
+      "source_file": "bar-lev-2022.pdf",
+      "test_json_sha256": "97de8b5c7e209fc3e92b6a2732970aa31112c7e799be282d73df01d8ccc8f618",
+      "source_sha256": "87e40f9d51583184bbdc794a0d72d9e2d207df9dc673ede7409137a8b52debd5"
+    },
+    {
+      "test_id": "medium/bianco-2022",
+      "split": "medium",
+      "stem": "bianco-2022",
+      "source_file": "bianco-2022.pdf",
+      "test_json_sha256": "5f41a56b8d9a60ff7b607e5cfa9a36990213e89e025e5968e6a7324ea2e0294a",
+      "source_sha256": "9c717a6760a62d155f1e08391a6149f6a681346d15481b0893a17bcadec0ad08"
+    },
+    {
+      "test_id": "medium/cabrera-2021",
+      "split": "medium",
+      "stem": "cabrera-2021",
+      "source_file": "cabrera-2021.pdf",
+      "test_json_sha256": "5a0a2682d82bcd687b63bcdf13781036c435786918ac90aa37e4d99044bf7435",
+      "source_sha256": "69bd7f4811259ddbfd0e9d65b2394980211c6b6e6ae5b28a9cc4170462fc08cb"
+    },
+    {
+      "test_id": "medium/cabrera-2022",
+      "split": "medium",
+      "stem": "cabrera-2022",
+      "source_file": "cabrera-2022.pdf",
+      "test_json_sha256": "76b7cefd2df2be2b73b8281081a482a0f9cfaa5f1c709e838466a58dd3caf222",
+      "source_sha256": "c0bdbe2346a7b3c07f366238a8aa5322c7731d10a20d394f3820d262ac173667"
+    },
+    {
+      "test_id": "medium/ccc_online_0004_liberty_dodge_journey_corrupted",
+      "split": "medium",
+      "stem": "ccc_online_0004_liberty_dodge_journey_corrupted",
+      "source_file": "ccc_online_0004_liberty_dodge_journey_corrupted.pdf",
+      "test_json_sha256": "f0172fc97715d1392f6e22300d69b388a6126788b996b8dbc441addd204f16b5",
+      "source_sha256": "4a5801ed3bc9662d5d191eb2f9f5b45aa8cadb1be66b7feafcbdbf2d02696dc3"
+    },
+    {
+      "test_id": "medium/real_sm0801_dispositions_full_corrupted",
+      "split": "medium",
+      "stem": "real_sm0801_dispositions_full_corrupted",
+      "source_file": "real_sm0801_dispositions_full_corrupted.pdf",
+      "test_json_sha256": "5fe0b0c0be456727914880435af321dace8befba4c2fdd0926eb76182890e07a",
+      "source_sha256": "e8e5b1e5559481c373d1acc15d4d5d79eafd947a7675b968103f4b650abe7fba"
+    },
+    {
+      "test_id": "long/real_ftx_full_corrupted",
+      "split": "long",
+      "stem": "real_ftx_full_corrupted",
+      "source_file": "real_ftx_full_corrupted.pdf",
+      "test_json_sha256": "a43cc3ff94e66e478f455c0c897119fa4216d4c0dfc05205085816c536394a2f",
+      "source_sha256": "ae32e3e176427feb3a19b83150393fbc5820160cdd2a0730f3bcc0b01eb69dd3"
+    },
+    {
+      "test_id": "long/real_imedia_full_corrupted",
+      "split": "long",
+      "stem": "real_imedia_full_corrupted",
+      "source_file": "real_imedia_full_corrupted.pdf",
+      "test_json_sha256": "a6d19001b72c481f71de67d40d0177bdd25864577f85f38ef40f71d973ce7262",
+      "source_sha256": "f52373f5891cebea37365011acfa98187b3b742967d1df9bf8c75f0bac9f4c17"
+    },
+    {
+      "test_id": "long/real_sm0801_eco_full_corrupted",
+      "split": "long",
+      "stem": "real_sm0801_eco_full_corrupted",
+      "source_file": "real_sm0801_eco_full_corrupted.pdf",
+      "test_json_sha256": "7eff9eb78f6e02468a624eaa22da1e2b004b8aa115fd9a2948246ad37e882d0b",
+      "source_sha256": "5680320c8c8ddbad55d889f9cdfd5b283df302ac932edc86175ea8eca12e0239"
+    }
+  ],
+  "parent": "pilot_70",
+  "selection": "documents in pilot_70 with under 50 text characters per page on their first 5 pages (no text layer)"
+}
