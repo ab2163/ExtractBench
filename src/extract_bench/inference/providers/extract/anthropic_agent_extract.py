@@ -36,9 +36,8 @@ SYSTEM_PROMPT = (
 MAX_TOOL_OUTPUT_CHARS = 30000
 BASH_TIMEOUT_S = 300
 MAX_IMAGE_BYTES = 4_500_000
-IMAGE_MEDIA_TYPES = {
-    ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp", ".gif": "image/gif",
-}
+IMAGE_SUFFIXES = (".png", ".jpg", ".jpeg", ".webp", ".gif")
+MAX_IMAGE_EDGE = 1568
 PRICE_PER_M = {"claude-opus-4-6": (5.00, 25.00), "claude-opus-4-5": (5.00, 25.00), "claude-sonnet-4-6": (3.00, 15.00)}
 CACHE_WRITE_RATE = 1.25
 CACHE_READ_RATE = 0.10
@@ -72,36 +71,50 @@ class ShellRunner:
 
 
 class ImageReader:
-    """Loads an image file from the working folder as a Messages API image block."""
+    """Loads an image file, shrinks it to the size the model sees, and says how to map coordinates back."""
 
     def __init__(self, workdir: Path):
         self.workdir = workdir
 
-    def read_image(self, relative_path: str) -> tuple[dict[str, Any] | None, str]:
-        path = (self.workdir / relative_path).resolve()
-        media_type = IMAGE_MEDIA_TYPES.get(path.suffix.lower())
-        if media_type is None or not path.is_file():
-            return None, f"Cannot view {relative_path}: not an existing png, jpg, webp or gif file."
-        payload = path.read_bytes()
-        if len(payload) > MAX_IMAGE_BYTES:
-            payload = self.shrink_to_jpeg(path)
-            media_type = "image/jpeg"
-        block = {"type": "image", "source": {"type": "base64", "media_type": media_type,
-                                              "data": base64.b64encode(payload).decode("ascii")}}
-        return block, f"[image {relative_path}, {len(payload)} bytes]"
-
-    def shrink_to_jpeg(self, path: Path) -> bytes:
-        from io import BytesIO
-
+    def read_image(self, relative_path: str) -> tuple[list[dict[str, Any]] | None, str]:
         from PIL import Image
 
-        image = Image.open(path).convert("RGB")
+        path = (self.workdir / relative_path).resolve()
+        if path.suffix.lower() not in IMAGE_SUFFIXES or not path.is_file():
+            return None, f"Cannot view {relative_path}: not an existing png, jpg, webp or gif file."
+        image = Image.open(path)
+        original_width, original_height = image.size
+        scale = min(1.0, MAX_IMAGE_EDGE / max(original_width, original_height))
+        if scale < 1.0:
+            shown_size = (max(1, round(original_width * scale)), max(1, round(original_height * scale)))
+            image = image.resize(shown_size, Image.LANCZOS)
+        payload, media_type = self.encode_image(image)
+        note = self.describe_scaling(relative_path, (original_width, original_height), image.size)
+        image_block = {"type": "image", "source": {"type": "base64", "media_type": media_type,
+                                                    "data": base64.b64encode(payload).decode("ascii")}}
+        return [{"type": "text", "text": note}, image_block], note
+
+    def describe_scaling(self, relative_path: str, original: tuple[int, int], shown: tuple[int, int]) -> str:
+        if original == shown:
+            return f"[Image {relative_path}: {original[0]}x{original[1]} pixels, shown at full size.]"
+        factor = original[0] / shown[0]
+        return (f"[Image {relative_path}: original {original[0]}x{original[1]} pixels, shown at {shown[0]}x{shown[1]}. "
+                f"Multiply coordinates read from this view by {factor:.3f} to get original pixel coordinates.]")
+
+    def encode_image(self, image: Any) -> tuple[bytes, str]:
+        from io import BytesIO
+
+        buffer = BytesIO()
+        image.save(buffer, format="PNG")
+        if buffer.tell() <= MAX_IMAGE_BYTES:
+            return buffer.getvalue(), "image/png"
+        rgb_image = image.convert("RGB")
         quality = 90
         while True:
             buffer = BytesIO()
-            image.save(buffer, format="JPEG", quality=quality)
+            rgb_image.save(buffer, format="JPEG", quality=quality)
             if buffer.tell() <= MAX_IMAGE_BYTES or quality <= 40:
-                return buffer.getvalue()
+                return buffer.getvalue(), "image/jpeg"
             quality = quality - 15
 
 
@@ -131,11 +144,11 @@ class AgentToolbox:
         return error, error
 
     def run_view_image(self, tool_use_id: str, relative_path: str) -> tuple[dict[str, Any], dict[str, Any]]:
-        image_block, summary = self.image_reader.read_image(relative_path)
-        if image_block is None:
+        image_blocks, summary = self.image_reader.read_image(relative_path)
+        if image_blocks is None:
             error = self.build_result(tool_use_id, [{"type": "text", "text": summary}], True)
             return error, error
-        result = self.build_result(tool_use_id, [image_block], False)
+        result = self.build_result(tool_use_id, image_blocks, False)
         traced = self.build_result(tool_use_id, [{"type": "text", "text": summary}], False)
         return result, traced
 
