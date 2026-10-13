@@ -229,3 +229,6 @@ results/
 # Materialized benchmark subsets and their outputs (rebuild from subsets/*.json)
 data_pilot_*/
 output_pilot_*/
+
+# Raw agent outputs kept next to their rendered traces
+traces/**/output/

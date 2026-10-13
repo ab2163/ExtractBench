@@ -412,6 +412,24 @@ def register_extract_pipelines(register_fn) -> None:  # type: ignore[no-untyped-
         )
     )
 
+    for _temperature_slug, _temperature in (("1_0", 1.0), ("0_5", 0.5)):
+        register_fn(
+            _pipeline_spec(
+                pipeline_name=f"anthropic_agent_extract_opus_4_6_temp_{_temperature_slug}_fulltrace_evidence",
+                provider_name="anthropic_agent_extract",
+                config={
+                    "model": "claude-opus-4-6",
+                    "temperature": _temperature,
+                    "evidence_mode": True,
+                    "is_checkbox_guidance": True,
+                    "is_checkbox_border": True,
+                    "is_yes_no_pair_rule": True,
+                    "is_all_fields_citation": True,
+                    "is_full_trace": True,
+                },
+            )
+        )
+
     for _model_slug, _model, _reasoning_effort in (
         ("gpt_5_4", "gpt-5.4", "low"),
         ("gpt_5_5", "gpt-5.5", "low"),

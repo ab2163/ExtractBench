@@ -23,6 +23,13 @@ ENTITY_HANDLED_KEYS = frozenset({"type", "description", "properties", "required"
 ATTRIBUTE_HANDLED_KEYS = frozenset({"type", "description", "items", "$ref", "anyOf", "oneOf"})
 
 
+def collect_union_options(schema: dict) -> list:
+    options = []
+    for union_key in ("anyOf", "oneOf"):
+        options.extend(schema.get(union_key) or [])
+    return options
+
+
 @dataclass
 class SchemaEntity:
     """One object type in the schema: its name, its schema and its position for coloring."""
@@ -77,6 +84,10 @@ class EntityCollector:
             return schema
         if schema.get("type") == "array":
             return self.find_object_schema(schema.get("items"))
+        for option in collect_union_options(schema):
+            target = self.find_object_schema(option)
+            if target is not None:
+                return target
         return None
 
     def find_by_ref(self, ref: str) -> SchemaEntity | None:
@@ -230,7 +241,7 @@ class RelationshipMapper:
                 target = self.find_target(attribute_schema)
                 if target is None:
                     continue
-                is_list = isinstance(attribute_schema, dict) and attribute_schema.get("type") == "array"
+                is_list = self.is_list_schema(attribute_schema)
                 lines.append(self.render_line(entity, attribute_name, target, is_list))
                 target.referenced_by.append(f"{self.describer.render_entity_chip(entity)} › {html.escape(attribute_name)}")
         return lines
@@ -244,7 +255,21 @@ class RelationshipMapper:
             return self.collector.by_schema_id[id(schema)]
         if schema.get("type") == "array":
             return self.find_target(schema.get("items"))
+        for option in collect_union_options(schema):
+            target = self.find_target(option)
+            if target is not None:
+                return target
         return None
+
+    def is_list_schema(self, schema: Any) -> bool:
+        if not isinstance(schema, dict):
+            return False
+        if schema.get("type") == "array":
+            return True
+        for option in collect_union_options(schema):
+            if self.is_list_schema(option):
+                return True
+        return False
 
     def render_line(self, source: SchemaEntity, attribute_name: str, target: SchemaEntity, is_list: bool) -> str:
         count = "has a list of" if is_list else "has one"

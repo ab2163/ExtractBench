@@ -1,0 +1,1461 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent trace: passcoag-2020-w2-p0003-r3</title>
+<link rel="stylesheet" href="trace.css">
+</head>
+<body>
+<h1>Agent trace: passcoag-2020-w2-p0003-r3</h1>
+<p class="count">27 events</p>
+<ol class="trace">
+<li class="event kind-prompt"><div class="event-type"><span class="index">1</span>prompt</div><pre class="content">Extract structured data from the document file `./input.pdf` in the current directory.
+
+Use only local file inspection and shell commands. Do not use web search, network calls, browser tools, or external services. Temporary scratch files inside the current directory are OK.
+
+Return a single JSON object conforming to this schema as your final answer:
+
+```json
+{
+  &quot;$defs&quot;: {
+    &quot;Box12Entry&quot;: {
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;title&quot;: &quot;Box 12 entry&quot;,
+      &quot;properties&quot;: {
+        &quot;code&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;type&quot;: &quot;string&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ],
+          &quot;default&quot;: null,
+          &quot;description&quot;: &quot;The letter code of a Box 12 entry (values like C, D, DD, W), verbatim uppercase as printed in the vertical &#x27;Code&#x27; rail of the blank form or at the left edge of the register column &#x27;12 See Instrs. for Box 12&#x27;. Identifies the row \u2014 Box 12 rows are aligned by this code at eval time, not by position.&quot;,
+          &quot;title&quot;: &quot;Box 12 code&quot;
+        },
+        &quot;amount&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;type&quot;: &quot;number&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ],
+          &quot;default&quot;: null,
+          &quot;description&quot;: &quot;Dollar amount printed beside the Box 12 code in any printed slot: &#x27;12a See instructions for box 12&#x27;, &#x27;12b&#x27;, &#x27;12c&#x27;, or &#x27;12d&#x27; on the IRS blank, or in the register column &#x27;12 See Instrs. for Box 12&#x27;. JSON number exactly as printed; null if a code prints with no amount.&quot;,
+          &quot;title&quot;: &quot;Box 12 amount&quot;
+        }
+      },
+      &quot;additionalProperties&quot;: false
+    },
+    &quot;Box14Entry&quot;: {
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;title&quot;: &quot;Box 14 entry&quot;,
+      &quot;properties&quot;: {
+        &quot;description&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;type&quot;: &quot;string&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ],
+          &quot;default&quot;: null,
+          &quot;description&quot;: &quot;Text label of a box &#x27;14 Other&#x27; entry, verbatim as printed, e.g. RISDI on this wave. Identifies the row \u2014 Box 14 rows are aligned by this description at eval time, not by position.&quot;,
+          &quot;title&quot;: &quot;Box 14 description&quot;
+        },
+        &quot;amount&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;type&quot;: &quot;number&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ],
+          &quot;default&quot;: null,
+          &quot;description&quot;: &quot;Dollar amount printed beside the description in box &#x27;14 Other&#x27;. JSON number exactly as printed; null if a description prints with no amount.&quot;,
+          &quot;title&quot;: &quot;Box 14 amount&quot;
+        }
+      },
+      &quot;additionalProperties&quot;: false
+    },
+    &quot;StateLocalRow1&quot;: {
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;properties&quot;: {
+        &quot;state&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;type&quot;: &quot;string&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ],
+          &quot;default&quot;: null,
+          &quot;description&quot;: &quot;Box &#x27;15 State&#x27; \u2014 the two-letter state abbreviation of the single printed state row, verbatim, e.g. RI. This copy prints one state row only; a multi-state W-2 (a second row in boxes 15-20) is out of scope for this schema version. (row 1 of the two printed &#x27;boxes 15-20&#x27; entry rows).&quot;,
+          &quot;title&quot;: &quot;15 State&quot;
+        },
+        &quot;employer_state_id&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;type&quot;: &quot;string&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ],
+          &quot;default&quot;: null,
+          &quot;description&quot;: &quot;Box 15 &#x27;Employer\u2019s state ID number&#x27; (the register variant caption reads &#x27;state ID No.&#x27;). The state identification number verbatim as printed, keeping leading zeros, e.g. 05051707900. (row 1 of the two printed &#x27;boxes 15-20&#x27; entry rows).&quot;,
+          &quot;title&quot;: &quot;15 Employer\u2019s state ID number&quot;
+        },
+        &quot;state_wages&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;type&quot;: &quot;number&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ],
+          &quot;default&quot;: null,
+          &quot;description&quot;: &quot;Box &#x27;16 State wages, tips, etc.&#x27; for the single printed state row. Dollar amount as a JSON number, exactly as printed; null if the box is blank. (row 1 of the two printed &#x27;boxes 15-20&#x27; entry rows).&quot;,
+          &quot;title&quot;: &quot;16 State wages, tips, etc.&quot;
+        },
+        &quot;state_income_tax&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;type&quot;: &quot;number&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ],
+          &quot;default&quot;: null,
+          &quot;description&quot;: &quot;Box &#x27;17 State income tax&#x27; for the single printed state row. Dollar amount as a JSON number, exactly as printed; null if the box is blank. (row 1 of the two printed &#x27;boxes 15-20&#x27; entry rows).&quot;,
+          &quot;title&quot;: &quot;17 State income tax&quot;
+        },
+        &quot;local_wages&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;type&quot;: &quot;number&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ],
+          &quot;default&quot;: null,
+          &quot;description&quot;: &quot;Amount in box &#x27;18 Local wages, tips, etc.&#x27; - the LOCAL wages column, distinct from box &#x27;16 State wages, tips, etc.&#x27; (do not copy the state amount here). Null when box 18 is blank, as it is on all RI register docs.&quot;,
+          &quot;title&quot;: &quot;18 Local wages, tips, etc.&quot;
+        },
+        &quot;local_income_tax&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;type&quot;: &quot;number&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ],
+          &quot;default&quot;: null,
+          &quot;description&quot;: &quot;Amount in box &#x27;19 Local income tax&#x27; - the LOCAL tax column, distinct from box &#x27;17 State income tax&#x27; (do not copy the state amount here). Null when box 19 is blank, as it is on all RI register docs.&quot;,
+          &quot;title&quot;: &quot;19 Local income tax&quot;
+        },
+        &quot;locality_name&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;type&quot;: &quot;string&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ],
+          &quot;default&quot;: null,
+          &quot;description&quot;: &quot;Box &#x27;20 Locality name&#x27; for the single printed state row, verbatim as printed; null if the box is blank (blank on all wave docs). (row 1 of the two printed &#x27;boxes 15-20&#x27; entry rows).&quot;,
+          &quot;title&quot;: &quot;20 Locality name&quot;
+        }
+      },
+      &quot;additionalProperties&quot;: false
+    },
+    &quot;StateLocalRow2&quot;: {
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;properties&quot;: {
+        &quot;state&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;type&quot;: &quot;string&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ],
+          &quot;default&quot;: null,
+          &quot;description&quot;: &quot;Box &#x27;15 State&#x27; \u2014 the two-letter state abbreviation of the single printed state row, verbatim, e.g. RI. This copy prints one state row only; a multi-state W-2 (a second row in boxes 15-20) is out of scope for this schema version. (row 2 of the two printed &#x27;boxes 15-20&#x27; entry rows). The employer-reference register variant prints only one row - null there.&quot;,
+          &quot;title&quot;: &quot;15 State&quot;
+        },
+        &quot;employer_state_id&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;type&quot;: &quot;string&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ],
+          &quot;default&quot;: null,
+          &quot;description&quot;: &quot;Box 15 &#x27;Employer\u2019s state ID number&#x27; (the register variant caption reads &#x27;state ID No.&#x27;). The state identification number verbatim as printed, keeping leading zeros, e.g. 05051707900. (row 2 of the two printed &#x27;boxes 15-20&#x27; entry rows). The employer-reference register variant prints only one row - null there.&quot;,
+          &quot;title&quot;: &quot;15 Employer\u2019s state ID number&quot;
+        },
+        &quot;state_wages&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;type&quot;: &quot;number&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ],
+          &quot;default&quot;: null,
+          &quot;description&quot;: &quot;Box &#x27;16 State wages, tips, etc.&#x27; for the single printed state row. Dollar amount as a JSON number, exactly as printed; null if the box is blank. (row 2 of the two printed &#x27;boxes 15-20&#x27; entry rows). The employer-reference register variant prints only one row - null there.&quot;,
+          &quot;title&quot;: &quot;16 State wages, tips, etc.&quot;
+        },
+        &quot;state_income_tax&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;type&quot;: &quot;number&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ],
+          &quot;default&quot;: null,
+          &quot;description&quot;: &quot;Box &#x27;17 State income tax&#x27; for the single printed state row. Dollar amount as a JSON number, exactly as printed; null if the box is blank. (row 2 of the two printed &#x27;boxes 15-20&#x27; entry rows). The employer-reference register variant prints only one row - null there.&quot;,
+          &quot;title&quot;: &quot;17 State income tax&quot;
+        },
+        &quot;local_wages&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;type&quot;: &quot;number&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ],
+          &quot;default&quot;: null,
+          &quot;description&quot;: &quot;Amount in box &#x27;18 Local wages, tips, etc.&#x27; - the LOCAL wages column, distinct from box &#x27;16 State wages, tips, etc.&#x27; (do not copy the state amount here). Null when box 18 is blank, as it is on all RI register docs. (row 2 of the two printed &#x27;boxes 15-20&#x27; entry rows).&quot;,
+          &quot;title&quot;: &quot;18 Local wages, tips, etc.&quot;
+        },
+        &quot;local_income_tax&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;type&quot;: &quot;number&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ],
+          &quot;default&quot;: null,
+          &quot;description&quot;: &quot;Amount in box &#x27;19 Local income tax&#x27; - the LOCAL tax column, distinct from box &#x27;17 State income tax&#x27; (do not copy the state amount here). Null when box 19 is blank, as it is on all RI register docs. (row 2 of the two printed &#x27;boxes 15-20&#x27; entry rows).&quot;,
+          &quot;title&quot;: &quot;19 Local income tax&quot;
+        },
+        &quot;locality_name&quot;: {
+          &quot;anyOf&quot;: [
+            {
+              &quot;type&quot;: &quot;string&quot;
+            },
+            {
+              &quot;type&quot;: &quot;null&quot;
+            }
+          ],
+          &quot;default&quot;: null,
+          &quot;description&quot;: &quot;Box &#x27;20 Locality name&#x27; for the single printed state row, verbatim as printed; null if the box is blank (blank on all wave docs). (row 2 of the two printed &#x27;boxes 15-20&#x27; entry rows). The employer-reference register variant prints only one row - null there.&quot;,
+          &quot;title&quot;: &quot;20 Locality name&quot;
+        }
+      },
+      &quot;additionalProperties&quot;: false
+    }
+  },
+  &quot;properties&quot;: {
+    &quot;employee_ssn&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;Box &#x27;a Employee&#x27;s social security number&#x27;. These copies print a masked value, often with overstruck characters. Policy: if the last four digits are legibly printed (e.g. &#x27;XXX-XX-9186&#x27;), return &#x27;XXX-XX-&#x27; plus those digits; if the tail is fully masked/overstruck, return exactly &#x27;XXX-XX-XXXX&#x27; (canonical 4-X form) - do NOT try to count the struck-out X characters. Null only if box a is entirely absent.&quot;,
+      &quot;title&quot;: &quot;a Employee\u2019s social security number&quot;
+    },
+    &quot;employer_ein&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;Box &#x27;b Employer identification number (EIN)&#x27;; the register variant caption under letter b reads &#x27;identification number&#x27;. The employer federal EIN verbatim as printed, keeping the hyphen, e.g. 05-0517079.&quot;,
+      &quot;title&quot;: &quot;b Employer identification number (EIN)&quot;
+    },
+    &quot;employer_name&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;First line of box &#x27;c Employer\u2019s name, address, and ZIP code&#x27; \u2014 the employer name only, verbatim as printed, e.g. PASCOAG UTILITY DISTRICT.&quot;,
+      &quot;title&quot;: &quot;c Employer name&quot;
+    },
+    &quot;employer_address&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;The lines of box &#x27;c Employer\u2019s name, address, and ZIP code&#x27; after the employer name \u2014 street or PO box, then city, state and ZIP, verbatim. Join printed lines with comma + space, e.g. PO BOX 107, PASCOAG RI 02859.&quot;,
+      &quot;title&quot;: &quot;c Employer address and ZIP code&quot;
+    },
+    &quot;void&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;boolean&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;The &#x27;Void&#x27; checkbox printed beside box d. A mark (X or similar) INSIDE the box counts; the box outline alone is not a mark. Two-state policy: true ONLY if a mark is printed inside the box; false otherwise (unmarked, or this checkbox not printed on this copy). Never return null for this field.&quot;,
+      &quot;title&quot;: &quot;Void checkbox&quot;
+    },
+    &quot;employee_name&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;Employee full name as printed. Blank form boxes: &#x27;e Employee\u2019s first name and initial&#x27;, &#x27;Last name&#x27;, &#x27;Suff.&#x27;; the register variant prints the name as the first line of the combined block &#x27;e Employee\u2019s name, address, and ZIP code&#x27;. Keep middle initial and any suffix verbatim, e.g. JENNA M ANTHONY.&quot;,
+      &quot;title&quot;: &quot;e Employee name (first name and initial, last name, suffix)&quot;
+    },
+    &quot;employee_address&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;Employee address: box &#x27;f Employee\u2019s address and ZIP code&#x27; on the blank form; the register variant prints it as the lines after the name inside the combined block &#x27;e Employee\u2019s name, address, and ZIP code&#x27;. Join printed lines with comma + space \u2014 street, then city, state and ZIP, verbatim, e.g. 221 EMERSON RD, HARRISVILLE RI 02830.&quot;,
+      &quot;title&quot;: &quot;f Employee address and ZIP code&quot;
+    },
+    &quot;box_1_wages&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;number&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;Box &#x27;1 Wages, tips, other compensation&#x27;. Dollar amount as a JSON number, exactly as printed (this register prints plain decimals such as 40093.72 \u2014 no thousands separators or dollar signs); null if the box is blank.&quot;,
+      &quot;title&quot;: &quot;1 Wages, tips, other compensation&quot;
+    },
+    &quot;box_2_federal_income_tax_withheld&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;number&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;Box &#x27;2 Federal income tax withheld&#x27;. Dollar amount as a JSON number, exactly as printed; null if the box is blank.&quot;,
+      &quot;title&quot;: &quot;2 Federal income tax withheld&quot;
+    },
+    &quot;box_3_social_security_wages&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;number&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;Box &#x27;3 Social security wages&#x27;. Dollar amount as a JSON number, exactly as printed; null if the box is blank.&quot;,
+      &quot;title&quot;: &quot;3 Social security wages&quot;
+    },
+    &quot;box_4_social_security_tax_withheld&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;number&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;Box &#x27;4 Social security tax withheld&#x27;. Dollar amount as a JSON number, exactly as printed; null if the box is blank.&quot;,
+      &quot;title&quot;: &quot;4 Social security tax withheld&quot;
+    },
+    &quot;box_5_medicare_wages_and_tips&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;number&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;Box &#x27;5 Medicare wages and tips&#x27;. Dollar amount as a JSON number, exactly as printed; null if the box is blank.&quot;,
+      &quot;title&quot;: &quot;5 Medicare wages and tips&quot;
+    },
+    &quot;box_6_medicare_tax_withheld&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;number&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;Box &#x27;6 Medicare tax withheld&#x27;. Dollar amount as a JSON number, exactly as printed; null if the box is blank.&quot;,
+      &quot;title&quot;: &quot;6 Medicare tax withheld&quot;
+    },
+    &quot;box_7_social_security_tips&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;number&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;Box &#x27;7 Social security tips&#x27;. Dollar amount as a JSON number, exactly as printed; null if the box is blank (printed but typically empty on this wave).&quot;,
+      &quot;title&quot;: &quot;7 Social security tips&quot;
+    },
+    &quot;box_8_allocated_tips&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;number&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;Box &#x27;8 Allocated tips&#x27;. Dollar amount as a JSON number, exactly as printed; null if the box is blank (printed but typically empty on this wave).&quot;,
+      &quot;title&quot;: &quot;8 Allocated tips&quot;
+    },
+    &quot;box_10_dependent_care_benefits&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;number&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;Box &#x27;10 Dependent care benefits&#x27;. Dollar amount as a JSON number, exactly as printed; null if the box is blank (printed but typically empty on this wave).&quot;,
+      &quot;title&quot;: &quot;10 Dependent care benefits&quot;
+    },
+    &quot;box_11_nonqualified_plans&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;number&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;Box &#x27;11 Nonqualified plans&#x27;. Dollar amount as a JSON number, exactly as printed; null if the box is blank (printed but typically empty on this wave).&quot;,
+      &quot;title&quot;: &quot;11 Nonqualified plans&quot;
+    },
+    &quot;box_12&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;array&quot;,
+          &quot;items&quot;: {
+            &quot;$ref&quot;: &quot;#/$defs/Box12Entry&quot;
+          }
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;Box 12 coded amounts. The blank form prints four slots &#x27;12a See instructions for box 12&#x27;, &#x27;12b&#x27;, &#x27;12c&#x27;, &#x27;12d&#x27;, each with a vertical &#x27;Code&#x27; rail; the register variant prints a single column headed &#x27;12 See Instrs. for Box 12&#x27; with one code letter and amount per line. One row per printed code entry, in print order; null if this copy prints no Box 12 entries.&quot;,
+      &quot;title&quot;: &quot;12 Box 12 coded amounts&quot;
+    },
+    &quot;box_13_statutory_employee&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;boolean&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;&#x27;13 Statutory employee&#x27; checkbox in the box-13 grid. Two-state policy: true ONLY if a mark is printed inside the box; false otherwise (unmarked, or this checkbox not printed on this copy). Never return null for this field.&quot;,
+      &quot;title&quot;: &quot;13 Statutory employee&quot;
+    },
+    &quot;box_13_retirement_plan&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;boolean&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;&#x27;Retirement plan&#x27; checkbox in the box-13 grid. Two-state policy: true ONLY if a mark is printed inside the box; false otherwise (unmarked, or this checkbox not printed on this copy). Never return null for this field.&quot;,
+      &quot;title&quot;: &quot;13 Retirement plan&quot;
+    },
+    &quot;box_13_third_party_sick_pay&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;boolean&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;&#x27;Third-party sick pay&#x27; checkbox in the box-13 grid. Two-state policy: true ONLY if a mark is printed inside the box; false otherwise (unmarked, or this checkbox not printed on this copy). Never return null for this field.&quot;,
+      &quot;title&quot;: &quot;13 Third-party sick pay&quot;
+    },
+    &quot;box_13_subtotal&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;boolean&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;&#x27;Subtotal&#x27; checkbox in the box-13 grid (register variant only). Two-state policy: true ONLY if a mark is printed inside the box; false otherwise (unmarked, or this checkbox not printed on this copy). Never return null for this field.&quot;,
+      &quot;title&quot;: &quot;13 Subtotal (register variant only)&quot;
+    },
+    &quot;box_14_other&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;array&quot;,
+          &quot;items&quot;: {
+            &quot;$ref&quot;: &quot;#/$defs/Box14Entry&quot;
+          }
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;Box &#x27;14 Other&#x27; \u2014 employer-defined deductions and benefits, e.g. RISDI on this wave. One row per printed description and amount pair, in print order; null if box 14 is blank.&quot;,
+      &quot;title&quot;: &quot;14 Other&quot;
+    },
+    &quot;state_local_row_1&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;$ref&quot;: &quot;#/$defs/StateLocalRow1&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;The first printed entry row of boxes &#x27;15 State&#x27; through &#x27;20 Locality name&#x27;. Null when this row is entirely blank or not printed.&quot;,
+      &quot;title&quot;: &quot;State/Local Row 1&quot;
+    },
+    &quot;state_local_row_2&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;$ref&quot;: &quot;#/$defs/StateLocalRow2&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;The second printed entry row of boxes &#x27;15 State&#x27; through &#x27;20 Locality name&#x27;. Null when this row is entirely blank or not printed.&quot;,
+      &quot;title&quot;: &quot;State/Local Row 2&quot;
+    },
+    &quot;control_number_line1&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;Box &#x27;d Control number&#x27; - the FIRST printed line only (e.g. &#x27;0012-0012N426&#x27;). Verbatim.&quot;,
+      &quot;title&quot;: &quot;Control Number Line 1&quot;
+    },
+    &quot;control_number_line2&quot;: {
+      &quot;anyOf&quot;: [
+        {
+          &quot;type&quot;: &quot;string&quot;
+        },
+        {
+          &quot;type&quot;: &quot;null&quot;
+        }
+      ],
+      &quot;default&quot;: null,
+      &quot;description&quot;: &quot;Box &#x27;d Control number&#x27; - the SECOND printed line only (e.g. &#x27;0000000165-ELECTR&#x27;), the register sequence/type line. Verbatim; null if the box prints a single line.&quot;,
+      &quot;title&quot;: &quot;Control Number Line 2&quot;
+    }
+  },
+  &quot;title&quot;: &quot;Form W-2 Wage and Tax Statement (2020)&quot;,
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;additionalProperties&quot;: false
+}
+```
+
+Rules:
+- Use null for fields not present in the document.
+- For list/array fields, enumerate every relevant row visible in the document; never collapse rows.
+- For large regular tables, prefer writing and running a local script to parse/enumerate rows.
+- For forms, prefer direct field extraction from the document content.
+- Write the resulting JSON object to ./output.json and validate that it is valid JSON before stopping.
+- Do not print the JSON to your assistant output.
+- Also write ./citations.json: a JSON array of evidence objects, one per non-null field you extracted -- every filled-in field in your output.json, including text fields such as names, titles, labels and codes, not only numbers or table cells -- each with the keys &quot;field_path&quot;, &quot;page&quot; and &quot;bbox&quot;.
+  - &quot;field_path&quot; is the dotted path of the field in your output.json, with a bracketed index for array rows: `invoice_number`, `line_items[0].amount`.
+  - &quot;page&quot; is the 1-indexed page the value was read from.
+  - &quot;bbox&quot; is [x, y, width, height] as fractions of that page&#x27;s width and height in [0, 1], origin at the TOP-LEFT corner of the page.
+  - Box the value itself -- the filled-in text, number, or checkbox mark -- not the surrounding row, label, or form section. For a checkbox field that is false because its box is printed but unchecked, box the empty checkbox square itself. If one field stands for a whole Yes/No pair and is false because No is checked, box the No box only. If Yes and No are separate fields, box each field&#x27;s own square. For a checkbox, box the whole printed square including its border.
+  - You may use any tool available to locate values on the page (e.g. a PDF text-extraction library that reports word rectangles, or reading the rendered page yourself). Convert PDF-space rectangles to the top-left-origin fractions above before writing them.
+  - Omit a field entirely rather than guessing a location for it.</pre></li>
+<li class="event kind-system"><div class="event-type"><span class="index">2</span>system · init</div><pre class="content">{
+  &quot;type&quot;: &quot;system&quot;,
+  &quot;subtype&quot;: &quot;init&quot;,
+  &quot;cwd&quot;: &quot;/private/var/folders/r5/dvty26f968gcckj337f3nbdr0000gn/T/tmpeve3s7pn&quot;,
+  &quot;session_id&quot;: &quot;41a5451d-8532-4e24-a9f5-731b6cf9343d&quot;,
+  &quot;tools&quot;: [
+    &quot;Task&quot;,
+    &quot;Artifact&quot;,
+    &quot;ArtifactComments&quot;,
+    &quot;ArtifactData&quot;,
+    &quot;Bash&quot;,
+    &quot;CronCreate&quot;,
+    &quot;CronDelete&quot;,
+    &quot;CronList&quot;,
+    &quot;DesignSync&quot;,
+    &quot;Edit&quot;,
+    &quot;EnterWorktree&quot;,
+    &quot;ExitWorktree&quot;,
+    &quot;ListAgents&quot;,
+    &quot;Monitor&quot;,
+    &quot;NotebookEdit&quot;,
+    &quot;PushNotification&quot;,
+    &quot;Read&quot;,
+    &quot;RemoteTrigger&quot;,
+    &quot;ReportFindings&quot;,
+    &quot;ScheduleWakeup&quot;,
+    &quot;SendMessage&quot;,
+    &quot;ShareOnboardingGuide&quot;,
+    &quot;Skill&quot;,
+    &quot;TaskStop&quot;,
+    &quot;ToolSearch&quot;,
+    &quot;Workflow&quot;,
+    &quot;Write&quot;
+  ],
+  &quot;mcp_servers&quot;: [],
+  &quot;model&quot;: &quot;claude-opus-5-5&quot;,
+  &quot;permissionMode&quot;: &quot;bypassPermissions&quot;,
+  &quot;slash_commands&quot;: [
+    &quot;deep-research&quot;,
+    &quot;design&quot;,
+    &quot;slides&quot;,
+    &quot;design-sync&quot;,
+    &quot;dataviz&quot;,
+    &quot;artifact-diagramming&quot;,
+    &quot;artifact-capabilities&quot;,
+    &quot;update-config&quot;,
+    &quot;verify&quot;,
+    &quot;debug&quot;,
+    &quot;code-review&quot;,
+    &quot;simplify&quot;,
+    &quot;batch&quot;,
+    &quot;fewer-permission-prompts&quot;,
+    &quot;doctor&quot;,
+    &quot;loop&quot;,
+    &quot;schedule&quot;,
+    &quot;claude-api&quot;,
+    &quot;workflow-authoring&quot;,
+    &quot;run&quot;,
+    &quot;run-skill-generator&quot;,
+    &quot;plugin-authoring&quot;,
+    &quot;advisor&quot;,
+    &quot;agents&quot;,
+    &quot;auto-mode-setup&quot;,
+    &quot;autocompact&quot;,
+    &quot;clear&quot;,
+    &quot;color&quot;,
+    &quot;compact&quot;,
+    &quot;config&quot;,
+    &quot;output-style&quot;,
+    &quot;context&quot;,
+    &quot;effort&quot;,
+    &quot;fast&quot;,
+    &quot;focus&quot;,
+    &quot;heapdump&quot;,
+    &quot;init&quot;,
+    &quot;mcp&quot;,
+    &quot;import&quot;,
+    &quot;model&quot;,
+    &quot;__remote-workflow&quot;,
+    &quot;workflow-launch-exec&quot;,
+    &quot;reload-plugins&quot;,
+    &quot;reload-skills&quot;,
+    &quot;rename&quot;,
+    &quot;security-review&quot;,
+    &quot;usage-credits&quot;,
+    &quot;extra-usage&quot;,
+    &quot;usage&quot;,
+    &quot;insights&quot;,
+    &quot;recap&quot;,
+    &quot;skill-doctor&quot;,
+    &quot;goal&quot;,
+    &quot;design-consent&quot;,
+    &quot;design-revoke&quot;,
+    &quot;list-agents&quot;,
+    &quot;team-onboarding&quot;,
+    &quot;anthropic-skills:docs&quot;,
+    &quot;anthropic-skills:docx&quot;,
+    &quot;anthropic-skills:google-workspace&quot;,
+    &quot;anthropic-skills:import-memory&quot;,
+    &quot;anthropic-skills:morning&quot;,
+    &quot;anthropic-skills:pdf&quot;,
+    &quot;anthropic-skills:pptx&quot;,
+    &quot;anthropic-skills:skill-creator&quot;,
+    &quot;anthropic-skills:xlsx&quot;
+  ],
+  &quot;terminal_slash_commands&quot;: [
+    &quot;doctor&quot;,
+    &quot;color&quot;,
+    &quot;focus&quot;,
+    &quot;reload-plugins&quot;
+  ],
+  &quot;apiKeySource&quot;: &quot;none&quot;,
+  &quot;claude_code_version&quot;: &quot;2.1.289&quot;,
+  &quot;output_style&quot;: &quot;default&quot;,
+  &quot;agents&quot;: [
+    &quot;claude&quot;,
+    &quot;claude-code-guide&quot;,
+    &quot;Explore&quot;,
+    &quot;general-purpose&quot;,
+    &quot;Plan&quot;,
+    &quot;statusline-setup&quot;
+  ],
+  &quot;skills&quot;: [
+    &quot;deep-research&quot;,
+    &quot;design&quot;,
+    &quot;slides&quot;,
+    &quot;design-sync&quot;,
+    &quot;dataviz&quot;,
+    &quot;artifact-diagramming&quot;,
+    &quot;artifact-capabilities&quot;,
+    &quot;update-config&quot;,
+    &quot;verify&quot;,
+    &quot;debug&quot;,
+    &quot;code-review&quot;,
+    &quot;simplify&quot;,
+    &quot;batch&quot;,
+    &quot;fewer-permission-prompts&quot;,
+    &quot;doctor&quot;,
+    &quot;loop&quot;,
+    &quot;schedule&quot;,
+    &quot;claude-api&quot;,
+    &quot;workflow-authoring&quot;,
+    &quot;run&quot;,
+    &quot;run-skill-generator&quot;,
+    &quot;plugin-authoring&quot;,
+    &quot;anthropic-skills:docs&quot;,
+    &quot;anthropic-skills:docx&quot;,
+    &quot;anthropic-skills:google-workspace&quot;,
+    &quot;anthropic-skills:import-memory&quot;,
+    &quot;anthropic-skills:morning&quot;,
+    &quot;anthropic-skills:pdf&quot;,
+    &quot;anthropic-skills:pptx&quot;,
+    &quot;anthropic-skills:skill-creator&quot;,
+    &quot;anthropic-skills:xlsx&quot;
+  ],
+  &quot;plugins&quot;: [
+    {
+      &quot;name&quot;: &quot;cc-plugin-sec-default&quot;,
+      &quot;path&quot;: &quot;builtin&quot;,
+      &quot;source&quot;: &quot;cc-plugin-sec-default@builtin&quot;
+    },
+    {
+      &quot;name&quot;: &quot;cc-plugin-agents-md&quot;,
+      &quot;path&quot;: &quot;builtin&quot;,
+      &quot;source&quot;: &quot;cc-plugin-agents-md@builtin&quot;
+    },
+    {
+      &quot;name&quot;: &quot;cc-plugin-telemetry&quot;,
+      &quot;path&quot;: &quot;builtin&quot;,
+      &quot;source&quot;: &quot;cc-plugin-telemetry@builtin&quot;
+    },
+    {
+      &quot;name&quot;: &quot;cc-plugin-plugin-authoring&quot;,
+      &quot;path&quot;: &quot;builtin&quot;,
+      &quot;source&quot;: &quot;cc-plugin-plugin-authoring@builtin&quot;
+    }
+  ],
+  &quot;capabilities&quot;: [
+    &quot;interrupt_receipt_v1&quot;,
+    &quot;interrupt_cancel_queued_v1&quot;,
+    &quot;interrupt_send_now_v1&quot;,
+    &quot;msg_lifecycle_v1&quot;,
+    &quot;sdk_mcp_tools_list_changed&quot;,
+    &quot;sdk_mcp_manifests&quot;,
+    &quot;mcp_read_resource_v1&quot;,
+    &quot;mcp_tool_ui_meta_v1&quot;,
+    &quot;ui_surface_v1&quot;
+  ],
+  &quot;analytics_disabled&quot;: false,
+  &quot;product_feedback_disabled&quot;: true,
+  &quot;uuid&quot;: &quot;47fe9bee-c55d-4242-9e14-82c2b4aee523&quot;,
+  &quot;memory_paths&quot;: {
+    &quot;auto&quot;: &quot;/Users/ajinkyabhalerao/.claude/projects/-private-var-folders-r5-dvty26f968gcckj337f3nbdr0000gn-T-tmpeve3s7pn/memory/&quot;
+  },
+  &quot;scratchpad_path&quot;: &quot;/private/tmp/claude-501/-private-var-folders-r5-dvty26f968gcckj337f3nbdr0000gn-T-tmpeve3s7pn/41a5451d-8532-4e24-a9f5-731b6cf9343d/scratchpad&quot;,
+  &quot;messaging_socket_path&quot;: &quot;/tmp/cc-socks/45827.sock&quot;,
+  &quot;fast_mode_state&quot;: &quot;off&quot;,
+  &quot;fast_mode_disabled_reason&quot;: &quot;unknown&quot;,
+  &quot;per_turn_effort_active&quot;: true,
+  &quot;view_mode&quot;: &quot;default&quot;,
+  &quot;startup_timing&quot;: {
+    &quot;entrypoint&quot;: &quot;claude-vscode&quot;,
+    &quot;warm_spare_claimed&quot;: false,
+    &quot;plugin_full_loads&quot;: 0,
+    &quot;user_context_builds&quot;: 1,
+    &quot;sdk_mcp_dial_runs&quot;: 0,
+    &quot;sdk_mcp_servers_dialed&quot;: 0,
+    &quot;flag_fetch_kick&quot;: &quot;not_eligible&quot;,
+    &quot;flag_fetch_kick_judged_at_ms&quot;: 378,
+    &quot;phases&quot;: {
+      &quot;node_boot_ms&quot;: 278,
+      &quot;settings_load_ms&quot;: 0,
+      &quot;pre_action_mdm_keychain_ms&quot;: 5,
+      &quot;pre_action_init_ms&quot;: 90,
+      &quot;pre_action_migrations_ms&quot;: 0,
+      &quot;pre_action_managed_settings_ms&quot;: 5,
+      &quot;pre_action_ms&quot;: 116,
+      &quot;permission_context_ms&quot;: 32,
+      &quot;setup_import_ms&quot;: 1,
+      &quot;skills_load_ms&quot;: 51,
+      &quot;setup_uds_messaging_ms&quot;: 54,
+      &quot;setup_hooks_snapshot_ms&quot;: 0,
+      &quot;setup_file_watcher_ms&quot;: 0,
+      &quot;setup_release_notes_ms&quot;: 36,
+      &quot;setup_ms&quot;: 89,
+      &quot;tools_commands_load_ms&quot;: 25,
+      &quot;model_catalog_decision_ms&quot;: 6,
+      &quot;mcp_connect_ms&quot;: 3,
+      &quot;print_import_ms&quot;: 11,
+      &quot;headless_prologue_ms&quot;: 2,
+      &quot;hooks_init_ms&quot;: 38,
+      &quot;initial_messages_load_ms&quot;: 5,
+      &quot;headless_post_load_ms&quot;: 1,
+      &quot;input_ready_ms&quot;: 626,
+      &quot;first_message_read_ms&quot;: 631,
+      &quot;sdk_mcp_update_ms&quot;: 1,
+      &quot;first_message_handle_ms&quot;: 1,
+      &quot;first_message_handle_cpu_ms&quot;: 1,
+      &quot;first_message_handle_loop_lag_ms&quot;: 0,
+      &quot;mcp_prewait_ms&quot;: 0,
+      &quot;qe_system_prompt_ms&quot;: 50,
+      &quot;prompt_submit_hooks_ms&quot;: 1,
+      &quot;qe_plugin_skills_load_ms&quot;: 3,
+      &quot;init_emit_ms&quot;: 1
+    },
+    &quot;time_origin_ms&quot;: 1791819409139.646,
+    &quot;phase_start_ms&quot;: {
+      &quot;node_boot_ms&quot;: 0,
+      &quot;settings_load_ms&quot;: 279,
+      &quot;pre_action_mdm_keychain_ms&quot;: 282,
+      &quot;pre_action_init_ms&quot;: 287,
+      &quot;pre_action_migrations_ms&quot;: 378,
+      &quot;pre_action_managed_settings_ms&quot;: 378,
+      &quot;pre_action_ms&quot;: 282,
+      &quot;permission_context_ms&quot;: 404,
+      &quot;setup_import_ms&quot;: 438,
+      &quot;skills_load_ms&quot;: 443,
+      &quot;setup_uds_messaging_ms&quot;: 442,
+      &quot;setup_hooks_snapshot_ms&quot;: 497,
+      &quot;setup_file_watcher_ms&quot;: 497,
+      &quot;setup_release_notes_ms&quot;: 499,
+      &quot;setup_ms&quot;: 446,
+      &quot;tools_commands_load_ms&quot;: 540,
+      &quot;model_catalog_decision_ms&quot;: 566,
+      &quot;mcp_connect_ms&quot;: 581,
+      &quot;print_import_ms&quot;: 598,
+      &quot;headless_prologue_ms&quot;: 610,
+      &quot;hooks_init_ms&quot;: 579,
+      &quot;initial_messages_load_ms&quot;: 612,
+      &quot;headless_post_load_ms&quot;: 617,
+      &quot;input_ready_ms&quot;: 0,
+      &quot;first_message_read_ms&quot;: 0,
+      &quot;sdk_mcp_update_ms&quot;: 631,
+      &quot;first_message_handle_ms&quot;: 631,
+      &quot;mcp_prewait_ms&quot;: 633,
+      &quot;qe_system_prompt_ms&quot;: 638,
+      &quot;prompt_submit_hooks_ms&quot;: 702,
+      &quot;qe_plugin_skills_load_ms&quot;: 705,
+      &quot;init_emit_ms&quot;: 708
+    }
+  }
+}</pre></li>
+<li class="event kind-rate-limit"><div class="event-type"><span class="index">3</span>rate_limit_event</div><pre class="content">{
+  &quot;type&quot;: &quot;rate_limit_event&quot;,
+  &quot;rate_limit_info&quot;: {
+    &quot;status&quot;: &quot;allowed&quot;,
+    &quot;resetsAt&quot;: 1791820800,
+    &quot;rateLimitType&quot;: &quot;five_hour&quot;,
+    &quot;overageStatus&quot;: &quot;allowed&quot;,
+    &quot;overageResetsAt&quot;: 1793491200,
+    &quot;isUsingOverage&quot;: false,
+    &quot;unifiedWindows&quot;: {
+      &quot;five_hour&quot;: {
+        &quot;utilization&quot;: 0.12,
+        &quot;resetsAt&quot;: 1791820800
+      },
+      &quot;seven_day&quot;: {
+        &quot;utilization&quot;: 0.39,
+        &quot;resetsAt&quot;: 1792044000
+      }
+    }
+  },
+  &quot;uuid&quot;: &quot;bd7243f6-5c06-4e6d-8a34-4cfb8b3797b7&quot;,
+  &quot;session_id&quot;: &quot;41a5451d-8532-4e24-a9f5-731b6cf9343d&quot;
+}</pre></li>
+<li class="event kind-tool-use"><div class="event-type"><span class="index">4</span>assistant · tool_use · Bash</div><pre class="content">cd /private/var/folders/r5/dvty26f968gcckj337f3nbdr0000gn/T/tmpeve3s7pn; ls; python3 -c &quot;import pdfplumber;print(&#x27;ok&#x27;)&quot;; pdftotext -layout input.pdf - | head -100; pdfinfo input.pdf</pre></li>
+<li class="event kind-rate-limit"><div class="event-type"><span class="index">5</span>rate_limit_event</div><pre class="content">{
+  &quot;type&quot;: &quot;rate_limit_event&quot;,
+  &quot;rate_limit_info&quot;: {
+    &quot;status&quot;: &quot;allowed&quot;,
+    &quot;resetsAt&quot;: 1791820800,
+    &quot;rateLimitType&quot;: &quot;five_hour&quot;,
+    &quot;overageStatus&quot;: &quot;allowed&quot;,
+    &quot;overageResetsAt&quot;: 1793491200,
+    &quot;isUsingOverage&quot;: false,
+    &quot;unifiedWindows&quot;: {
+      &quot;five_hour&quot;: {
+        &quot;utilization&quot;: 0.13,
+        &quot;resetsAt&quot;: 1791820800
+      },
+      &quot;seven_day&quot;: {
+        &quot;utilization&quot;: 0.39,
+        &quot;resetsAt&quot;: 1792044000
+      }
+    }
+  },
+  &quot;uuid&quot;: &quot;32642754-e44b-4bf0-999a-e6d0e5f2b539&quot;,
+  &quot;session_id&quot;: &quot;41a5451d-8532-4e24-a9f5-731b6cf9343d&quot;
+}</pre></li>
+<li class="event kind-tool-result"><div class="event-type"><span class="index">6</span>user · tool_result</div><pre class="content">claude_stderr.log
+input.pdf
+mcp_config.json
+ok
+Custom Metadata: no
+Metadata Stream: no
+Tagged:          no
+UserProperties:  no
+Suspects:        no
+Form:            none
+JavaScript:      no
+Pages:           1
+Encrypted:       no
+Page size:       491.4 x 158.4 pts
+Page rot:        0
+File size:       154691 bytes
+Optimized:       no
+PDF version:     1.4</pre></li>
+<li class="event kind-text"><div class="event-type"><span class="index">7</span>assistant · text</div><pre class="content">No text layer. Render it.</pre></li>
+<li class="event kind-tool-use"><div class="event-type"><span class="index">8</span>assistant · tool_use · Bash</div><pre class="content">cd /private/var/folders/r5/dvty26f968gcckj337f3nbdr0000gn/T/tmpeve3s7pn; pdftoppm -r 300 -png input.pdf page; ls; python3 -c &quot;from PIL import Image;im=Image.open(&#x27;page-1.png&#x27;);print(im.size)&quot;; which tesseract</pre></li>
+<li class="event kind-tool-result"><div class="event-type"><span class="index">9</span>user · tool_result</div><pre class="content">claude_stderr.log
+input.pdf
+mcp_config.json
+page-1.png
+(2048, 660)
+/opt/homebrew/bin/tesseract</pre></li>
+<li class="event kind-tool-use"><div class="event-type"><span class="index">10</span>assistant · tool_use · Read</div><pre class="content">{
+  &quot;file_path&quot;: &quot;/private/var/folders/r5/dvty26f968gcckj337f3nbdr0000gn/T/tmpeve3s7pn/page-1.png&quot;
+}</pre></li>
+<li class="event kind-tool-result"><div class="event-type"><span class="index">11</span>user · tool_result</div><pre class="content"></pre></li>
+<li class="event kind-text"><div class="event-type"><span class="index">12</span>user · text</div><pre class="content">[Image: original 2048x660, displayed at 2000x645. Multiply coordinates by 1.02 to map to original image.]</pre></li>
+<li class="event kind-thinking-tokens"><div class="event-type"><span class="index">13</span>system · thinking_tokens</div><pre class="content">{
+  &quot;type&quot;: &quot;system&quot;,
+  &quot;subtype&quot;: &quot;thinking_tokens&quot;,
+  &quot;estimated_tokens&quot;: 50,
+  &quot;estimated_tokens_delta&quot;: 50,
+  &quot;session_id&quot;: &quot;41a5451d-8532-4e24-a9f5-731b6cf9343d&quot;,
+  &quot;uuid&quot;: &quot;f1284ff9-549e-4905-bc5d-89319cafc21d&quot;
+}</pre></li>
+<li class="event kind-thinking-tokens"><div class="event-type"><span class="index">14</span>system · thinking_tokens</div><pre class="content">{
+  &quot;type&quot;: &quot;system&quot;,
+  &quot;subtype&quot;: &quot;thinking_tokens&quot;,
+  &quot;estimated_tokens&quot;: 100,
+  &quot;estimated_tokens_delta&quot;: 50,
+  &quot;session_id&quot;: &quot;41a5451d-8532-4e24-a9f5-731b6cf9343d&quot;,
+  &quot;uuid&quot;: &quot;869580b3-0566-4621-af01-f709e7d4bdbf&quot;
+}</pre></li>
+<li class="event kind-thinking-tokens"><div class="event-type"><span class="index">15</span>system · thinking_tokens</div><pre class="content">{
+  &quot;type&quot;: &quot;system&quot;,
+  &quot;subtype&quot;: &quot;thinking_tokens&quot;,
+  &quot;estimated_tokens&quot;: 253,
+  &quot;estimated_tokens_delta&quot;: 153,
+  &quot;session_id&quot;: &quot;41a5451d-8532-4e24-a9f5-731b6cf9343d&quot;,
+  &quot;uuid&quot;: &quot;5e868f6e-a6ab-4666-9d75-ee1c84d40dbc&quot;
+}</pre></li>
+<li class="event kind-thinking"><div class="event-type"><span class="index">16</span>assistant · thinking</div><pre class="content">N/A</pre></li>
+<li class="event kind-tool-use"><div class="event-type"><span class="index">17</span>assistant · tool_use · Bash</div><pre class="content">cd /private/var/folders/r5/dvty26f968gcckj337f3nbdr0000gn/T/tmpeve3s7pn; tesseract page-1.png - --psm 11 tsv 2&gt;/dev/null | awk -F&#x27;\t&#x27; &#x27;$12!=&quot;&quot; &amp;&amp; $11&gt;0 {print $7,$8,$9,$10,$12}&#x27;</pre></li>
+<li class="event kind-tool-result"><div class="event-type"><span class="index">18</span>user · tool_result</div><pre class="content">left top width height text
+40 15 80 26 Form
+131 15 60 25 W-2
+201 15 87 33 Wage
+300 15 57 26 and
+368 16 56 25 Tax
+435 16 161 26 Statement
+605 17 75 26 2020
+907 17 184 27 EMPLOYER
+1104 18 204 26 REFERENCE
+1321 19 92 26 COPY
+1424 32 9 6 -
+1444 18 49 27 DO
+1505 19 68 26 NOT
+1585 19 70 25 FILE
+46 61 9 18 id
+69 61 63 18 Contro}
+139 61 67 18 number
+602 63 38 18 Void
+662 67 8 14 fc
+802 67 57 16 name,
+869 63 81 20 address,
+960 64 34 17 and
+1003 64 31 18 ZIP
+1044 64 45 18 code
+258 66 227 20 0012-0012N426
+1350 77 110 21 Department
+1470 78 18 17 of
+1497 78 28 17 the
+1535 78 83 21 Treasury
+1628 86 6 3 -
+1643 77 72 18 Internal
+1726 77 82 18 Revenue
+1817 77 70 18 Service
+258 99 300 20 0000000163-ELECTR
+1349 105 42 18 OMB
+1403 105 25 18 No.
+1444 104 104 19 1545-0008
+46 131 10 18 Ib
+70 127 88 19 Employers
+152 123 10 30 i
+253 128 56 15 number
+361 136 9 14 a
+472 128 42 16 social
+519 128 58 21 security
+583 129 53 15 number
+671 116 125 19 PASCOAG
+814 118 125 17 UTILITY
+958 117 141 20 DISTRICT
+672 150 34 19 PO
+725 150 52 19 BOX
+798 150 48 19 107
+1337 153 6 16 1
+1360 153 61 21 Wages,
+1430 153 35 21 tins,
+1475 153 46 17 other
+1527 153 119 21 compensation
+1682 153 10 16 2
+1699 152 61 18 Federal
+1767 156 63 14 income
+1838 153 25 16 tax
+1869 153 74 17 withheld
+98 160 173 19 05-0517079
+408 162 53 19 XXX
+465 171 9 4 -
+479 163 35 18 XX
+1522 177 139 21 49245.74
+1874 177 121 21 6452.65
+49 193 20 17 13
+94 194 66 19 Statutory
+223 193 82 16 Retirement
+370 195 82 20 Third-party
+534 195 58 16 Subtotal
+671 183 125 19 PASCOAG
+816 184 31 18 RI
+870 183 84 19 02859
+93 210 69 19 employee
+1334 205 10 18 3
+1358 205 56 18 Social
+1425 205 76 23 security
+1510 210 59 18 wages
+1682 205 10 18 4
+1702 205 58 18 Social
+1769 205 75 23 security
+1853 207 29 16 tax
+1889 205 82 18 withheld
+246 239 17 18 x
+1521 238 140 20 49245.74
+1874 238 120 20 3053.24
+47 268 22 18 12
+86 268 32 18 See
+129 268 55 18 Instrs.
+200 268 26 18 for
+240 268 30 18 Box
+280 268 20 19 12
+327 269 21 17 14
+366 269 52 18 Other
+1683 270 9 18 6
+1702 270 87 18 Medicare
+1800 272 26 16 tax
+1834 269 79 19 withheld
+661 275 9 13 e
+805 275 56 17 name,
+871 272 82 19 address,
+962 272 34 17 and
+1005 272 32 17 ZIP
+1046 272 45 17 code
+1335 271 9 17 5
+1358 269 87 19 Medicare
+1453 275 61 18 wages
+1522 269 34 19 and
+1566 272 36 20 tips
+52 302 16 19 Cc
+219 302 82 19 66.88}
+326 304 85 18 RISDI
+544 303 101 20 639.36
+1521 299 140 20 49245.74
+1891 299 103 20 714.06
+670 325 126 18 MATTHEW
+814 325 18 18 G
+850 325 105 19 DUPUIS
+1335 334 9 17 7
+1358 334 56 17 Social
+1425 334 76 21 security
+1510 335 35 18 tips
+1686 334 9 16 8
+1703 334 87 17 Allocated
+1802 335 32 19 tips
+672 357 31 19 43
+726 357 87 19 EAGLE
+833 358 70 18 PEAK
+923 358 34 18 RD
+673 388 124 19 PASCOAG
+816 389 33 18 RI
+871 388 84 20 02859
+1334 388 21 18 10
+1363 388 101 21 Dependent
+1474 393 38 13 care
+1522 388 77 18 benefits
+1680 388 18 18 11
+1707 388 120 21 Nonqualified
+1836 389 51 20 plans
+48 508 21 18 15
+76 508 44 18 State
+171 507 105 23 Employer&#x27;s
+286 509 44 16 state
+341 508 18 18 ID
+370 508 30 18 No.
+535 509 23 18 16
+568 509 47 18 State
+624 514 66 18 wages,
+700 509 41 22 tips,
+751 511 28 16 etc
+818 512 22 16 17
+850 511 48 17 State
+907 516 69 14 income
+985 513 28 17 tax
+1130 511 23 16 18
+1165 511 48 16 Local
+1223 515 65 17 wages.
+1297 511 41 21 tips,
+1349 512 32 16 etc.
+1439 512 21 18 19
+1472 512 48 18 Local
+1531 512 69 18 income
+1610 513 27 16 tax
+1726 511 23 17 20
+1759 511 73 22 Locality
+1841 515 49 13 name
+68 555 32 18 RI
+150 554 190 20 05051707900
+643 556 139 19 49245.74
+970 557 119 19 1855.22</pre></li>
+<li class="event kind-thinking-tokens"><div class="event-type"><span class="index">19</span>system · thinking_tokens</div><pre class="content">{
+  &quot;type&quot;: &quot;system&quot;,
+  &quot;subtype&quot;: &quot;thinking_tokens&quot;,
+  &quot;estimated_tokens&quot;: 50,
+  &quot;estimated_tokens_delta&quot;: 50,
+  &quot;session_id&quot;: &quot;41a5451d-8532-4e24-a9f5-731b6cf9343d&quot;,
+  &quot;uuid&quot;: &quot;d29ac451-0f39-43f9-afdc-2670da089348&quot;
+}</pre></li>
+<li class="event kind-thinking-tokens"><div class="event-type"><span class="index">20</span>system · thinking_tokens</div><pre class="content">{
+  &quot;type&quot;: &quot;system&quot;,
+  &quot;subtype&quot;: &quot;thinking_tokens&quot;,
+  &quot;estimated_tokens&quot;: 100,
+  &quot;estimated_tokens_delta&quot;: 50,
+  &quot;session_id&quot;: &quot;41a5451d-8532-4e24-a9f5-731b6cf9343d&quot;,
+  &quot;uuid&quot;: &quot;86b1cca2-f4cb-45e7-972f-5ce5c172a1fe&quot;
+}</pre></li>
+<li class="event kind-thinking-tokens"><div class="event-type"><span class="index">21</span>system · thinking_tokens</div><pre class="content">{
+  &quot;type&quot;: &quot;system&quot;,
+  &quot;subtype&quot;: &quot;thinking_tokens&quot;,
+  &quot;estimated_tokens&quot;: 243,
+  &quot;estimated_tokens_delta&quot;: 143,
+  &quot;session_id&quot;: &quot;41a5451d-8532-4e24-a9f5-731b6cf9343d&quot;,
+  &quot;uuid&quot;: &quot;7c288f39-ffa0-49da-8253-ddf8d2072d62&quot;
+}</pre></li>
+<li class="event kind-thinking"><div class="event-type"><span class="index">22</span>assistant · thinking</div><pre class="content">N/A</pre></li>
+<li class="event kind-tool-use"><div class="event-type"><span class="index">23</span>assistant · tool_use · Bash</div><pre class="content">cd /private/var/folders/r5/dvty26f968gcckj337f3nbdr0000gn/T/tmpeve3s7pn; cat &gt; /private/tmp/claude-501/-private-var-folders-r5-dvty26f968gcckj337f3nbdr0000gn-T-tmpeve3s7pn/41a5451d-8532-4e24-a9f5-731b6cf9343d/scratchpad/w.py &lt;&lt;&#x27;EOF&#x27;
+import json
+W,H=2048,660
+out={
+&quot;employee_ssn&quot;:&quot;XXX-XX-XXXX&quot;,&quot;employer_ein&quot;:&quot;05-0517079&quot;,&quot;employer_name&quot;:&quot;PASCOAG UTILITY DISTRICT&quot;,
+&quot;employer_address&quot;:&quot;PO BOX 107, PASCOAG RI 02859&quot;,&quot;void&quot;:False,&quot;employee_name&quot;:&quot;MATTHEW G DUPUIS&quot;,
+&quot;employee_address&quot;:&quot;43 EAGLE PEAK RD, PASCOAG RI 02859&quot;,&quot;box_1_wages&quot;:49245.74,
+&quot;box_2_federal_income_tax_withheld&quot;:6452.65,&quot;box_3_social_security_wages&quot;:49245.74,
+&quot;box_4_social_security_tax_withheld&quot;:3053.24,&quot;box_5_medicare_wages_and_tips&quot;:49245.74,
+&quot;box_6_medicare_tax_withheld&quot;:714.06,&quot;box_7_social_security_tips&quot;:None,&quot;box_8_allocated_tips&quot;:None,
+&quot;box_10_dependent_care_benefits&quot;:None,&quot;box_11_nonqualified_plans&quot;:None,
+&quot;box_12&quot;:[{&quot;code&quot;:&quot;C&quot;,&quot;amount&quot;:66.88}],
+&quot;box_13_statutory_employee&quot;:False,&quot;box_13_retirement_plan&quot;:True,&quot;box_13_third_party_sick_pay&quot;:False,&quot;box_13_subtotal&quot;:False,
+&quot;box_14_other&quot;:[{&quot;description&quot;:&quot;RISDI&quot;,&quot;amount&quot;:639.36}],
+&quot;state_local_row_1&quot;:{&quot;state&quot;:&quot;RI&quot;,&quot;employer_state_id&quot;:&quot;05051707900&quot;,&quot;state_wages&quot;:49245.74,&quot;state_income_tax&quot;:1855.22,
+ &quot;local_wages&quot;:None,&quot;local_income_tax&quot;:None,&quot;locality_name&quot;:None},
+&quot;state_local_row_2&quot;:None,
+&quot;control_number_line1&quot;:&quot;0012-0012N426&quot;,&quot;control_number_line2&quot;:&quot;0000000163-ELECTR&quot;}
+B={ # x0,y0,x1,y1 in px
+&quot;employee_ssn&quot;:(406,158,628,185),&quot;employer_ein&quot;:(96,158,273,181),&quot;employer_name&quot;:(669,114,1101,138),
+&quot;employer_address&quot;:(670,148,956,204),&quot;void&quot;:(587,82,653,122),&quot;employee_name&quot;:(668,323,957,346),
+&quot;employee_address&quot;:(670,355,959,410),&quot;box_1_wages&quot;:(1520,175,1663,200),&quot;box_2_federal_income_tax_withheld&quot;:(1872,175,1997,200),
+&quot;box_3_social_security_wages&quot;:(1519,236,1663,260),&quot;box_4_social_security_tax_withheld&quot;:(1872,236,1996,260),
+&quot;box_5_medicare_wages_and_tips&quot;:(1519,297,1663,321),&quot;box_6_medicare_tax_withheld&quot;:(1889,297,1996,321),
+&quot;box_12[0].code&quot;:(50,300,70,323),&quot;box_12[0].amount&quot;:(217,300,303,323),
+&quot;box_13_statutory_employee&quot;:(41,224,192,262),&quot;box_13_retirement_plan&quot;:(192,224,340,262),
+&quot;box_13_third_party_sick_pay&quot;:(340,224,490,262),&quot;box_13_subtotal&quot;:(490,224,654,262),
+&quot;box_14_other[0].description&quot;:(324,302,413,324),&quot;box_14_other[0].amount&quot;:(542,301,647,325),
+&quot;state_local_row_1.state&quot;:(66,553,102,575),&quot;state_local_row_1.employer_state_id&quot;:(148,552,342,576),
+&quot;state_local_row_1.state_wages&quot;:(641,554,784,577),&quot;state_local_row_1.state_income_tax&quot;:(968,555,1091,578),
+&quot;control_number_line1&quot;:(256,64,487,88),&quot;control_number_line2&quot;:(256,97,560,121)}
+cit=[{&quot;field_path&quot;:k,&quot;page&quot;:1,&quot;bbox&quot;:[round(a/W,4),round(b/H,4),round((c-a)/W,4),round((d-b)/H,4)]} for k,(a,b,c,d) in B.items()]
+json.dump(out,open(&#x27;output.json&#x27;,&#x27;w&#x27;),indent=2); json.dump(cit,open(&#x27;citations.json&#x27;,&#x27;w&#x27;),indent=2)
+EOF
+python3 /private/tmp/claude-501/-private-var-folders-r5-dvty26f968gcckj337f3nbdr0000gn-T-tmpeve3s7pn/41a5451d-8532-4e24-a9f5-731b6cf9343d/scratchpad/w.py &amp;&amp; python3 -m json.tool output.json &gt;/dev/null &amp;&amp; python3 -m json.tool citations.json &gt;/dev/null &amp;&amp; echo ok; rm page-1.png</pre></li>
+<li class="event kind-tool-result"><div class="event-type"><span class="index">24</span>user · tool_result</div><pre class="content">ok</pre></li>
+<li class="event kind-text"><div class="event-type"><span class="index">25</span>assistant · text</div><pre class="content">I extracted the W-2 data into `./output.json` and wrote `./citations.json` with a location for each of the 26 filled-in fields. Both files load as valid JSON.
+
+The PDF is one scanned page with no text layer. I rendered it to an image, read the values myself, and used tesseract OCR to find where each value sits on the page.
+
+This is an &quot;Employer Reference Copy&quot; for 2020: Pascoag Utility District, employee Matthew G Dupuis.
+
+A few calls you may want to check:
+- **SSN:** the last four digits are struck over and can&#x27;t be read, so I recorded the masked form `XXX-XX-XXXX`, as the schema says to.
+- **Box 13:** only &quot;Retirement plan&quot; has an X. Statutory employee, Third-party sick pay, Subtotal and Void are all `false`.
+- **Checkbox locations:** this copy prints the box 13 options and Void as cells in a grid, not as separate squares. For those fields the location covers the whole cell.
+- **Empty fields:** boxes 7, 8, 10, 11 and 18–20 are blank, so they are `null`. State/local row 2 is `null` because this copy prints only one state row.</pre></li>
+<li class="event kind-rate-limit"><div class="event-type"><span class="index">26</span>rate_limit_event</div><pre class="content">{
+  &quot;type&quot;: &quot;rate_limit_event&quot;,
+  &quot;rate_limit_info&quot;: {
+    &quot;status&quot;: &quot;allowed&quot;,
+    &quot;resetsAt&quot;: 1791820800,
+    &quot;rateLimitType&quot;: &quot;five_hour&quot;,
+    &quot;overageStatus&quot;: &quot;allowed&quot;,
+    &quot;overageResetsAt&quot;: 1793491200,
+    &quot;isUsingOverage&quot;: false,
+    &quot;unifiedWindows&quot;: {
+      &quot;five_hour&quot;: {
+        &quot;utilization&quot;: 0.14,
+        &quot;resetsAt&quot;: 1791820800
+      },
+      &quot;seven_day&quot;: {
+        &quot;utilization&quot;: 0.39,
+        &quot;resetsAt&quot;: 1792044000
+      }
+    }
+  },
+  &quot;uuid&quot;: &quot;7b8839e1-59a6-44e0-9947-3b6bd2f25213&quot;,
+  &quot;session_id&quot;: &quot;41a5451d-8532-4e24-a9f5-731b6cf9343d&quot;
+}</pre></li>
+<li class="event kind-result"><div class="event-type"><span class="index">27</span>result · success</div><pre class="content">{
+  &quot;duration_api_ms&quot;: 31639,
+  &quot;stop_reason&quot;: &quot;end_turn&quot;,
+  &quot;session_id&quot;: &quot;41a5451d-8532-4e24-a9f5-731b6cf9343d&quot;,
+  &quot;total_cost_usd&quot;: 0.3023646,
+  &quot;usage&quot;: {
+    &quot;input_tokens&quot;: 12,
+    &quot;cache_creation_input_tokens&quot;: 23748,
+    &quot;cache_read_input_tokens&quot;: 225303,
+    &quot;output_tokens&quot;: 2965,
+    &quot;output_tokens_details&quot;: {
+      &quot;thinking_tokens&quot;: 363
+    },
+    &quot;server_tool_use&quot;: {
+      &quot;web_search_requests&quot;: 0,
+      &quot;web_fetch_requests&quot;: 0
+    },
+    &quot;service_tier&quot;: &quot;standard&quot;,
+    &quot;cache_creation&quot;: {
+      &quot;ephemeral_1h_input_tokens&quot;: 23748,
+      &quot;ephemeral_5m_input_tokens&quot;: 0
+    },
+    &quot;inference_geo&quot;: &quot;not_available&quot;,
+    &quot;iterations&quot;: [
+      {
+        &quot;input_tokens&quot;: 2,
+        &quot;output_tokens&quot;: 388,
+        &quot;cache_read_input_tokens&quot;: 43929,
+        &quot;cache_creation_input_tokens&quot;: 1842,
+        &quot;cache_creation&quot;: {
+          &quot;ephemeral_5m_input_tokens&quot;: 0,
+          &quot;ephemeral_1h_input_tokens&quot;: 1842
+        },
+        &quot;type&quot;: &quot;message&quot;
+      }
+    ],
+    &quot;speed&quot;: &quot;standard&quot;,
+    &quot;fallback_credit&quot;: null
+  },
+  &quot;modelUsage&quot;: {
+    &quot;claude-haiku-4-5-20251001&quot;: {
+      &quot;inputTokens&quot;: 7887,
+      &quot;outputTokens&quot;: 17,
+      &quot;cacheReadInputTokens&quot;: 0,
+      &quot;cacheCreationInputTokens&quot;: 0,
+      &quot;webSearchRequests&quot;: 0,
+      &quot;costUSD&quot;: 0.007972,
+      &quot;contextWindow&quot;: 200000,
+      &quot;maxOutputTokens&quot;: 32000,
+      &quot;thinkingTokens&quot;: 0,
+      &quot;canonicalModel&quot;: &quot;claude-haiku-4-5&quot;,
+      &quot;provider&quot;: &quot;firstParty&quot;,
+      &quot;costBasis&quot;: &quot;list&quot;
+    },
+    &quot;claude-opus-5-5&quot;: {
+      &quot;inputTokens&quot;: 12,
+      &quot;outputTokens&quot;: 2965,
+      &quot;cacheReadInputTokens&quot;: 225303,
+      &quot;cacheCreationInputTokens&quot;: 23748,
+      &quot;webSearchRequests&quot;: 0,
+      &quot;costUSD&quot;: 0.29439259999999995,
+      &quot;contextWindow&quot;: 1000000,
+      &quot;maxOutputTokens&quot;: 128000,
+      &quot;thinkingTokens&quot;: 363,
+      &quot;canonicalModel&quot;: &quot;claude-opus-5-5&quot;,
+      &quot;provider&quot;: &quot;firstParty&quot;,
+      &quot;costBasis&quot;: &quot;list&quot;
+    }
+  },
+  &quot;permission_denials&quot;: [],
+  &quot;terminal_reason&quot;: &quot;completed&quot;,
+  &quot;fast_mode_state&quot;: &quot;off&quot;,
+  &quot;fast_mode_disabled_reason&quot;: &quot;preference&quot;,
+  &quot;subagent_stats&quot;: {
+    &quot;spawned&quot;: 0,
+    &quot;requested&quot;: {
+      &quot;background&quot;: 0,
+      &quot;foreground&quot;: 0,
+      &quot;unset&quot;: 0
+    },
+    &quot;started_in_background&quot;: 0,
+    &quot;max_depth&quot;: 0,
+    &quot;spawned_by_subagents&quot;: 0,
+    &quot;completed&quot;: 0,
+    &quot;failed&quot;: 0,
+    &quot;killed&quot;: {
+      &quot;parent&quot;: 0,
+      &quot;user&quot;: 0,
+      &quot;system&quot;: 0
+    },
+    &quot;refused&quot;: {
+      &quot;depth_limit&quot;: 0,
+      &quot;concurrency_limit&quot;: 0,
+      &quot;budget&quot;: 0
+    },
+    &quot;by_type&quot;: {}
+  },
+  &quot;is_error&quot;: false,
+  &quot;num_turns&quot;: 7,
+  &quot;subtype&quot;: &quot;success&quot;,
+  &quot;api_error_status&quot;: null,
+  &quot;result&quot;: &quot;I extracted the W-2 data into `./output.json` and wrote `./citations.json` with a location for each of the 26 filled-in fields. Both files load as valid JSON.\n\nThe PDF is one scanned page with no text layer. I rendered it to an image, read the values myself, and used tesseract OCR to find where each value sits on the page.\n\nThis is an \&quot;Employer Reference Copy\&quot; for 2020: Pascoag Utility District, employee Matthew G Dupuis.\n\nA few calls you may want to check:\n- **SSN:** the last four digits are struck over and can&#x27;t be read, so I recorded the masked form `XXX-XX-XXXX`, as the schema says to.\n- **Box 13:** only \&quot;Retirement plan\&quot; has an X. Statutory employee, Third-party sick pay, Subtotal and Void are all `false`.\n- **Checkbox locations:** this copy prints the box 13 options and Void as cells in a grid, not as separate squares. For those fields the location covers the whole cell.\n- **Empty fields:** boxes 7, 8, 10, 11 and 18\u201320 are blank, so they are `null`. State/local row 2 is `null` because this copy prints only one state row.&quot;,
+  &quot;ttft_ms&quot;: 2927,
+  &quot;type&quot;: &quot;result&quot;,
+  &quot;duration_ms&quot;: 32024,
+  &quot;uuid&quot;: &quot;734cb1af-5058-4961-a369-6cb6e1dc0f50&quot;,
+  &quot;ttft_stream_ms&quot;: 1280,
+  &quot;time_to_request_ms&quot;: 158,
+  &quot;time_to_request_phases_ms&quot;: {
+    &quot;other&quot;: 8,
+    &quot;system_prompt&quot;: 50,
+    &quot;resume_other&quot;: 8,
+    &quot;process_user_input&quot;: 1,
+    &quot;input_attachments&quot;: 6,
+    &quot;input_hooks&quot;: 1,
+    &quot;tool_pool_refresh&quot;: 1,
+    &quot;init_message&quot;: 3,
+    &quot;engine_pickup&quot;: 1,
+    &quot;message_prep&quot;: 0,
+    &quot;model_config_wait&quot;: 1,
+    &quot;autocompact&quot;: 1,
+    &quot;query_setup&quot;: 0,
+    &quot;model_gates&quot;: 69,
+    &quot;tool_schema_build&quot;: 5,
+    &quot;message_normalization&quot;: 0,
+    &quot;client_creation&quot;: 1,
+    &quot;request_build&quot;: 2
+  },
+  &quot;turn_start_resume_kind&quot;: &quot;none&quot;,
+  &quot;process_turn_index&quot;: 0,
+  &quot;time_to_request_loop_lag_ms&quot;: 31,
+  &quot;time_to_request_cpu_ms&quot;: 128,
+  &quot;time_to_request_major_faults&quot;: 15,
+  &quot;input_attachments_detail&quot;: {
+    &quot;slowest_producer&quot;: &quot;model&quot;,
+    &quot;slowest_producer_ms&quot;: 5,
+    &quot;cpu_ms&quot;: 8,
+    &quot;major_faults&quot;: 0
+  },
+  &quot;first_content_frame_ms&quot;: 1281,
+  &quot;queued_turn_count&quot;: 0,
+  &quot;result_index&quot;: 0
+}</pre></li>
+</ol>
+</body>
+</html>
