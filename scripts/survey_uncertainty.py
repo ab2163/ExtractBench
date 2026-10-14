@@ -22,6 +22,7 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from extract_bench.inference.providers.extract.claude_code_extract import ClaudeCodeExtractProvider  # noqa: E402
+from extract_bench.inference.providers.extract.claude_code_uncertainty_extract import PromptComposer  # noqa: E402
 from extract_bench.test_cases.loader import load_test_case  # noqa: E402
 
 PIPELINE_CONFIG = {
@@ -35,30 +36,6 @@ PIPELINE_CONFIG = {
     "is_all_fields_citation": True,
 }
 
-SURVEY_INTRO = """Below is an extraction task. It is your end goal, but do not carry it out now. Do not write
-./output.json or ./citations.json. Instead, prepare for it as described after the task.
-
-=== Extraction task (for reference only) ===
-"""
-
-SURVEY_STEPS = """=== End of extraction task ===
-
-What to do now, instead of the extraction:
-1. Consider the schema and the document ./input.pdf. You may use tools and think as you normally would.
-2. Identify specific schema values where you are uncertain which value to pick from the document.
-3. Identify specific citations where you are uncertain where the evidence box should be placed, or what its
-   boundaries should be.
-4. For each uncertainty from steps 2 and 3, list the different interpretations you could make.
-5. For each interpretation, list (a) reasons why it is sensible and (b) reasons why it is not sensible.
-
-Then stop. Write your findings to ./uncertainties.json in this shape:
-{"value_uncertainties": [{"field_path": "...", "page": 1, "question": "...",
-  "interpretations": [{"interpretation": "...", "reasons_sensible": ["..."], "reasons_not_sensible": ["..."]}]}],
- "box_uncertainties": [{"field_path": "...", "page": 1, "question": "...",
-  "interpretations": [{"interpretation": "...", "reasons_sensible": ["..."], "reasons_not_sensible": ["..."]}]}]}
-Use the field paths from the schema, with a bracketed index for list rows. Do not print the JSON."""
-
-
 class SurveyPromptBuilder:
     """Builds the survey prompt around the exact extraction prompt the latest pipeline would send."""
 
@@ -71,7 +48,7 @@ class SurveyPromptBuilder:
             raise ValueError(f"No test.json found next to {pdf_path}")
         schema = self.provider._prepare_schema(test_case.data_schema)
         extraction_prompt = self.provider._build_prompt(schema, "input.pdf")
-        return SURVEY_INTRO + extraction_prompt + "\n\n" + SURVEY_STEPS
+        return PromptComposer().compose_survey_prompt(extraction_prompt)
 
 
 class UncertaintySurveyor:

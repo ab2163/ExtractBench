@@ -7,6 +7,7 @@ and open-weight pipelines.
 
 from typing import Any
 
+from extract_bench.inference.providers.extract.claude_code_uncertainty_extract import SHARED_SURVEY_CONFIG
 from extract_bench.schemas.pipeline import PipelineSpec
 from extract_bench.schemas.product import ProductType
 
@@ -411,6 +412,39 @@ def register_extract_pipelines(register_fn) -> None:  # type: ignore[no-untyped-
             },
         )
     )
+
+    for _mode_slug, _provider in (
+        ("resume_shared_survey", "claude_code_resume_survey_extract"),
+        ("fresh_shared_survey", "claude_code_fresh_survey_extract"),
+    ):
+        register_fn(
+            _pipeline_spec(
+                pipeline_name=f"claude_code_extract_opus_5_5_high_{_mode_slug}_fulltrace_evidence",
+                provider_name=_provider,
+                config=dict(SHARED_SURVEY_CONFIG),
+            )
+        )
+
+    for _mode_slug, _provider in (
+        ("survey_then_extract", "claude_code_survey_then_extract"),
+        ("uncertainty_informed", "claude_code_uncertainty_informed_extract"),
+    ):
+        register_fn(
+            _pipeline_spec(
+                pipeline_name=f"claude_code_extract_opus_5_5_high_{_mode_slug}_fulltrace_evidence",
+                provider_name=_provider,
+                config={
+                    "model": "claude-opus-5-5",
+                    "evidence_mode": True,
+                    "effort": "high",
+                    "is_checkbox_guidance": True,
+                    "is_checkbox_border": True,
+                    "is_yes_no_pair_rule": True,
+                    "is_all_fields_citation": True,
+                    "is_full_trace": True,
+                },
+            )
+        )
 
     for _temperature_slug, _temperature in (("1_0", 1.0), ("0_5", 0.5)):
         register_fn(
