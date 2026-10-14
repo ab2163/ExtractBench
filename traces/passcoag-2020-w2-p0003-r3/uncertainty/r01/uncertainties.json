@@ -1,0 +1,333 @@
+{
+ "value_uncertainties": [
+  {
+   "field_path": "employee_ssn",
+   "page": 1,
+   "question": "Box a prints 'XXX-XX-' followed by a heavily overstruck tail where faint digit shapes (possibly '4', '9'/'8', '9', '7') show beneath bold italic X characters. Is the tail 'legibly printed' digits or fully masked?",
+   "interpretations": [
+    {
+     "interpretation": "XXX-XX-XXXX (canonical fully-masked form)",
+     "reasons_sensible": [
+      "Schema policy explicitly says to return exactly 'XXX-XX-XXXX' when the tail is overstruck and not to count struck-out X characters",
+      "The underlying digits are obscured by the overstrike and cannot be read with confidence"
+     ],
+     "reasons_not_sensible": [
+      "Some digit fragments (a '4' at the start, a '7'-like top stroke) are partially visible under the X marks, so one could argue the tail is partially legible"
+     ]
+    },
+    {
+     "interpretation": "XXX-XX- plus guessed digits from the faint underlying glyphs (e.g. XXX-XX-4997)",
+     "reasons_sensible": [
+      "Faint digit shapes are visible beneath the overstrike at high zoom"
+     ],
+     "reasons_not_sensible": [
+      "Digits are not legibly printed; any reading would be a guess",
+      "Policy reserves the digit form for legibly printed last four"
+     ]
+    },
+    {
+     "interpretation": "Verbatim count of printed X's, e.g. 'XXX-XX-XXXXX'",
+     "reasons_sensible": [
+      "Closer to literally what is visible (five bold X's after the hyphen)"
+     ],
+     "reasons_not_sensible": [
+      "Schema explicitly forbids counting struck-out X characters and requires the canonical 4-X form"
+     ]
+    }
+   ]
+  },
+  {
+   "field_path": "void",
+   "page": 1,
+   "question": "The register variant prints a 'Void' label in a cell to the right of the control number but no explicit checkbox square. Is it false or should the field reflect 'not printed'?",
+   "interpretations": [
+    {
+     "interpretation": "false",
+     "reasons_sensible": [
+      "No mark appears in the Void cell",
+      "Two-state policy says false when unmarked or not printed; null is forbidden"
+     ],
+     "reasons_not_sensible": [
+      "None substantive"
+     ]
+    }
+   ]
+  },
+  {
+   "field_path": "box_13_retirement_plan",
+   "page": 1,
+   "question": "An 'X' is printed in the lower part of the box-13 grid below the 'Retirement plan' label, between vertical tick marks; there is no drawn checkbox square. Does it count as a mark for Retirement plan?",
+   "interpretations": [
+    {
+     "interpretation": "true",
+     "reasons_sensible": [
+      "The X sits directly under 'Retirement plan', in the cell bounded by the ticks at ~x=0.093 and ~x=0.163",
+      "Register variant uses X under the caption as its checkbox convention"
+     ],
+     "reasons_not_sensible": [
+      "No literal square box is printed, so 'inside the box' is interpretive"
+     ]
+    },
+    {
+     "interpretation": "false (no checkbox square printed)",
+     "reasons_sensible": [
+      "Strict reading of 'mark INSIDE the box' when no box exists"
+     ],
+     "reasons_not_sensible": [
+      "Clearly intended as the marked indicator for retirement plan; ignoring it loses information"
+     ]
+    }
+   ]
+  },
+  {
+   "field_path": "box_13_subtotal",
+   "page": 1,
+   "question": "Subtotal column exists with no X beneath it; statutory employee and third-party sick pay likewise unmarked. Any chance the single X is centered ambiguously between columns?",
+   "interpretations": [
+    {
+     "interpretation": "statutory=false, third_party_sick_pay=false, subtotal=false",
+     "reasons_sensible": [
+      "The only X (x\u22480.117\u20130.128) lies within the Retirement plan column bounds; other columns are empty"
+     ],
+     "reasons_not_sensible": [
+      "None substantive"
+     ]
+    }
+   ]
+  },
+  {
+   "field_path": "state_local_row_2",
+   "page": 1,
+   "question": "The employer-reference register variant prints only one state row (RI). Should row 2 be null or an object of nulls?",
+   "interpretations": [
+    {
+     "interpretation": "null",
+     "reasons_sensible": [
+      "Schema: row null when entirely blank or not printed; descriptions say register variant prints only one row"
+     ],
+     "reasons_not_sensible": [
+      "None substantive"
+     ]
+    },
+    {
+     "interpretation": "object with all-null fields",
+     "reasons_sensible": [
+      "Keeps structure uniform"
+     ],
+     "reasons_not_sensible": [
+      "Schema explicitly says null when row is blank/not printed"
+     ]
+    }
+   ]
+  },
+  {
+   "field_path": "control_number_line2",
+   "page": 1,
+   "question": "Second control-number line reads '0000000163-ELECTR'; schema example shows '0000000165-ELECTR'. Count of leading zeros and the digit '163' need verification.",
+   "interpretations": [
+    {
+     "interpretation": "0000000163-ELECTR (7 zeros then 163)",
+     "reasons_sensible": [
+      "Zoomed render clearly shows '163', and the field is 10 digits like the schema example"
+     ],
+     "reasons_not_sensible": [
+      "Monospace zeros at low resolution can be miscounted; must not copy schema example's 165"
+     ]
+    }
+   ]
+  },
+  {
+   "field_path": "employer_address",
+   "page": 1,
+   "question": "Join format for the two address lines in box c.",
+   "interpretations": [
+    {
+     "interpretation": "PO BOX 107, PASCOAG RI 02859",
+     "reasons_sensible": [
+      "Matches schema instruction (comma + space join) and printed text exactly"
+     ],
+     "reasons_not_sensible": [
+      "None substantive"
+     ]
+    }
+   ]
+  }
+ ],
+ "box_uncertainties": [
+  {
+   "field_path": "void",
+   "page": 1,
+   "question": "No checkbox square is printed for Void; only a cell labeled 'Void' (\u2248x 0.283\u20130.312, y 0.088\u20130.18). What to box for a false value?",
+   "interpretations": [
+    {
+     "interpretation": "Box the empty area of the Void cell below the label (\u2248[0.283, 0.13, 0.029, 0.05])",
+     "reasons_sensible": [
+      "Instruction says box the empty checkbox square for false; the cell's blank area is the functional equivalent"
+     ],
+     "reasons_not_sensible": [
+      "There is no printed square, so any box is somewhat arbitrary"
+     ]
+    },
+    {
+     "interpretation": "Box the whole Void cell including label (\u2248[0.283, 0.09, 0.03, 0.095])",
+     "reasons_sensible": [
+      "Clearly identifiable printed region"
+     ],
+     "reasons_not_sensible": [
+      "Includes the label rather than just the mark area"
+     ]
+    },
+    {
+     "interpretation": "Omit citation",
+     "reasons_sensible": [
+      "Rules say omit rather than guess location; no square exists"
+     ],
+     "reasons_not_sensible": [
+      "Value is non-null and a reasonable location exists"
+     ]
+    }
+   ]
+  },
+  {
+   "field_path": "box_13_statutory_employee",
+   "page": 1,
+   "question": "Box-13 grid has no checkbox squares; columns are separated by short vertical ticks at the bottom. Where to box unchecked statutory employee / third-party sick pay / subtotal?",
+   "interpretations": [
+    {
+     "interpretation": "Box the empty lower cell segment of each column between the tick marks (statutory \u2248x 0.021\u20130.093, third-party \u2248x 0.163\u20130.235, subtotal \u2248x 0.235\u20130.312; y \u22480.34\u20130.39)",
+     "reasons_sensible": [
+      "That is where an X would be printed (as with Retirement plan)"
+     ],
+     "reasons_not_sensible": [
+      "No printed square; boundaries are inferred"
+     ]
+    },
+    {
+     "interpretation": "Box the column label text",
+     "reasons_sensible": [
+      "Concrete printed ink"
+     ],
+     "reasons_not_sensible": [
+      "Instructions say not to box labels"
+     ]
+    },
+    {
+     "interpretation": "Omit",
+     "reasons_sensible": [
+      "No printed square to box"
+     ],
+     "reasons_not_sensible": [
+      "Field is non-null"
+     ]
+    }
+   ]
+  },
+  {
+   "field_path": "box_13_retirement_plan",
+   "page": 1,
+   "question": "Box only the 'X' glyph or the whole column cell?",
+   "interpretations": [
+    {
+     "interpretation": "Tight box around the X mark (\u2248[0.117, 0.341, 0.011, 0.046])",
+     "reasons_sensible": [
+      "Instruction: box the checkbox mark/value itself"
+     ],
+     "reasons_not_sensible": [
+      "Instruction for checkboxes says box the whole printed square; no square exists, so a tight box may be smaller than expected"
+     ]
+    },
+    {
+     "interpretation": "Box the cell segment between the tick marks containing the X (\u2248x 0.093\u20130.163, y 0.34\u20130.39)",
+     "reasons_sensible": [
+      "Analogous to 'whole printed square including border'"
+     ],
+     "reasons_not_sensible": [
+      "Larger than the mark; boundaries inferred"
+     ]
+    }
+   ]
+  },
+  {
+   "field_path": "employee_ssn",
+   "page": 1,
+   "question": "Box the entire printed SSN string or only the masked tail?",
+   "interpretations": [
+    {
+     "interpretation": "Whole string 'XXX-XX-XXXXX' (\u2248[0.199, 0.246, 0.108, 0.042])",
+     "reasons_sensible": [
+      "Value covers the whole SSN field"
+     ],
+     "reasons_not_sensible": [
+      "Normalized output differs from printed glyph count"
+     ]
+    },
+    {
+     "interpretation": "Only the overstruck tail (\u2248[0.244, 0.246, 0.063, 0.033])",
+     "reasons_sensible": [
+      "The tail is what determines the output form"
+     ],
+     "reasons_not_sensible": [
+      "Field value includes the prefix as well"
+     ]
+    }
+   ]
+  },
+  {
+   "field_path": "employer_address",
+   "page": 1,
+   "question": "Address spans two printed lines in box c; box both lines as a union, or just one?",
+   "interpretations": [
+    {
+     "interpretation": "Union box over 'PO BOX 107' and 'PASCOAG RI 02859' (\u2248x 0.32\u20130.47, y 0.22\u20130.31)",
+     "reasons_sensible": [
+      "Value comprises both lines"
+     ],
+     "reasons_not_sensible": [
+      "None substantive"
+     ]
+    }
+   ]
+  },
+  {
+   "field_path": "box_12[0].code",
+   "page": 1,
+   "question": "Code 'C' and amount '66.88' are on the same line in the register Box 12 column; separate tight boxes or one shared box?",
+   "interpretations": [
+    {
+     "interpretation": "Separate tight boxes: 'C' (\u2248x 0.024\u20130.032) and '66.88' (\u2248x 0.105\u20130.146), y \u22480.45\u20130.48",
+     "reasons_sensible": [
+      "Each field gets its own value evidence"
+     ],
+     "reasons_not_sensible": [
+      "None substantive"
+     ]
+    },
+    {
+     "interpretation": "One box spanning both for each field",
+     "reasons_sensible": [
+      "Shows pairing"
+     ],
+     "reasons_not_sensible": [
+      "Includes text not belonging to the field"
+     ]
+    }
+   ]
+  },
+  {
+   "field_path": "employee_name",
+   "page": 1,
+   "question": "Register variant combines name and address in block e; box only the first line.",
+   "interpretations": [
+    {
+     "interpretation": "Box only 'MATTHEW G DUPUIS' line (\u2248x 0.32\u20130.46, y 0.485\u20130.525)",
+     "reasons_sensible": [
+      "Name is only the first line"
+     ],
+     "reasons_not_sensible": [
+      "None substantive"
+     ]
+    }
+   ]
+  }
+ ]
+}

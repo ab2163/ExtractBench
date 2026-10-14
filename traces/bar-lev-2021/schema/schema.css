@@ -1,0 +1,58 @@
+:root {
+  --page: #f7f7f5; --card: #ffffff; --ink: #1d2129; --muted: #646a76; --rule: #e2e3e7; --soft: #f1f2f4;
+  --entity-0: #1f5fd1; --entity-1: #1b7a43; --entity-2: #b86e00; --entity-3: #a3329e; --entity-4: #0f8a8a; --entity-5: #c62828;
+  --string: #1b7a43; --number: #1f5fd1; --boolean: #a3329e; --null: #8a8f99;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #131519; --card: #1b1e24; --ink: #e8e9ed; --muted: #9a9fab; --rule: #2d313a; --soft: #23272f;
+    --entity-0: #7ea3ff; --entity-1: #5fd08f; --entity-2: #e0a23a; --entity-3: #d36bd0; --entity-4: #3cc4c4; --entity-5: #ff6b6b;
+    --string: #5fd08f; --number: #7ea3ff; --boolean: #d36bd0; --null: #8a8f99;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0 auto; max-width: 1100px; padding: 24px 16px 48px; background: var(--page); color: var(--ink);
+  font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+h1 { font-size: 18px; margin: 0 0 16px; overflow-wrap: anywhere; }
+h2 { margin: 0; }
+.color-0 { --accent: var(--entity-0); } .color-1 { --accent: var(--entity-1); } .color-2 { --accent: var(--entity-2); }
+.color-3 { --accent: var(--entity-3); } .color-4 { --accent: var(--entity-4); } .color-5 { --accent: var(--entity-5); }
+.overview { background: var(--card); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; margin: 0 0 20px; }
+.overview h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 8px; }
+.overview ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.relation { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.arrow { color: var(--muted); }
+.entity-chip { display: inline-block; font-weight: 600; color: var(--accent); text-decoration: none;
+  border: 1.5px solid var(--accent); border-radius: 6px; padding: 0 8px; background: var(--card); }
+.entity-chip:hover, .entity-chip:focus-visible { background: var(--accent); color: var(--card); }
+.cards { display: grid; gap: 20px; }
+.card { background: var(--card); border: 1.5px solid var(--accent); border-radius: 10px; overflow: hidden; scroll-margin-top: 16px; }
+.card:target { box-shadow: 0 0 0 4px var(--accent); }
+.card-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; background: var(--accent); color: var(--card); padding: 10px 16px; }
+.card-head h2 { font-size: 18px; }
+.kind { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.85; }
+.closed { margin-left: auto; font-size: 12px; opacity: 0.9; }
+.card-body { padding: 12px 16px 16px; display: grid; gap: 10px; min-width: 0; overflow-x: auto; }
+.description { margin: 0; max-width: 80ch; }
+.used-by { margin: 0; font-size: 13px; color: var(--muted); }
+.attributes { width: 100%; border-collapse: collapse; }
+.attributes th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted);
+  border-bottom: 1.5px solid var(--rule); padding: 6px 10px 6px 0; }
+.attributes td { vertical-align: top; border-bottom: 1px solid var(--rule); padding: 10px 10px 10px 0; }
+.attr-name { width: 1%; white-space: nowrap; }
+.attr-name .name { display: block; font-weight: 600; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.attr-type { width: 1%; white-space: nowrap; }
+.attr-desc { color: var(--ink); min-width: 280px; }
+.flag { display: inline-block; font-size: 11px; margin-top: 2px; padding: 0 6px; border-radius: 4px; }
+.flag.required { background: var(--soft); color: var(--ink); font-weight: 600; }
+.flag.optional { color: var(--muted); border: 1px dashed var(--rule); }
+.type-word { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; color: var(--muted); }
+.type-string { color: var(--string); } .type-number, .type-integer { color: var(--number); }
+.type-boolean { color: var(--boolean); } .type-null { color: var(--null); font-style: italic; }
+.or { color: var(--muted); font-size: 12px; }
+.rules { display: flex; flex-wrap: wrap; gap: 6px; }
+.rules:empty { display: none; }
+.rule { font-size: 12px; background: var(--soft); border-radius: 4px; padding: 1px 6px; }
+.rule-key { color: var(--muted); }
+.rule-value { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; overflow-wrap: anywhere; }
+.none { color: var(--muted); margin: 0; }

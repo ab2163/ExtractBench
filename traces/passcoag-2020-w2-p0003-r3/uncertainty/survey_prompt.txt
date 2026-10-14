@@ -1,0 +1,670 @@
+Below is an extraction task. It is your end goal, but do not carry it out now. Do not write
+./output.json or ./citations.json. Instead, prepare for it as described after the task.
+
+=== Extraction task (for reference only) ===
+Extract structured data from the document file `./input.pdf` in the current directory.
+
+Use only local file inspection and shell commands. Do not use web search, network calls, browser tools, or external services. Temporary scratch files inside the current directory are OK.
+
+Return a single JSON object conforming to this schema as your final answer:
+
+```json
+{
+  "$defs": {
+    "Box12Entry": {
+      "type": "object",
+      "title": "Box 12 entry",
+      "properties": {
+        "code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The letter code of a Box 12 entry (values like C, D, DD, W), verbatim uppercase as printed in the vertical 'Code' rail of the blank form or at the left edge of the register column '12 See Instrs. for Box 12'. Identifies the row \u2014 Box 12 rows are aligned by this code at eval time, not by position.",
+          "title": "Box 12 code"
+        },
+        "amount": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Dollar amount printed beside the Box 12 code in any printed slot: '12a See instructions for box 12', '12b', '12c', or '12d' on the IRS blank, or in the register column '12 See Instrs. for Box 12'. JSON number exactly as printed; null if a code prints with no amount.",
+          "title": "Box 12 amount"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Box14Entry": {
+      "type": "object",
+      "title": "Box 14 entry",
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Text label of a box '14 Other' entry, verbatim as printed, e.g. RISDI on this wave. Identifies the row \u2014 Box 14 rows are aligned by this description at eval time, not by position.",
+          "title": "Box 14 description"
+        },
+        "amount": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Dollar amount printed beside the description in box '14 Other'. JSON number exactly as printed; null if a description prints with no amount.",
+          "title": "Box 14 amount"
+        }
+      },
+      "additionalProperties": false
+    },
+    "StateLocalRow1": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Box '15 State' \u2014 the two-letter state abbreviation of the single printed state row, verbatim, e.g. RI. This copy prints one state row only; a multi-state W-2 (a second row in boxes 15-20) is out of scope for this schema version. (row 1 of the two printed 'boxes 15-20' entry rows).",
+          "title": "15 State"
+        },
+        "employer_state_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Box 15 'Employer\u2019s state ID number' (the register variant caption reads 'state ID No.'). The state identification number verbatim as printed, keeping leading zeros, e.g. 05051707900. (row 1 of the two printed 'boxes 15-20' entry rows).",
+          "title": "15 Employer\u2019s state ID number"
+        },
+        "state_wages": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Box '16 State wages, tips, etc.' for the single printed state row. Dollar amount as a JSON number, exactly as printed; null if the box is blank. (row 1 of the two printed 'boxes 15-20' entry rows).",
+          "title": "16 State wages, tips, etc."
+        },
+        "state_income_tax": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Box '17 State income tax' for the single printed state row. Dollar amount as a JSON number, exactly as printed; null if the box is blank. (row 1 of the two printed 'boxes 15-20' entry rows).",
+          "title": "17 State income tax"
+        },
+        "local_wages": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Amount in box '18 Local wages, tips, etc.' - the LOCAL wages column, distinct from box '16 State wages, tips, etc.' (do not copy the state amount here). Null when box 18 is blank, as it is on all RI register docs.",
+          "title": "18 Local wages, tips, etc."
+        },
+        "local_income_tax": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Amount in box '19 Local income tax' - the LOCAL tax column, distinct from box '17 State income tax' (do not copy the state amount here). Null when box 19 is blank, as it is on all RI register docs.",
+          "title": "19 Local income tax"
+        },
+        "locality_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Box '20 Locality name' for the single printed state row, verbatim as printed; null if the box is blank (blank on all wave docs). (row 1 of the two printed 'boxes 15-20' entry rows).",
+          "title": "20 Locality name"
+        }
+      },
+      "additionalProperties": false
+    },
+    "StateLocalRow2": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Box '15 State' \u2014 the two-letter state abbreviation of the single printed state row, verbatim, e.g. RI. This copy prints one state row only; a multi-state W-2 (a second row in boxes 15-20) is out of scope for this schema version. (row 2 of the two printed 'boxes 15-20' entry rows). The employer-reference register variant prints only one row - null there.",
+          "title": "15 State"
+        },
+        "employer_state_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Box 15 'Employer\u2019s state ID number' (the register variant caption reads 'state ID No.'). The state identification number verbatim as printed, keeping leading zeros, e.g. 05051707900. (row 2 of the two printed 'boxes 15-20' entry rows). The employer-reference register variant prints only one row - null there.",
+          "title": "15 Employer\u2019s state ID number"
+        },
+        "state_wages": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Box '16 State wages, tips, etc.' for the single printed state row. Dollar amount as a JSON number, exactly as printed; null if the box is blank. (row 2 of the two printed 'boxes 15-20' entry rows). The employer-reference register variant prints only one row - null there.",
+          "title": "16 State wages, tips, etc."
+        },
+        "state_income_tax": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Box '17 State income tax' for the single printed state row. Dollar amount as a JSON number, exactly as printed; null if the box is blank. (row 2 of the two printed 'boxes 15-20' entry rows). The employer-reference register variant prints only one row - null there.",
+          "title": "17 State income tax"
+        },
+        "local_wages": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Amount in box '18 Local wages, tips, etc.' - the LOCAL wages column, distinct from box '16 State wages, tips, etc.' (do not copy the state amount here). Null when box 18 is blank, as it is on all RI register docs. (row 2 of the two printed 'boxes 15-20' entry rows).",
+          "title": "18 Local wages, tips, etc."
+        },
+        "local_income_tax": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Amount in box '19 Local income tax' - the LOCAL tax column, distinct from box '17 State income tax' (do not copy the state amount here). Null when box 19 is blank, as it is on all RI register docs. (row 2 of the two printed 'boxes 15-20' entry rows).",
+          "title": "19 Local income tax"
+        },
+        "locality_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Box '20 Locality name' for the single printed state row, verbatim as printed; null if the box is blank (blank on all wave docs). (row 2 of the two printed 'boxes 15-20' entry rows). The employer-reference register variant prints only one row - null there.",
+          "title": "20 Locality name"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "employee_ssn": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Box 'a Employee's social security number'. These copies print a masked value, often with overstruck characters. Policy: if the last four digits are legibly printed (e.g. 'XXX-XX-9186'), return 'XXX-XX-' plus those digits; if the tail is fully masked/overstruck, return exactly 'XXX-XX-XXXX' (canonical 4-X form) - do NOT try to count the struck-out X characters. Null only if box a is entirely absent.",
+      "title": "a Employee\u2019s social security number"
+    },
+    "employer_ein": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Box 'b Employer identification number (EIN)'; the register variant caption under letter b reads 'identification number'. The employer federal EIN verbatim as printed, keeping the hyphen, e.g. 05-0517079.",
+      "title": "b Employer identification number (EIN)"
+    },
+    "employer_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "First line of box 'c Employer\u2019s name, address, and ZIP code' \u2014 the employer name only, verbatim as printed, e.g. PASCOAG UTILITY DISTRICT.",
+      "title": "c Employer name"
+    },
+    "employer_address": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The lines of box 'c Employer\u2019s name, address, and ZIP code' after the employer name \u2014 street or PO box, then city, state and ZIP, verbatim. Join printed lines with comma + space, e.g. PO BOX 107, PASCOAG RI 02859.",
+      "title": "c Employer address and ZIP code"
+    },
+    "void": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The 'Void' checkbox printed beside box d. A mark (X or similar) INSIDE the box counts; the box outline alone is not a mark. Two-state policy: true ONLY if a mark is printed inside the box; false otherwise (unmarked, or this checkbox not printed on this copy). Never return null for this field.",
+      "title": "Void checkbox"
+    },
+    "employee_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Employee full name as printed. Blank form boxes: 'e Employee\u2019s first name and initial', 'Last name', 'Suff.'; the register variant prints the name as the first line of the combined block 'e Employee\u2019s name, address, and ZIP code'. Keep middle initial and any suffix verbatim, e.g. JENNA M ANTHONY.",
+      "title": "e Employee name (first name and initial, last name, suffix)"
+    },
+    "employee_address": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Employee address: box 'f Employee\u2019s address and ZIP code' on the blank form; the register variant prints it as the lines after the name inside the combined block 'e Employee\u2019s name, address, and ZIP code'. Join printed lines with comma + space \u2014 street, then city, state and ZIP, verbatim, e.g. 221 EMERSON RD, HARRISVILLE RI 02830.",
+      "title": "f Employee address and ZIP code"
+    },
+    "box_1_wages": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Box '1 Wages, tips, other compensation'. Dollar amount as a JSON number, exactly as printed (this register prints plain decimals such as 40093.72 \u2014 no thousands separators or dollar signs); null if the box is blank.",
+      "title": "1 Wages, tips, other compensation"
+    },
+    "box_2_federal_income_tax_withheld": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Box '2 Federal income tax withheld'. Dollar amount as a JSON number, exactly as printed; null if the box is blank.",
+      "title": "2 Federal income tax withheld"
+    },
+    "box_3_social_security_wages": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Box '3 Social security wages'. Dollar amount as a JSON number, exactly as printed; null if the box is blank.",
+      "title": "3 Social security wages"
+    },
+    "box_4_social_security_tax_withheld": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Box '4 Social security tax withheld'. Dollar amount as a JSON number, exactly as printed; null if the box is blank.",
+      "title": "4 Social security tax withheld"
+    },
+    "box_5_medicare_wages_and_tips": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Box '5 Medicare wages and tips'. Dollar amount as a JSON number, exactly as printed; null if the box is blank.",
+      "title": "5 Medicare wages and tips"
+    },
+    "box_6_medicare_tax_withheld": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Box '6 Medicare tax withheld'. Dollar amount as a JSON number, exactly as printed; null if the box is blank.",
+      "title": "6 Medicare tax withheld"
+    },
+    "box_7_social_security_tips": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Box '7 Social security tips'. Dollar amount as a JSON number, exactly as printed; null if the box is blank (printed but typically empty on this wave).",
+      "title": "7 Social security tips"
+    },
+    "box_8_allocated_tips": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Box '8 Allocated tips'. Dollar amount as a JSON number, exactly as printed; null if the box is blank (printed but typically empty on this wave).",
+      "title": "8 Allocated tips"
+    },
+    "box_10_dependent_care_benefits": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Box '10 Dependent care benefits'. Dollar amount as a JSON number, exactly as printed; null if the box is blank (printed but typically empty on this wave).",
+      "title": "10 Dependent care benefits"
+    },
+    "box_11_nonqualified_plans": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Box '11 Nonqualified plans'. Dollar amount as a JSON number, exactly as printed; null if the box is blank (printed but typically empty on this wave).",
+      "title": "11 Nonqualified plans"
+    },
+    "box_12": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Box12Entry"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Box 12 coded amounts. The blank form prints four slots '12a See instructions for box 12', '12b', '12c', '12d', each with a vertical 'Code' rail; the register variant prints a single column headed '12 See Instrs. for Box 12' with one code letter and amount per line. One row per printed code entry, in print order; null if this copy prints no Box 12 entries.",
+      "title": "12 Box 12 coded amounts"
+    },
+    "box_13_statutory_employee": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "'13 Statutory employee' checkbox in the box-13 grid. Two-state policy: true ONLY if a mark is printed inside the box; false otherwise (unmarked, or this checkbox not printed on this copy). Never return null for this field.",
+      "title": "13 Statutory employee"
+    },
+    "box_13_retirement_plan": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "'Retirement plan' checkbox in the box-13 grid. Two-state policy: true ONLY if a mark is printed inside the box; false otherwise (unmarked, or this checkbox not printed on this copy). Never return null for this field.",
+      "title": "13 Retirement plan"
+    },
+    "box_13_third_party_sick_pay": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "'Third-party sick pay' checkbox in the box-13 grid. Two-state policy: true ONLY if a mark is printed inside the box; false otherwise (unmarked, or this checkbox not printed on this copy). Never return null for this field.",
+      "title": "13 Third-party sick pay"
+    },
+    "box_13_subtotal": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "'Subtotal' checkbox in the box-13 grid (register variant only). Two-state policy: true ONLY if a mark is printed inside the box; false otherwise (unmarked, or this checkbox not printed on this copy). Never return null for this field.",
+      "title": "13 Subtotal (register variant only)"
+    },
+    "box_14_other": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Box14Entry"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Box '14 Other' \u2014 employer-defined deductions and benefits, e.g. RISDI on this wave. One row per printed description and amount pair, in print order; null if box 14 is blank.",
+      "title": "14 Other"
+    },
+    "state_local_row_1": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/StateLocalRow1"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The first printed entry row of boxes '15 State' through '20 Locality name'. Null when this row is entirely blank or not printed.",
+      "title": "State/Local Row 1"
+    },
+    "state_local_row_2": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/StateLocalRow2"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "The second printed entry row of boxes '15 State' through '20 Locality name'. Null when this row is entirely blank or not printed.",
+      "title": "State/Local Row 2"
+    },
+    "control_number_line1": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Box 'd Control number' - the FIRST printed line only (e.g. '0012-0012N426'). Verbatim.",
+      "title": "Control Number Line 1"
+    },
+    "control_number_line2": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Box 'd Control number' - the SECOND printed line only (e.g. '0000000165-ELECTR'), the register sequence/type line. Verbatim; null if the box prints a single line.",
+      "title": "Control Number Line 2"
+    }
+  },
+  "title": "Form W-2 Wage and Tax Statement (2020)",
+  "type": "object",
+  "additionalProperties": false
+}
+```
+
+Rules:
+- Use null for fields not present in the document.
+- For list/array fields, enumerate every relevant row visible in the document; never collapse rows.
+- For large regular tables, prefer writing and running a local script to parse/enumerate rows.
+- For forms, prefer direct field extraction from the document content.
+- Write the resulting JSON object to ./output.json and validate that it is valid JSON before stopping.
+- Do not print the JSON to your assistant output.
+- Also write ./citations.json: a JSON array of evidence objects, one per non-null field you extracted -- every filled-in field in your output.json, including text fields such as names, titles, labels and codes, not only numbers or table cells -- each with the keys "field_path", "page" and "bbox".
+  - "field_path" is the dotted path of the field in your output.json, with a bracketed index for array rows: `invoice_number`, `line_items[0].amount`.
+  - "page" is the 1-indexed page the value was read from.
+  - "bbox" is [x, y, width, height] as fractions of that page's width and height in [0, 1], origin at the TOP-LEFT corner of the page.
+  - Box the value itself -- the filled-in text, number, or checkbox mark -- not the surrounding row, label, or form section. For a checkbox field that is false because its box is printed but unchecked, box the empty checkbox square itself. If one field stands for a whole Yes/No pair and is false because No is checked, box the No box only. If Yes and No are separate fields, box each field's own square. For a checkbox, box the whole printed square including its border.
+  - You may use any tool available to locate values on the page (e.g. a PDF text-extraction library that reports word rectangles, or reading the rendered page yourself). Convert PDF-space rectangles to the top-left-origin fractions above before writing them.
+  - Omit a field entirely rather than guessing a location for it.
+
+=== End of extraction task ===
+
+What to do now, instead of the extraction:
+1. Consider the schema and the document ./input.pdf. You may use tools and think as you normally would.
+2. Identify specific schema values where you are uncertain which value to pick from the document.
+3. Identify specific citations where you are uncertain where the evidence box should be placed, or what its
+   boundaries should be.
+4. For each uncertainty from steps 2 and 3, list the different interpretations you could make.
+5. For each interpretation, list (a) reasons why it is sensible and (b) reasons why it is not sensible.
+
+Then stop. Write your findings to ./uncertainties.json in this shape:
+{"value_uncertainties": [{"field_path": "...", "page": 1, "question": "...",
+  "interpretations": [{"interpretation": "...", "reasons_sensible": ["..."], "reasons_not_sensible": ["..."]}]}],
+ "box_uncertainties": [{"field_path": "...", "page": 1, "question": "...",
+  "interpretations": [{"interpretation": "...", "reasons_sensible": ["..."], "reasons_not_sensible": ["..."]}]}]}
+Use the field paths from the schema, with a bracketed index for list rows. Do not print the JSON.
