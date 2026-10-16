@@ -446,6 +446,25 @@ def register_extract_pipelines(register_fn) -> None:  # type: ignore[no-untyped-
             )
         )
 
+    register_fn(
+        _pipeline_spec(
+            pipeline_name="claude_code_extract_opus_5_5_high_allfields_fulltrace_single_10min_evidence",
+            provider_name="claude_code_extract",
+            config={
+                "model": "claude-opus-5-5",
+                "evidence_mode": True,
+                "effort": "high",
+                "is_checkbox_guidance": True,
+                "is_checkbox_border": True,
+                "is_yes_no_pair_rule": True,
+                "is_all_fields_citation": True,
+                "is_full_trace": True,
+                "timeout_s": 600,
+                "is_single_attempt": True,
+            },
+            per_file_timeout=900.0,
+        )
+    )
     for _temperature_slug, _temperature in (("1_0", 1.0), ("0_5", 0.5)):
         register_fn(
             _pipeline_spec(

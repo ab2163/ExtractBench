@@ -233,3 +233,7 @@ output_pilot_*/
 # Raw agent outputs kept next to their rendered traces
 traces/**/output/
 traces/**/survey.raw.json
+data_rest_*/
+output_rest_*/
+data_all_*/
+output_all_*/

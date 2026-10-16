@@ -117,6 +117,7 @@ class ClaudeCodeExtractProvider(Provider):
         self._is_yes_no_pair_rule: bool = bool(self.base_config.get("is_yes_no_pair_rule", False))
         self._is_full_trace: bool = bool(self.base_config.get("is_full_trace", False))
         self._is_all_fields_citation: bool = bool(self.base_config.get("is_all_fields_citation", False))
+        self._is_single_attempt: bool = bool(self.base_config.get("is_single_attempt", False))
         # Track live subprocesses for cancel(): example_id -> Popen
         self._procs: dict[str, subprocess.Popen[str]] = {}
         self._procs_lock = threading.Lock()
@@ -487,6 +488,17 @@ class ClaudeCodeExtractProvider(Provider):
             )
         return data
 
+    def _run_one_attempt(self, cmd: list[str], workdir: Path, example_id: str, lines: list[str]) -> dict | None:
+        try:
+            returncode, stderr_tail = self._run_cli(cmd, workdir, example_id, lines)
+            result_event = self._parse_result_event(lines)
+            self._raise_for_status(returncode, result_event, lines, stderr_tail)
+        except (ProviderTransientError, ProviderRateLimitError) as error:
+            if self._is_single_attempt:
+                raise ProviderPermanentError(f"single attempt, not retried: {error}") from error
+            raise
+        return result_event
+
     def _config_snapshot(self) -> dict[str, Any]:
         return {
             "model": self._model,
@@ -503,6 +515,7 @@ class ClaudeCodeExtractProvider(Provider):
             "is_yes_no_pair_rule": self._is_yes_no_pair_rule,
             "is_full_trace": self._is_full_trace,
             "is_all_fields_citation": self._is_all_fields_citation,
+            "is_single_attempt": self._is_single_attempt,
         }
 
     # ------------------------------------------------------------------
@@ -542,9 +555,7 @@ class ClaudeCodeExtractProvider(Provider):
             prompt = self._build_prompt(schema, staged_name)
             cmd = self._build_cmd(prompt, mcp_config)
             lines: list[str] = []
-            returncode, stderr_tail = self._run_cli(cmd, workdir, request.example_id, lines)
-            result_event = self._parse_result_event(lines)
-            self._raise_for_status(returncode, result_event, lines, stderr_tail)
+            result_event = self._run_one_attempt(cmd, workdir, request.example_id, lines)
             data = self._read_output_json(workdir)
             agent_citations = read_agent_citations_file(workdir / "citations.json") if self._evidence_mode else None
             workdir_texts = self._read_workdir_texts(workdir, staged_name) if self._is_full_trace else None
