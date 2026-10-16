@@ -1,0 +1,36 @@
+:root {
+  --page: #ffffff; --ink: #1d1d1f; --muted: #6e6e73; --panel: #f6f6f8; --rule: #e2e2e6;
+  --prompt: #6b4fd8; --system: #8a8a8e; --rate-limit: #b0b0b4; --thinking: #c27c0e;
+  --thinking-tokens: #d9a441; --text: #1f7a3d; --tool-use: #1f5fd1; --tool-result: #0f8a8a;
+  --tool-error: #c62828; --result: #a3329e; --other: #555555;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #141416; --ink: #ececf0; --muted: #9a9aa0; --panel: #1e1e22; --rule: #2e2e34;
+    --prompt: #9d86ff; --system: #9a9aa0; --rate-limit: #6e6e73; --thinking: #e0a23a;
+    --thinking-tokens: #c9a24f; --text: #4cc472; --tool-use: #5b93ff; --tool-result: #3cc4c4;
+    --tool-error: #ff6b6b; --result: #d36bd0; --other: #9a9aa0;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0 auto; max-width: 1100px; padding: 24px 16px; background: var(--page); color: var(--ink);
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+h1 { font-size: 20px; margin: 0 0 4px; overflow-wrap: anywhere; }
+.count { color: var(--muted); margin: 0 0 20px; }
+.trace { list-style: none; margin: 0; padding: 0; }
+.event { --accent: var(--other); border-left: 5px solid var(--accent); background: var(--panel);
+  border-radius: 6px; margin: 0 0 12px; overflow: hidden; }
+.event-type { font-weight: 600; color: var(--accent); padding: 8px 12px; border-bottom: 1px solid var(--rule); }
+.index { display: inline-block; min-width: 2.5em; color: var(--muted); font-weight: 400; }
+.content { margin: 0; padding: 10px 12px; max-height: 32em; overflow: auto; white-space: pre-wrap;
+  overflow-wrap: anywhere; font: 13px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; }
+.kind-prompt { --accent: var(--prompt); }
+.kind-system { --accent: var(--system); }
+.kind-rate-limit { --accent: var(--rate-limit); }
+.kind-thinking { --accent: var(--thinking); }
+.kind-thinking-tokens { --accent: var(--thinking-tokens); }
+.kind-text { --accent: var(--text); }
+.kind-tool-use { --accent: var(--tool-use); }
+.kind-tool-result { --accent: var(--tool-result); }
+.kind-tool-error { --accent: var(--tool-error); }
+.kind-result { --accent: var(--result); }
