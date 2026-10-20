@@ -167,8 +167,6 @@ class ClaudeCodeExtractProvider(Provider):
             "Rules:\n"
             "- Use null for fields not present in the document.\n"
             "- For list/array fields, enumerate every relevant row visible in the document; never collapse rows.\n"
-            "- For large regular tables, prefer writing and running a local script to parse/enumerate rows.\n"
-            "- For forms, prefer direct field extraction from the document content.\n"
             "- Write the resulting JSON object to ./output.json and validate that it is valid JSON before stopping.\n"
             f"- Do not print the JSON to your assistant output.{evidence_rule}"
         )
